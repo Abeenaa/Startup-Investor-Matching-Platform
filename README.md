@@ -1,4 +1,4 @@
-# 🇪🇹 Innobiz-K Ethiopia: Startup-Investor Matching Platform
+# Innobiz-K Ethiopia: Startup-Investor Matching Platform
 
 ### 🚀 Vision
 Innobiz-K Ethiopia is the nation's premier incubation center. This platform serves as the digital bridge between high-potential Ethiopian startups and global/local investors, fostering a transparent, data-driven, and scalable entrepreneurship ecosystem.
