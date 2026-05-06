@@ -1,0 +1,229 @@
+// Prisma Schema - Database Models Definition
+// This file defines your database structure (tables, columns, relationships)
+// Run: npx prisma generate (to generate Prisma Client)
+// Run: npx prisma migrate dev (to create database tables)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER MANAGEMENT
+// ============================================
+
+// Main User table - Base for all user types
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  role          Role
+  isActive      Boolean   @default(true) @map("is_active")
+  
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  
+  // Relations (one user can have one startup OR one investor profile)
+  startup       Startup?
+  investor      Investor?
+  evaluations   Evaluation[]
+  profileHistory ProfileHistory[]
+  
+  @@map("users")
+}
+
+// User roles in the system
+enum Role {
+  STARTUP      // Can create startup profile, apply to programs
+  INVESTOR     // Can create investor profile, search startups
+  REVIEWER     // Can evaluate applications
+  ADMIN        // Can do everything (approve, create programs, assign reviewers)
+}
+
+// ============================================
+// STARTUP PROFILES
+// ============================================
+
+// Startup profile - Detailed information about a startup
+model Startup {
+  id              String    @id @default(uuid())
+  userId          String    @unique @map("user_id")
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Basic Information
+  name            String
+  sector          String    // Tech, Agriculture, Healthcare, etc.
+  stage           String    // Idea, Seed, Growth, Expansion
+  description     String    @db.Text
+  
+  // Detailed Information
+  problemSolved   String    @db.Text @map("problem_solved")
+  targetMarket    String    @db.Text @map("target_market")
+  innovation      String    @db.Text
+  
+  // Team & Metrics
+  teamSize        Int?      @map("team_size")
+  fundingHistory  String?   @db.Text @map("funding_history")
+  tractionMetrics Json?     @map("traction_metrics")
+  website         String?
+  
+  // Approval Status
+  isApproved      Boolean   @default(false) @map("is_approved")
+  approvalStatus  ApprovalStatus @default(PENDING) @map("approval_status")
+  approvedBy      String?   @map("approved_by")
+  approvedAt      DateTime? @map("approved_at")
+  rejectionReason String?   @db.Text @map("rejection_reason")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  
+  // Relations
+  applications    Application[]
+  
+  @@map("startups")
+}
+
+// Approval status for profiles
+enum ApprovalStatus {
+  PENDING      // Waiting for admin review
+  APPROVED     // Approved by admin, visible in directory
+  REJECTED     // Rejected by admin
+}
+
+// ============================================
+// INVESTOR PROFILES
+// ============================================
+
+// Investor profile - Investment preferences and criteria
+model Investor {
+  id                String    @id @default(uuid())
+  userId            String    @unique @map("user_id")
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Basic Information
+  name              String
+  organizationType  String?   @map("organization_type") // Individual, VC, Angel Network, etc.
+  
+  // Investment Preferences
+  investmentStage   String[]  @map("investment_stage")   // Array: ["Seed", "Series A"]
+  sectorFocus       String[]  @map("sector_focus")       // Array: ["Tech", "Agriculture"]
+  fundingCapacity   String    @map("funding_capacity")   // "$10K-$50K", "$50K-$100K", etc.
+  geographicFocus   String[]  @map("geographic_focus")   // Array: ["Addis Ababa", "Ethiopia"]
+  
+  // Approval Status
+  isApproved        Boolean   @default(false) @map("is_approved")
+  approvalStatus    ApprovalStatus @default(PENDING) @map("approval_status")
+  approvedBy        String?   @map("approved_by")
+  approvedAt        DateTime? @map("approved_at")
+  
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  
+  @@map("investors")
+}
+
+// ============================================
+// PROGRAMS & APPLICATIONS
+// ============================================
+
+// Program - Incubation/funding opportunities created by admins
+model Program {
+  id                  String    @id @default(uuid())
+  name                String
+  description         String    @db.Text
+  eligibilityCriteria String    @db.Text @map("eligibility_criteria")
+  deadline            DateTime
+  evaluationStages    Json      @map("evaluation_stages")  // JSON: stages of evaluation
+  expectedOutcomes    String    @db.Text @map("expected_outcomes")
+  
+  isActive            Boolean   @default(true) @map("is_active")
+  createdBy           String    @map("created_by")  // Admin user ID
+  
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+  
+  // Relations
+  applications        Application[]
+  
+  @@map("programs")
+}
+
+// Application - Startup's submission to a program
+model Application {
+  id              String    @id @default(uuid())
+  startupId       String    @map("startup_id")
+  startup         Startup   @relation(fields: [startupId], references: [id], onDelete: Cascade)
+  programId       String    @map("program_id")
+  program         Program   @relation(fields: [programId], references: [id], onDelete: Cascade)
+  
+  status          ApplicationStatus @default(SUBMITTED)
+  submittedAt     DateTime  @default(now()) @map("submitted_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  
+  // Relations
+  evaluations     Evaluation[]
+  
+  @@unique([startupId, programId]) // One startup can only apply once per program
+  @@map("applications")
+}
+
+// Application status workflow
+enum ApplicationStatus {
+  DRAFT           // Saved but not submitted
+  SUBMITTED       // Submitted, waiting for review
+  UNDER_REVIEW    // Being evaluated by reviewers
+  APPROVED        // Accepted into program
+  REJECTED        // Not accepted
+}
+
+// ============================================
+// EVALUATION & REVIEW
+// ============================================
+
+// Evaluation - Reviewer's assessment of an application
+model Evaluation {
+  id              String    @id @default(uuid())
+  applicationId   String    @map("application_id")
+  application     Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  reviewerId      String    @map("reviewer_id")
+  reviewer        User      @relation(fields: [reviewerId], references: [id])
+  
+  // Evaluation Details
+  score           Int       // 0-100 or 1-10 (define your scale)
+  comments        String    @db.Text
+  recommendation  String    // "APPROVE", "REJECT", "NEEDS_IMPROVEMENT"
+  
+  // Conflict of Interest
+  hasConflict     Boolean   @default(false) @map("has_conflict")
+  conflictReason  String?   @db.Text @map("conflict_reason")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  
+  @@unique([applicationId, reviewerId]) // One reviewer can only evaluate once per application
+  @@map("evaluations")
+}
+
+// ============================================
+// AUDIT & HISTORY
+// ============================================
+
+// Profile History - Track all profile changes for accountability
+model ProfileHistory {
+  id              String    @id @default(uuid())
+  userId          String    @map("user_id")
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  changeType      String    @map("change_type")  // "PROFILE_UPDATE", "STATUS_CHANGE", etc.
+  oldValue        Json?     @map("old_value")
+  newValue        Json?     @map("new_value")
+  changedBy       String?   @map("changed_by")   // Who made the change (for admin actions)
+  
+  changedAt       DateTime  @default(now()) @map("changed_at")
+  
+  @@map("profile_history")
+}

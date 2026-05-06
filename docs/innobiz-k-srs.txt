@@ -1,0 +1,752 @@
+  
+             SOFTWARE REQUIREMENTS SPECIFICATION (SRS)  
+For  
+                  INNOBIZ-K STARTUP ECOSYSTEM PLATFORM  
+Version: 1.0  
+ 
+  
+Prepared By :                   
+    Name  
+            1                         Abenezer Endalew 
+            2                         Semeriya Seid            
+            3                          Fadil Ahmed        
+           4                           Abdi Tamene           
+           5                            Gelana Zerihun  
+                                                                                          
+  
+                                                                                                              Supervisor: Mr. Tadesse A. 
+                                                                                                               Date: March 2026 GC  
+ 
+ 
+  
+1. INTRODUCTION  
+1.1 Purpose  
+1.1.1 Objective of the Document  
+This Software Requirements Specification (SRS) document provides a complete, 
+detailed, and formally structured description of the Innobiz-K Startup Ecosystem 
+Platform. The primary objective of this document is to define, in a clear and 
+verifiable manner, the full scope of the system’s functionality, constraints, and 
+expected behavior.  
+The document establishes a shared and precise understanding between all 
+stakeholders involved in the project, including developers, system architects, project 
+managers, evaluators, and representatives of the Ministry of Innovation and 
+Technology. By removing ambiguity and informal interpretation, it ensures that the 
+system is designed and implemented according to a consistent and agreed-upon 
+specification.  
+In addition to guiding development, this document serves as the official reference 
+point for system validation. Every feature implemented within the platform must be 
+traceable to a requirement defined in this document. If a feature cannot be traced 
+back to a requirement, it should not exist in the system. Likewise, if a requirement is 
+defined here but not implemented, the system is incomplete.  
+1.1.2 Role of the Document in System Development  
+Within the lifecycle of the project, this document functions as a contractual and 
+operational baseline. It is not merely descriptive; it is prescriptive. It defines what 
+must be built, how it should behave, and under what conditions it is considered 
+complete.  
+All design decisions, development tasks, and testing activities must align with the 
+requirements specified in this document. Any changes to the system scope or 
+behavior must be formally reviewed and documented to maintain consistency and 
+traceability.  
+The SRS also plays a critical role in reducing project risk. By clearly defining 
+expectations at an early stage, it minimizes misunderstandings, prevents scope creep, 
+and ensures that all stakeholders are aligned before significant development 
+resources are committed.  
+1.2 Scope of the System  
+1.2.1 System Overview  
+The Innobiz-K Startup Ecosystem Platform is designed as a centralized digital 
+infrastructure that supports the lifecycle of innovation within the national startup 
+ecosystem. It provides a unified environment where startups, investors, reviewers, 
+and administrative bodies can interact through structured and transparent processes.  
+Currently, many of these interactions are managed through fragmented and 
+disconnected tools, including spreadsheets, email communication, and online forms. 
+These approaches create inefficiencies, including repeated data entry, inconsistent 
+records, lack of visibility, and limited accountability. As a result, both startups and 
+investors face unnecessary barriers when attempting to engage with one another or 
+participate in programs.  
+The proposed system eliminates these inefficiencies by introducing a persistent, 
+structured, and scalable platform. It ensures that information is captured once, stored 
+securely, and reused across multiple processes. It also provides mechanisms for 
+discovery, evaluation, and monitoring, thereby supporting the entire innovation 
+lifecycle from onboarding to post-funding tracking.  
+1.2.2 Core System Objectives  
+The system is designed to achieve several core objectives that directly address the 
+limitations of the current ecosystem.  
+First, it aims to standardize how information about startups and investors is collected 
+and managed. By enforcing structured profiles, the system ensures that all relevant 
+data is consistent, comparable, and easy to interpret.  
+Second, it seeks to improve visibility within the ecosystem. Startups should be 
+discoverable based on their sector, stage, and geographic location, while investors 
+should be identifiable based on their funding preferences and strategic focus.  
+Third, the system aims to enhance transparency and fairness in program 
+management. By digitizing application and evaluation processes, it ensures that 
+decisions are based on clearly defined criteria and that all actions are recorded and 
+traceable.  
+Fourth, it introduces mechanisms for long-term monitoring and accountability. 
+Through the tracking of milestones and performance indicators, the platform enables 
+stakeholders to assess the real impact of funding and support programs.  
+1.2.3 Phased Development Approach  
+The system will be developed and deployed in multiple phases, each building upon 
+the capabilities of the previous one.  
+The first phase establishes the core platform, focusing on profile creation, public 
+visibility, and search functionality. This phase ensures that the platform becomes 
+immediately useful and operational.  
+The second phase introduces ecosystem-level features, including automated 
+matching between startups and investors, structured evaluation workflows, and 
+centralized program management.  
+The third phase focuses on monitoring and performance tracking. It introduces tools 
+for managing milestones, collecting performance data, and generating reports that 
+reflect the outcomes of funding and support initiatives.  
+The fourth phase provides advanced operational capabilities, including facility 
+allocation systems and automated contract generation with electronic signature 
+support. These features enable the platform to manage not only information but also 
+real-world resources and agreements.  
+1.3 Definitions and Terminology  
+1.3.1 Purpose of Definitions  
+This section defines key terms used throughout the document to ensure clarity and 
+consistency. Given the diverse audience of this document, including both technical 
+and non-technical stakeholders, it is essential that all terms are interpreted in a 
+uniform manner.  
+1.3.2 Key Terms  
+A startup is defined as an early-stage business entity focused on developing 
+innovative products or services with the intention of achieving scalable growth. 
+Startups may exist at different stages, ranging from initial concept to growth and 
+expansion.  
+An investor refers to an individual or organization that provides financial resources 
+to startups. Investors may include venture capital firms, angel investors, grantmaking 
+institutions, or government funding bodies.  
+A Key Performance Indicator (KPI) is a measurable value used to evaluate the 
+progress or success of a startup or program. KPIs may include metrics such as 
+revenue growth, user acquisition, job creation, or product development milestones.  
+A reviewer is an individual assigned to evaluate startup applications submitted to 
+programs within the platform. Reviewers are expected to assess applications based 
+on predefined criteria and provide objective scores and feedback.  
+A conflict of interest is a situation in which a reviewer’s ability to make an impartial 
+evaluation may be compromised due to personal, financial, or professional 
+relationships with an applicant.  
+Designation refers to the official recognition status of a startup under the national 
+startup proclamation. This status may affect eligibility for certain programs and 
+benefits within the platform.  
+1.4 Intended Audience  
+1.4.1 Stakeholder Identification  
+This document is intended for multiple categories of stakeholders, each with distinct 
+roles and responsibilities within the system lifecycle.  
+Software developers and system architects require a precise and detailed description 
+of system behavior in order to design and implement the platform effectively. The 
+clarity of requirements directly impacts the quality and reliability of the system.  
+Project managers use this document to plan development activities, allocate 
+resources, and track progress. A well-defined SRS allows for accurate estimation and 
+reduces the likelihood of delays or scope-related issues.  
+Government stakeholders and program administrators rely on the document to ensure 
+that the system aligns with policy objectives and operational needs. The platform 
+must support real-world processes, not just theoretical functionality.  
+Test engineers use the document as a basis for validation. Each requirement defined 
+in this document must be testable, and the system must demonstrate compliance 
+through structured testing procedures.  
+1.5 Document Structure  
+1.5.1 Organization and Navigation  
+This SRS is organized in a hierarchical structure that allows readers to navigate from 
+general concepts to detailed specifications.  
+The first chapter provides an introduction to the system, including its purpose, scope, 
+and context. The second chapter describes the overall system characteristics, 
+including user types, constraints, and assumptions.  
+Subsequent chapters provide detailed functional and non-functional requirements, 
+external interface descriptions, and supporting information necessary for system 
+implementation and validation.  
+This structured approach ensures that the document remains both comprehensive and 
+accessible, allowing different stakeholders to focus on the sections most relevant to 
+their roles.  
+1.6 Assumptions and Dependencies  
+1.6.1 Operational Assumptions  
+The system assumes that users have access to internet-enabled devices and possess a 
+basic level of digital literacy. It is expected that users will interact with the platform 
+through web browsers on mobile or desktop devices.  
+The system also assumes that users will provide accurate and truthful information 
+when creating profiles and submitting applications. While validation mechanisms 
+may be implemented, the overall reliability of the system depends on user honesty.  
+1.6.2 External Dependencies  
+The functionality of the system may depend on external services and infrastructure. 
+These include email and SMS services for notifications, as well as potential 
+integration with national systems such as startup designation registries.  
+The system may also depend on hosting infrastructure provided by government or 
+third-party providers. Performance, scalability, and security considerations must 
+account for these dependencies.  
+2. OVERALL DESCRIPTION  
+2.1 Product Perspective  
+2.1.1 System Context  
+The Innobiz-K Startup Ecosystem Platform is designed as a centralized digital 
+system that operates within the broader national innovation framework. It is not an 
+isolated application; rather, it functions as a core infrastructure layer that connects 
+multiple actors, including startups, investors, government institutions, and 
+evaluators.  
+In the current environment, these actors interact through fragmented and largely 
+manual processes. Startups submit applications through standalone forms, investors 
+rely on informal networks to identify opportunities, and administrators manage data 
+across spreadsheets and disconnected tools. This fragmented structure leads to 
+inefficiencies, duplication of effort, and a lack of transparency.  
+The proposed system replaces these disconnected workflows with an integrated 
+platform in which all interactions are structured, traceable, and managed within a 
+single environment. By doing so, it introduces consistency in how information is 
+collected, stored, and used across different processes.  
+2.1.2 System Architecture Overview  
+The platform is implemented as a web-based application built on a client-server 
+architecture. Users interact with the system through a web interface, while the 
+backend processes requests, enforces business rules, and manages persistent data 
+storage.  
+The frontend layer is responsible for presenting information and capturing user input. 
+It must be responsive and optimized for both mobile and desktop devices, with 
+particular emphasis on usability in low-bandwidth environments.  
+The backend layer handles authentication, authorization, data processing, and system 
+logic. It ensures that all actions performed within the system adhere to defined rules, 
+such as access control and approval workflows.  
+The database layer stores all system data, including user profiles, program 
+applications, evaluation results, and monitoring records. Data integrity and 
+consistency are critical at this level, as the platform relies on accurate and reliable 
+information to function effectively.  
+2.1.3 Relationship to External Systems  
+The system is designed with the expectation that it may integrate with external 
+services and government infrastructure. These integrations may include identity 
+verification systems, notification services such as email or SMS gateways, and 
+official registries related to startup designation.  
+While such integrations are not mandatory for the initial deployment, the system 
+architecture must remain flexible to accommodate them in future phases. This 
+ensures that the platform can evolve without requiring fundamental redesign.  
+2.2 Product Functions  
+2.2.1 Core Functional Capabilities  
+At a high level, the platform provides a set of interconnected functions that support 
+the lifecycle of startup engagement within the ecosystem.  
+The system enables startups and investors to create structured digital profiles that 
+represent their identity, capabilities, and interests. These profiles serve as the 
+foundation for all interactions within the platform.  
+It provides a public directory that allows users to discover startups and investors 
+based on relevant criteria. This functionality enhances visibility and reduces reliance 
+on informal networks.  
+The system also supports program management processes, including application 
+submission, evaluation, and decision-making. These processes are designed to be 
+transparent, structured, and efficient.  
+In later phases, the platform introduces advanced capabilities such as automated 
+matching between startups and investors, post-funding monitoring through KPIs and 
+milestones, and operational tools such as facility allocation and contract 
+management.  
+2.2.2 End-to-End Workflow Integration  
+The system is designed to support continuous workflows rather than isolated actions. 
+For example, a startup may begin by creating a profile, then apply to a program, 
+undergo evaluation, receive funding, and subsequently report on progress through 
+defined milestones.  
+Each of these steps is connected within the platform, allowing data to flow 
+seamlessly from one stage to the next. This eliminates the need for repeated data 
+entry and ensures that all relevant information is available when needed.  
+Similarly, investors can use the platform to discover startups, evaluate potential 
+opportunities, and initiate communication, all within a single environment.  
+2.3 User Classes and Characteristics  
+2.3.1 Startup Users  
+Startup users represent founders or team members responsible for managing the 
+startup’s presence on the platform. Their primary objective is to gain visibility, 
+access opportunities, and participate in programs.  
+These users may have varying levels of technical expertise. Therefore, the system 
+must be intuitive and straightforward, minimizing complexity and guiding users 
+through each process step by step.  
+2.3.2 Investor Users  
+Investor users include individuals and organizations that provide funding or support 
+to startups. Their interaction with the system is primarily focused on discovering 
+relevant startups and evaluating potential investment opportunities.  
+Investors typically have limited time and require efficient access to structured and 
+reliable information. The system must therefore prioritize clarity, speed, and 
+relevance in presenting data.  
+2.3.3 Administrative Users  
+Administrative users, including staff from the Ministry and Innobiz-K, are 
+responsible for managing the platform’s operations. Their responsibilities include 
+approving profiles, configuring programs, assigning reviewers, and monitoring 
+system activity.  
+These users require advanced access privileges and tools that allow them to oversee 
+and control system processes effectively.  
+2.3.4 Reviewer Users  
+Reviewer users are assigned to evaluate startup applications. They are expected to 
+provide objective assessments based on predefined criteria.  
+The system must support reviewers by providing clear evaluation interfaces, 
+structured scoring mechanisms, and safeguards such as conflict-of-interest 
+declarations.  
+2.3.5 Public Users  
+Public users are individuals who access the platform without creating an account. 
+Their interaction is limited to browsing the public directory and viewing available 
+information.  
+The system must ensure that public users can navigate and explore content easily 
+while respecting the privacy settings defined by registered users.  
+2.4 Operating Environment  
+2.4.1 Technical Environment  
+The platform is designed to operate within a web-based environment accessible 
+through modern browsers. It must support a wide range of devices, including 
+smartphones, tablets, and desktop computers.  
+Given the local context, the system must perform reliably under conditions of limited 
+internet connectivity. This requires optimization of data transfer, efficient loading of 
+resources, and minimal reliance on heavy graphical elements.  
+2.4.2 User Environment  
+Users are expected to access the system from diverse environments, including urban 
+and rural areas. As a result, the platform must be designed with inclusivity in mind, 
+ensuring that it remains usable across different levels of connectivity and device 
+capability.  
+2.5 Design and Implementation Constraints  
+2.5.1 Technical Constraints  
+The system must adhere to constraints related to performance, security, and 
+scalability. It must be capable of handling increasing volumes of data and users 
+without degradation in performance.  
+Security requirements include secure authentication mechanisms, role-based access 
+control, and protection of sensitive data through encryption.  
+2.5.2 Regulatory Constraints  
+The system must comply with applicable national regulations related to data 
+protection and digital services. This includes ensuring that user data is handled 
+responsibly and that privacy is maintained at all times.  
+2.6 Assumptions and Dependencies  
+2.6.1 Assumptions  
+It is assumed that users will have access to devices capable of running modern web 
+applications. It is also assumed that users will provide accurate information when 
+interacting with the system.  
+The system assumes that administrative staff will actively manage approvals and 
+monitor system activity to maintain data quality and integrity.  
+2.6.2 Dependencies  
+The platform may depend on external services such as notification systems for email 
+and SMS communication. It may also rely on future integrations with government 
+systems for verification and data synchronization.  
+These dependencies must be considered during system design to ensure reliability 
+and flexibility.  
+3. SPECIFIC REQUIREMENTS  
+3.1 Functional Requirements  
+3.1.1 User Registration and Account Management  
+The system shall provide a structured user registration process that allows 
+individuals and organizations to create accounts within the platform. During 
+registration, users shall provide essential identity information, including name, email 
+address, organization details, and account type. The system must validate the 
+authenticity and completeness of submitted information before activating the 
+account.  
+After successful registration, the system shall generate a persistent account that 
+allows users to log in securely and manage their profile information over time. Users 
+must be able to update their details, modify profile content, and manage security 
+credentials such as passwords. The platform shall maintain historical records of 
+profile changes in order to ensure traceability and accountability.  
+The system shall also support role-based access control. Each user shall be assigned 
+a role that determines the actions they are authorized to perform within the system.  
+These roles include startup user, investor user, reviewer user, and administrative user.  
+3.1.2 Startup Profile Management  
+The platform shall allow startups to create and maintain comprehensive digital 
+profiles. These profiles shall represent the startup’s identity, business model, stage of 
+development, sector focus, and operational status.  
+Startup users must be able to provide detailed descriptions of their product or 
+service, the problem they aim to solve, their target market, and the technological 
+innovation behind their solution. The system shall allow the inclusion of supporting 
+information such as team composition, funding history, traction metrics, and external 
+links.  
+The system shall ensure that startup profiles remain persistent and reusable across 
+different processes within the platform. Once created, a startup profile shall serve as 
+the primary reference for applications, investor discovery, and ecosystem visibility.  
+3.1.3 Investor Profile Management  
+These provide functionality for investors to create profiles that describe their 
+investment interests and strategic priorities. Investor profiles shall include 
+information such as investment stage preference, sector interest, funding capacity, 
+and geographic focus.  
+These profiles shall enable investors to clearly communicate their expectations and 
+investment criteria to potential startup partners. The platform shall store this 
+information in a structured format that allows it to be used in discovery and 
+matching processes.  
+Investors must also be able to update their profiles as their investment focus evolves 
+over time.  
+3.1.4 Public Startup Directory  
+The platform shall provide a publicly accessible directory that allows users to browse 
+and discover registered startups. This directory shall function as a searchable 
+database that organizes startups according to predefined attributes such as industry 
+sector, growth stage, and location.  
+The system shall ensure that only approved and verified startup profiles appear in the 
+public directory. Administrative users shall have the authority to review and approve 
+profiles before they become visible to the public.  
+This feature is intended to improve visibility across the ecosystem and support 
+collaboration between startups, investors, and other stakeholders. The Innobiz-K 
+initiative itself focuses on supporting startups and fostering innovation within 
+Ethiopia’s ecosystem, which makes visibility and collaboration central objectives of 
+the platform. (addisstartup.com)  
+3.1.5 Search and Filtering Capabilities  
+The system shall provide advanced search functionality that enables users to locate 
+startups or investors based on specific criteria. These criteria may include sector, 
+funding stage, technological focus, geographic location, and other relevant attributes. 
+search system must support filtering mechanisms that allow users to refine results 
+dynamically. Search results shall be presented in a structured and readable format to 
+ensure efficient navigation.  
+The objective of this functionality is to enable faster discovery of relevant ecosystem 
+participants and reduce reliance on informal connections.  
+3.1.6 Program Application Management  
+The platform shall support the management of startup support programs, incubation 
+opportunities, and funding initiatives organized by Innobiz-K or related institutions.  
+Administrative users shall be able to create program listings that define eligibility 
+criteria, application deadlines, evaluation stages, and expected outcomes.  
+Startup users shall be able to submit applications to available programs through the 
+system. During submission, the platform shall automatically link the application to 
+the startup’s profile, reducing the need for repetitive data entry.  
+The system shall record all submitted applications and maintain a history of 
+participation across programs.  
+3.1.7 Evaluation and Review Workflow  
+The system shall provide a structured workflow for evaluating program applications. 
+Administrative users shall assign reviewers to applications based on predefined rules 
+and availability.  
+Reviewers shall access a dedicated interface where they can evaluate applications 
+according to specific criteria such as innovation potential, feasibility, market 
+relevance, and team capability.  
+The platform shall allow reviewers to submit scores, comments, and 
+recommendations. All evaluations shall be stored within the system and must be 
+accessible to authorized administrative users for decision-making also include 
+mechanisms for identifying potential conflicts of interest to preserve fairness and 
+integrity in the evaluation process.  
+3.1.8 Startup–Investor Matching Mechanism  
+In later phases of the system, the platform shall introduce automated matching 
+capabilities that analyze startup and investor profiles to identify potential 
+partnerships.  
+The matching system shall evaluate compatibility based on sector alignment, funding 
+stage, investment interest, and strategic objectives. The platform shall present 
+suggested matches to both parties, allowing them to explore potential collaboration 
+opportunities.  
+This feature aims to improve efficiency in connecting startups with relevant investors 
+and to strengthen the innovation ecosystem.  
+3.1.9 Monitoring and Performance Tracking  
+The system shall support monitoring of startups that receive support through 
+programs or funding initiatives. Administrative users shall define performance 
+indicators and milestones that startups are expected to achieve.  
+Startup users shall periodically submit updates that describe their progress toward 
+these milestones. The system shall store and organize this information to allow 
+administrators to evaluate the impact of support programs.  
+Performance tracking shall also enable the generation of reports that summarize 
+ecosystem growth and program outcomes.  
+3.1.10 Facility and Resource Allocation  
+The platform shall provide tools for managing physical and operational resources 
+associated with the innovation center. These may include co-working spaces, 
+incubation facilities, and shared equipment.  
+Administrative users shall be able to assign resources to selected startups based on 
+program participation and availability.  
+The system shall record allocation history and ensure that resources are used 
+efficiently.  
+3.2 External Interface Requirements  
+3.2.1 User Interface Requirements  
+The system shall provide a modern web-based interface that supports intuitive 
+navigation and accessibility. The design must accommodate users with varying 
+levels of technical expertise and provide clear guidance throughout system 
+interactions.  
+Interfaces shall prioritize readability, structured content presentation, and responsive 
+design to support mobile and desktop devices.  
+3.2.2 Software Interfaces  
+The platform shall be designed to integrate with external systems where necessary. 
+These integrations may include authentication services, government registries, and 
+notification systems.  
+Such integrations must be implemented through secure and well-documented 
+interfaces to ensure reliability and scalability.  
+3.2.3 Communication Interfaces  
+The system shall support communication channels that allow the delivery of 
+notifications related to account activity, application status, and program updates.  
+These notifications may be delivered through email or other messaging systems.  
+The communication infrastructure must ensure reliable and timely delivery of 
+messages.  
+3.3 Non-Functional Requirements  
+3.3.1 Performance Requirements  
+The system shall support a large number of concurrent users without degradation in 
+performance. Page loading times should remain within acceptable limits to ensure 
+usability.  
+The platform must be optimized to function effectively even in environments where 
+internet bandwidth is limited.  
+3.3.2 Security Requirements  
+Security is a critical requirement for the system due to the sensitive nature of user 
+and organizational data. The system shall implement strong authentication 
+mechanisms and enforce secure password policies.  
+Data transmitted between the user and the system must be protected using encryption 
+protocols. The system must also ensure that unauthorized users cannot access 
+restricted information.  
+3.3.3 Reliability and Availability  
+The system must maintain consistent availability to support continuous interaction 
+among ecosystem participants. Downtime should be minimized through reliable 
+hosting infrastructure and proper system monitoring.  
+Data must be backed up regularly to prevent loss of critical information.  
+3.3.4 Scalability  
+The platform shall be designed to accommodate growth in the number of users, 
+startups, investors, and programs over time. The system architecture must support 
+expansion without requiring major redesign.  
+4. SYSTEM MODELS AND REPRESENTATION  
+4.1 Purpose of System Modeling  
+4.1.1 Objective  
+This section provides a conceptual and logical representation of the Innobiz-K Startup 
+Ecosystem Platform. While previous sections describe what the system must do, this section 
+illustrates how the system behaves through structured models.  
+System modeling is essential for bridging the gap between requirements and 
+implementation. It allows stakeholders to visualize interactions, data flow, and 
+system boundaries without requiring technical implementation details.  
+These models support developers in designing the system architecture and assist 
+stakeholders in understanding system behavior in a simplified but structured manner.  
+4.2 System Context Model  
+4.2.1 Overview  
+The Innobiz-K Platform operates within a broader ecosystem that includes multiple 
+external and internal entities. At the highest level, the system acts as a central hub 
+connecting startups, investors, reviewers, administrative staff, and public users.  
+Each of these entities interacts with the system through defined interfaces and 
+workflows. The system itself is responsible for managing these interactions, storing 
+data, and enforcing rules.  
+4.2.2 External Entities  
+The primary external entities interacting with the system include:  
+● Startups, which provide profile data, submit applications, and report progress  
+● Investors, who provide investment preferences and search for opportunities  
+● Reviewers, who evaluate applications and provide structured feedback  
+4.3.1 Purpose  
+The use case model describes how different users interact with the system to achieve 
+specific goals. Each use case represents a complete interaction scenario between a 
+user and the system.  
+4.3.2 Core Use Cases  
+Startup Registration and Profile Creation  
+A startup user creates an account, logs into the system, and completes a structured 
+profile. The system validates the input and stores the profile for future use. The user 
+may update the profile at any time and choose whether to make it publicly visible.  
+Investor Registration and Profile Management  
+An investor registers on the platform, provides relevant investment information, and 
+configures visibility settings. The system stores this data and makes it available for 
+search and matching processes.  
+Startup Discovery and Search  
+A user accesses the platform and searches for startups using filters such as sector, 
+stage, or location. The system retrieves relevant results and presents them in a 
+structured format.  
+Program Application Submission  
+A startup selects an available program and submits an application. The system records 
+the submission, links it to the startup profile, and notifies administrators.  
+Application Evaluation  
+An administrator assigns reviewers to evaluate applications. Reviewers access 
+assigned applications, submit scores and comments, and the system aggregates results 
+for decision-making.  
+Matching Process  
+The system analyzes startup and investor profiles and generates suggested matches 
+based on predefined criteria. Users can review these matches and initiate 
+communication.  
+Post-Funding Monitoring  
+Startups submit periodic updates on their performance. The system records these 
+updates and allows administrators to monitor progress against defined milestones.  
+4.4 Data Flow Description  
+4.4.1 Overview  
+The system processes data through a series of inputs, transformations, and outputs.  
+Data flows between users, the system interface, backend services, and the database.  
+4.4.2 Data Flow Process  
+When a user submits information, such as a profile or application, the data is first 
+validated at the interface level. It is then transmitted to the backend, where business 
+rules are applied. Once validated, the data is stored in the database.  
+When another user requests information, such as performing a search, the system 
+retrieves relevant data from the database, processes it according to filters or 
+conditions, and presents the results through the interface.  
+This continuous flow ensures that data remains consistent, accessible, and up to date 
+across all system components.  
+4.5 System Behavior and Workflow Representation  
+4.5.1 End-to-End Workflow  
+The platform supports continuous workflows that span multiple stages of interaction.  
+A typical workflow begins with user registration, followed by profile creation. The 
+user may then participate in programs by submitting applications. These applications 
+are evaluated, and decisions are recorded within the system.  
+If funding or support is provided, the workflow continues into the monitoring phase, 
+where progress is tracked through milestones and performance indicators.  
+Each stage of this workflow is connected, allowing data to move seamlessly from 
+one phase to the next without duplication.  
+4.6 Limitations of System Models  
+4.6.1 Scope of Representation  
+The models presented in this section are conceptual and do not represent the full 
+technical implementation of the system. They are intended to provide clarity and 
+understanding rather than detailed design specifications.  
+More detailed representations, such as database schemas and technical architecture 
+diagrams, may be included in later sections or appendices.  
+5. USE CASE SCENARIOS  
+5.1 Purpose  
+This section provides detailed descriptions of key system interactions from the 
+perspective of users. Unlike the abstract use case model, these scenarios describe 
+step-by-step flows of actions and system responses.  
+5.2 Use Case: Startup Profile Creation  
+5.2.1 Description  
+This use case describes the process through which a startup creates and manages its 
+profile within the platform.  
+5.2.2 Actors  
+Primary Actor: Startup User  
+System Actor: Innobiz-K Platform  
+5.2.3 Flow of Events  
+The process begins when the startup user accesses the platform and selects the option 
+to create an account. The user provides required registration details and successfully 
+logs into the system.  
+After authentication, the user navigates to the profile creation section and begins 
+entering startup information. The system guides the user through structured input 
+fields, ensuring that all required data is provided.  
+Once the profile is completed, the user reviews the information and submits it. The 
+system validates the input and stores the profile. The user may then choose to make 
+the profile publicly visible, subject to administrative approval.  
+5.3 Use Case: Program Application  
+5.3.1 Description  
+This use case describes how a startup applies for a program within the platform.  
+5.3.2 Flow of Events  
+The startup user browses available programs and selects one that matches their 
+interest. The system displays detailed information about the program, including 
+eligibility criteria and deadlines.  
+The user initiates the application process and completes the required fields. The 
+system allows the user to save progress and return later if needed.  
+Upon submission, the system records the application and notifies the relevant 
+administrative users. The startup receives confirmation that the application has been 
+successfully submitted.  
+5.4 Use Case: Application Evaluation  
+5.4.1 Description  
+This use case describes how reviewers evaluate submitted applications.  
+5.4.2 Flow of Events  
+An administrator assigns applications to reviewers. Reviewers log into the system 
+and access their assigned tasks.  
+Each reviewer examines the application and provides scores based on predefined 
+criteria. The system records these scores and aggregates results.  
+After all evaluations are complete, administrative users review the results and make a 
+final decision.  
+6. DATA REQUIREMENTS  
+6.1 Purpose  
+The purpose of this chapter is to define the structure, storage, and constraints of the 
+data required by the Innobiz-K Startup Ecosystem Platform. Proper data definition 
+ensures consistency, reliability, and traceability throughout all system processes.  
+6.2 Data Entities  
+The primary data entities of the system are described below:  
+6.2.1 Startup Profile  
+● Attributes: Startup ID, Name, Sector, Stage, Team Members, Product/Service 
+Description, Funding History, Traction Metrics, Website/Links.  
+● Constraints: Each startup must have a unique ID; mandatory fields include 
+Name, Sector, and Stage.  
+● Relationships: Linked to Applications, Funding Records, Facility Allocations.  
+6.2.2 Investor Profile  
+● Attributes: Investor ID, Name, Investment Preferences, Sector Focus, Funding 
+Capacity, Geographic Focus, Contact Info.  
+● Constraints: Unique ID; mandatory fields include Name and Investment 
+Preferences.  
+● Relationships: Linked to Matching Records, Communication Logs.  
+6.2.3 Program Application  
+● Attributes: Application ID, Startup ID, Program ID, Submission Date, Status, 
+Scores, Reviewer Comments.  
+● Constraints: Each application must be linked to one startup and one program.  
+● Relationships: Tied to Startup Profiles and Reviewer Evaluations.  
+6.2.4 Reviewer Evaluation  
+● Attributes: Evaluation ID, Reviewer ID, Application ID, Score, Comments, 
+Date of Review.  
+● Constraints: Reviewers cannot evaluate applications where conflicts of interest 
+exist.  
+● Relationships: Associated with Applications and Programs.  
+6.2.5 Facility Allocation  
+● Attributes: Allocation ID, Startup ID, Facility ID, Start Date, End Date, Status.  
+● Constraints: Each allocation must reference a valid startup and facility; 
+overlapping allocations must be prevented.  
+● Relationships: Linked to Startups and Facilities.  
+6.2.6 Communication Log  
+● Attributes: Log ID, Sender ID, Recipient ID, Message, Timestamp, Type 
+(Email/SMS/Platform).  
+● Constraints: Messages must be linked to valid users.  
+● Relationships: Tied to Users and Notifications.  
+6.3 Entity Relationship Diagram (ERD) 
+The ER diagram represents the database structure of the system. It includes key entities 
+such as users, startups, investors, programs, applications, and their relationships. The 
+system follows a relational database design where foreign keys establish connections 
+between entities. 
+6.4 Data Storage and Management  
+6.4.1 Database Design  
+The platform shall use a relational database to store structured information. Primary 
+keys, foreign keys, and indexes shall be implemented to ensure data integrity and 
+query performance. The database shall include tables corresponding to all major 
+entities described above.  
+6.4.2 Data Security  
+Sensitive information such as user credentials, contact info, and funding records 
+shall be encrypted at rest and during transmission. Role-based access control shall 
+restrict access to data based on user privileges.  
+6.4.3 Backup and Recovery  
+The system shall implement automated daily backups to prevent data loss. Recovery 
+procedures must allow restoration to the last consistent backup within one hour.  
+6.5 Data Validation Rules  
+The system shall enforce input validation on all forms. For example:  
+● Email addresses must follow standard format.  
+● Numeric fields (e.g., funding amounts) must be non-negative.  
+● Mandatory fields must be completed before submission.  
+● Duplicate records (e.g., duplicate startup names in the same sector) shall be 
+prevented.  
+7. APPENDICES AND SUPPORTING INFORMATION  
+7.1 Acronyms and Abbreviations  
+Acronym  
+Meaning  
+KPI  
+Key Performance Indicator  
+SRS  
+Software Requirements Specification  
+UI  
+User Interface  
+UX  
+User Experience  
+7.2 User Interface Mockups 
+Figure 1: Admin Dashboard 
+This interface represents the administrative dashboard used to manage system 
+operations. It provides an overview of platform activity, including user management, 
+program administration, and system monitoring. The dashboard enables 
+administrators to approve profiles, configure programs, assign reviewers, and oversee 
+overall platform performance. 
+Figure 2: Reviewer Dashboard  
+This interface represents the reviewer dashboard. It allows reviewers to access 
+assigned applications, evaluate submissions based on predefined criteria, and provide 
+scores and feedback. The dashboard is designed to streamline the evaluation process 
+and ensure consistency and transparency in decision-making. 
+Figure 3: Investor Dashboard  
+This interface represents the dashboard for investor users. It displays important 
+investment-related insights, including portfolio size, capital invested, returns, and 
+available opportunities. Visual charts illustrate portfolio distribution and sector 
+allocation, while the interface also highlights potential investment opportunities that 
+match the investor’s preferences. 
+Figure 4: Startup Dashboard 
+This interface represents the dashboard for startup users. It provides an overview of 
+key activities, including profile views, active applications, investor connections, and 
+available programs. The dashboard also includes a trend visualization for 
+performance monitoring, recent application status updates, and quick action buttons 
+for common tasks such as updating profiles and applying to programs. 
+7.3 Reference Documents  
+1. 
+2. 
+3. 
+4. 
+Innobiz-K Startup Ecosystem Guidelines (2026)  
+National Startup Proclamation, Ethiopia  
+Technical Design Documents for Web Platform Architecture  
+User Experience Guidelines for Government Portals  
+7.4 Architecture Diagrams  
+7.4.1 System Architecture Overview  
+● Web-based client-server architecture  
+● Frontend: Responsive web application  
+● Backend: API-driven application layer with role-based access  
+● Database: Relational DBMS with encryption and auditing  
+7.4.2   System Architecture Diagram 
+The system architecture diagram illustrates the overall structure of the Innobiz-K Startup 
+Ecosystem Platform. The system follows a client-server architecture, where users 
+interact with the platform through a web-based frontend interface. The frontend 
+communicates with the backend server, which handles business logic, authentication, 
+and application processing. The backend is connected to a relational database that stores 
+user profiles, applications, and system data. External services such as email and 
+notification systems are integrated to support communication and system functionality. 
+7.4.3 Data Flow Diagram  
+The Data Flow Diagram (DFD) illustrates how data moves through the system from 
+user input to final output. Users such as startups, investors, reviewers, and 
+administrators provide input through the frontend interface. The data is validated and 
+sent to the backend for processing, where business logic and authentication are applied. 
+The processed data is then stored in the database. When required, the system retrieves 
+data from the database and presents it to users in the form of reports, application status 
+updates, or notifications. This process ensures efficient data handling, consistency, and 
+real-time interaction within the system. 
+7.4.4 Use Case Diagram 
+The use case diagram illustrates the interaction between system users (Startup, 
+Investor, Reviewer, and Administrator) and the platform. It presents the main 
+functionalities such as user registration, profile management, program application, 
+application evaluation, and system monitoring. 
+7.5 Assumptions and Constraints  
+● Users have internet-enabled devices.  
+● Government staff actively manage approvals and allocations.  
+● Notifications depend on external email/SMS services.  
+● The system must scale to at least 5,000 concurrent users in Phase 1 and grow for 
+future phases.  
+7.6 Revision History  
+Version  
+Date  
+Author  
+1.0  
+23-Mar-26  
+Innobiz-K Team  
+Changes  
+Initial Draft  
+1.1  
+23-Mar-26  
+Innobiz-K Team  
+Expanded Chapters & Models  
+  
+ 

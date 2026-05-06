@@ -1,0 +1,1 @@
+// Defines authentication API endpoints
