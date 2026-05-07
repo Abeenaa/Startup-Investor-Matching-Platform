@@ -3,7 +3,6 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { AnyZodObject, ZodError } from 'zod';
-import { BadRequestError } from '../shared/errors/AppError';
 
 /**
  * Middleware to validate request data against a Zod schema
@@ -22,16 +21,19 @@ export const validate = (schema: AnyZodObject) => {
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        // Format Zod errors into readable format
+        // Format Zod errors into readable format and pass them along
         const errors = error.errors.map((err) => ({
-          field: err.path.join('.'),
+          field: err.path.slice(1).join('.'), // strip leading 'body'/'query'/'params'
           message: err.message,
         }));
 
-        next(new BadRequestError('Validation failed'));
-      } else {
-        next(error);
+        return res.status(400).json({
+          success: false,
+          message: 'Validation failed',
+          errors,
+        });
       }
+      next(error);
     }
   };
 };

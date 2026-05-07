@@ -10,20 +10,35 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Starting database seeding...');
 
-  // Create default admin user
-  const adminPassword = await hashPassword('Admin@123');
-  const admin = await prisma.user.upsert({
-    where: { email: 'admin@innobiz.et' },
+  // Create default staff admin user (super admin)
+  const staffAdminPassword = await hashPassword('StaffAdmin@123');
+  const staffAdmin = await prisma.user.upsert({
+    where: { email: 'staff.admin@innobiz.et' },
     update: {},
     create: {
-      email: 'admin@innobiz.et',
-      passwordHash: adminPassword,
-      role: Role.ADMIN,
+      email: 'staff.admin@innobiz.et',
+      passwordHash: staffAdminPassword,
+      role: Role.STAFF_ADMIN,
       isActive: true,
     },
   });
 
-  console.log('✅ Created admin user:', admin.email);
+  console.log('✅ Created staff admin user:', staffAdmin.email);
+
+  // Create default system admin user
+  const systemAdminPassword = await hashPassword('SystemAdmin@123');
+  const systemAdmin = await prisma.user.upsert({
+    where: { email: 'system.admin@innobiz.et' },
+    update: {},
+    create: {
+      email: 'system.admin@innobiz.et',
+      passwordHash: systemAdminPassword,
+      role: Role.SYSTEM_ADMIN,
+      isActive: true,
+    },
+  });
+
+  console.log('✅ Created system admin user:', systemAdmin.email);
 
   // Create test reviewer
   const reviewerPassword = await hashPassword('Reviewer@123');

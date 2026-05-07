@@ -31,9 +31,19 @@ export const authorize = (allowedRoles: UserRole[]) => {
 };
 
 /**
- * Shorthand middleware for admin-only routes
+ * Shorthand middleware for staff admin only routes (highest privilege)
  */
-export const adminOnly = authorize([UserRole.ADMIN]);
+export const staffAdminOnly = authorize([UserRole.STAFF_ADMIN]);
+
+/**
+ * Shorthand middleware for system admin only routes
+ */
+export const systemAdminOnly = authorize([UserRole.SYSTEM_ADMIN]);
+
+/**
+ * Shorthand middleware for any admin routes
+ */
+export const adminOnly = authorize([UserRole.SYSTEM_ADMIN, UserRole.STAFF_ADMIN]);
 
 /**
  * Shorthand middleware for reviewer routes
@@ -41,6 +51,11 @@ export const adminOnly = authorize([UserRole.ADMIN]);
 export const reviewerOnly = authorize([UserRole.REVIEWER]);
 
 /**
- * Middleware for routes accessible by both admin and reviewer
+ * Middleware for routes accessible by staff admin and reviewers
  */
-export const adminOrReviewer = authorize([UserRole.ADMIN, UserRole.REVIEWER]);
+export const staffAdminOrReviewer = authorize([UserRole.STAFF_ADMIN, UserRole.REVIEWER]);
+
+/**
+ * Middleware for routes accessible by any admin and reviewer
+ */
+export const adminOrReviewer = authorize([UserRole.SYSTEM_ADMIN, UserRole.STAFF_ADMIN, UserRole.REVIEWER]);

@@ -40,8 +40,9 @@ model User {
 enum Role {
   STARTUP      // Can create startup profile, apply to programs
   INVESTOR     // Can create investor profile, search startups
-  REVIEWER     // Can evaluate applications
-  ADMIN        // Can do everything (approve, create programs, assign reviewers)
+  REVIEWER     // Can evaluate applications (assigned by staff admin)
+  SYSTEM_ADMIN // Can approve profiles, create programs (managed by staff admin)
+  STAFF_ADMIN  // Super admin - can do everything + manage system admins + assign reviewers
 }
 
 // ============================================
