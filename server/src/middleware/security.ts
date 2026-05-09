@@ -6,11 +6,9 @@ import { rateLimit } from 'express-rate-limit';
 import { ForbiddenError, TooManyRequestsError } from '../shared/errors/AppError';
 import { NODE_ENV } from '../config/env';
 
-// ─── Rate Limiting ───────────────────────────────────────────────────────────
+// Rate Limiting
 
-/**
- * General API rate limiting
- */
+//General API rate limiting
 export const generalRateLimit = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
@@ -22,9 +20,7 @@ export const generalRateLimit = rateLimit({
   legacyHeaders: false,
 });
 
-/**
- * Strict rate limiting for authentication endpoints
- */
+//Strict rate limiting for authentication endpoints
 export const authRateLimit = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 5, // Limit each IP to 5 login attempts per windowMs
@@ -36,9 +32,7 @@ export const authRateLimit = rateLimit({
   legacyHeaders: false,
 });
 
-/**
- * Admin operation rate limiting
- */
+// Admin operation rate limiting
 export const adminRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
   max: 50, // Limit admin operations
@@ -50,11 +44,8 @@ export const adminRateLimit = rateLimit({
   legacyHeaders: false,
 });
 
-// ─── Request Validation ─────────────────────────────────────────────────────
-
-/**
- * Validate request headers for security
- */
+// Request Validation 
+//Validate request headers for security
 export const validateHeaders = (req: Request, res: Response, next: NextFunction) => {
   // Check for required security headers in production
   if (NODE_ENV === 'production') {
@@ -95,11 +86,9 @@ export const validateHeaders = (req: Request, res: Response, next: NextFunction)
   next();
 };
 
-// ─── IP Whitelisting ────────────────────────────────────────────────────────
+// IP Whitelisting
 
-/**
- * IP whitelist for admin operations (optional, for high-security environments)
- */
+//IP whitelist for admin operations (optional, for high-security environments)
 export const ipWhitelist = (allowedIPs: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (NODE_ENV === 'development') {
@@ -116,11 +105,8 @@ export const ipWhitelist = (allowedIPs: string[]) => {
   };
 };
 
-// ─── Session Security ───────────────────────────────────────────────────────
-
-/**
- * Track user sessions and detect suspicious activity
- */
+// Session Security 
+//Track user sessions and detect suspicious activity
 interface UserSession {
   userId: string;
   lastActivity: Date;
@@ -176,11 +162,8 @@ export const sessionSecurity = (req: Request, res: Response, next: NextFunction)
   next();
 };
 
-// ─── Data Sanitization ──────────────────────────────────────────────────────
-
-/**
- * Sanitize input data to prevent injection attacks
- */
+// Data Sanitization 
+//Sanitize input data to prevent injection attacks
 export const sanitizeInput = (req: Request, res: Response, next: NextFunction) => {
   const sanitizeValue = (value: any): any => {
     if (typeof value === 'string') {
@@ -220,11 +203,8 @@ export const sanitizeInput = (req: Request, res: Response, next: NextFunction) =
   next();
 };
 
-// ─── Audit Logging ──────────────────────────────────────────────────────────
-
-/**
- * Log all admin and sensitive operations for audit trail
- */
+// Audit Logging
+//Log all admin and sensitive operations for audit trail
 export const auditLog = (req: Request, res: Response, next: NextFunction) => {
   const originalSend = res.send;
   
@@ -254,9 +234,7 @@ export const auditLog = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-/**
- * Remove sensitive fields from audit logs
- */
+//Remove sensitive fields from audit logs
 function sanitizeForLog(data: any): any {
   if (!data || typeof data !== 'object') return data;
   

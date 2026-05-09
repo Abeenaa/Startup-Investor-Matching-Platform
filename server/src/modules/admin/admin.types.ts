@@ -3,8 +3,7 @@
 
 import { Role } from '@prisma/client';
 
-// ─── User Management ─────────────────────────────────────────────────────────
-
+// User Management
 export interface CreateUserInput {
   email: string;
   password: string;
@@ -32,8 +31,7 @@ export interface UserManagementFilters {
   search?: string;
 }
 
-// ─── Role Assignment ─────────────────────────────────────────────────────────
-
+// Role Assignment
 export interface AssignReviewerInput {
   reviewerIds: string[];
   applicationIds: string[];

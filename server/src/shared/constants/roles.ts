@@ -1,4 +1,5 @@
 // User Roles Constants
+
 // Defines all user roles in the system
 
 export enum UserRole {

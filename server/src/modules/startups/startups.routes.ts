@@ -17,8 +17,7 @@ import {
 
 const router = Router();
 
-// ─── Startup User Routes ─────────────────────────────────────────────────────
-
+// Startup User Routes 
 // POST /api/startups/profile - Create startup profile
 router.post(
   '/profile',
@@ -45,8 +44,7 @@ router.patch(
   startupController.updateProfile
 );
 
-// ─── Admin Routes ────────────────────────────────────────────────────────────
-
+// Admin Routes
 // GET /api/startups - Get all startups (admin/reviewer)
 router.get(
   '/',

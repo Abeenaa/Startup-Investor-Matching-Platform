@@ -3,8 +3,7 @@
 
 import { NODE_ENV } from './env';
 
-// ─── Password Policy ─────────────────────────────────────────────────────────
-
+// Password Policy
 export const PASSWORD_POLICY = {
   minLength: 12,
   requireUppercase: true,
@@ -15,8 +14,7 @@ export const PASSWORD_POLICY = {
   preventReuse: 5, // last N passwords
 } as const;
 
-// ─── Session Configuration ──────────────────────────────────────────────────
-
+// Session Configuration
 export const SESSION_CONFIG = {
   maxConcurrentSessions: 3,
   sessionTimeout: 8 * 60 * 60 * 1000, // 8 hours in milliseconds
@@ -25,8 +23,7 @@ export const SESSION_CONFIG = {
   lockoutDuration: 15 * 60 * 1000, // 15 minutes in milliseconds
 } as const;
 
-// ─── Rate Limiting Configuration ────────────────────────────────────────────
-
+// Rate Limiting Configuration
 export const RATE_LIMITS = {
   general: {
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -46,8 +43,7 @@ export const RATE_LIMITS = {
   },
 } as const;
 
-// ─── Security Headers ───────────────────────────────────────────────────────
-
+// Security Headers 
 export const SECURITY_HEADERS = {
   contentSecurityPolicy: {
     directives: {
@@ -72,8 +68,7 @@ export const SECURITY_HEADERS = {
   xssFilter: true,
 } as const;
 
-// ─── Audit Configuration ────────────────────────────────────────────────────
-
+// Audit Configuration 
 export const AUDIT_CONFIG = {
   logSensitiveOperations: true,
   logFailedAttempts: true,
@@ -89,8 +84,7 @@ export const AUDIT_CONFIG = {
   ],
 } as const;
 
-// ─── IP Whitelist (for high-security environments) ──────────────────────────
-
+// IP Whitelist 
 export const IP_WHITELIST = {
   enabled: NODE_ENV === 'production',
   adminIPs: [
@@ -105,8 +99,7 @@ export const IP_WHITELIST = {
   ],
 } as const;
 
-// ─── Data Classification ────────────────────────────────────────────────────
-
+// Data Classification
 export const DATA_CLASSIFICATION = {
   PUBLIC: 'public',
   INTERNAL: 'internal',
@@ -114,8 +107,7 @@ export const DATA_CLASSIFICATION = {
   RESTRICTED: 'restricted',
 } as const;
 
-// ─── Encryption Configuration ───────────────────────────────────────────────
-
+// Encryption Configuration 
 export const ENCRYPTION_CONFIG = {
   algorithm: 'aes-256-gcm',
   keyLength: 32,
@@ -124,8 +116,7 @@ export const ENCRYPTION_CONFIG = {
   saltRounds: 12, // for bcrypt
 } as const;
 
-// ─── Compliance Requirements ────────────────────────────────────────────────
-
+// Compliance Requirements
 export const COMPLIANCE = {
   dataRetention: {
     userProfiles: 7 * 365, // 7 years
@@ -144,11 +135,8 @@ export const COMPLIANCE = {
   },
 } as const;
 
-// ─── Security Validation Functions ──────────────────────────────────────────
-
-/**
- * Validate password against security policy
- */
+//  Security Validation Functions 
+// Validate password against security policy
 export function validatePassword(password: string): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
@@ -178,9 +166,8 @@ export function validatePassword(password: string): { valid: boolean; errors: st
   };
 }
 
-/**
- * Check if IP address is in whitelist
- */
+//Check if IP address is in whitelist
+ 
 export function isIPWhitelisted(ip: string): boolean {
   if (!IP_WHITELIST.enabled) {
     return true; // Allow all IPs in development
@@ -189,9 +176,7 @@ export function isIPWhitelisted(ip: string): boolean {
   return IP_WHITELIST.adminIPs.includes(ip as never);
 }
 
-/**
- * Classify data sensitivity level
- */
+//Classify data sensitivity level
 export function classifyData(dataType: string): string {
   const sensitiveTypes = ['password', 'ssn', 'financial', 'medical'];
   const confidentialTypes = ['profile', 'application', 'evaluation'];

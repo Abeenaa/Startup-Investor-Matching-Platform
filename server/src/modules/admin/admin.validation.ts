@@ -4,7 +4,7 @@
 import { z } from 'zod';
 import { Role } from '@prisma/client';
 
-// ─── Create User (System Admin or Reviewer) ─────────────────────────────────
+// Create User (System Admin or Reviewer)
 
 export const createUserSchema = z.object({
   body: z.object({
@@ -27,8 +27,7 @@ export const createUserSchema = z.object({
   }),
 });
 
-// ─── Update User ─────────────────────────────────────────────────────────────
-
+// Update User 
 export const updateUserSchema = z.object({
   params: z.object({
     userId: z.string().uuid('Invalid user ID'),
@@ -40,8 +39,7 @@ export const updateUserSchema = z.object({
   }),
 });
 
-// ─── Get Users List ──────────────────────────────────────────────────────────
-
+// Get Users List 
 export const getUsersSchema = z.object({
   query: z.object({
     page: z.string().optional(),
@@ -52,8 +50,7 @@ export const getUsersSchema = z.object({
   }),
 });
 
-// ─── Assign Reviewers ────────────────────────────────────────────────────────
-
+// Assign Reviewers
 export const assignReviewersSchema = z.object({
   body: z.object({
     reviewerIds: z
@@ -65,16 +62,14 @@ export const assignReviewersSchema = z.object({
   }),
 });
 
-// ─── Delete User ─────────────────────────────────────────────────────────────
-
+// Delete User 
 export const deleteUserSchema = z.object({
   params: z.object({
     userId: z.string().uuid('Invalid user ID'),
   }),
 });
 
-// ─── Inferred Types ──────────────────────────────────────────────────────────
-
+// Inferred Types 
 export type CreateUserSchema = z.infer<typeof createUserSchema>;
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 export type GetUsersSchema = z.infer<typeof getUsersSchema>;

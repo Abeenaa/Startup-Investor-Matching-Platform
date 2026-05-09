@@ -21,10 +21,7 @@ import { NODE_ENV } from './config/env';
 // Create Express app
 const app: Application = express();
 
-// ============================================
-// SECURITY MIDDLEWARE (Applied First)
-// ============================================
-
+// SECURITY MIDDLEWARE
 // Trust proxy (for rate limiting and IP detection)
 app.set('trust proxy', 1);
 
@@ -52,9 +49,7 @@ app.use(generalRateLimit);
 app.use(validateHeaders);
 app.use(sanitizeInput);
 
-// ============================================
 // STANDARD MIDDLEWARE
-// ============================================
 
 // CORS
 app.use(cors(corsOptions));
@@ -78,10 +73,7 @@ app.use(sessionSecurity);
 app.use('/api/admin', auditLog);
 app.use('/api/auth', auditLog);
 
-// ============================================
 // ROUTES
-// ============================================
-
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
@@ -103,11 +95,9 @@ app.use('*', (req, res) => {
   });
 });
 
-// ============================================
 // ERROR HANDLING
-// ============================================
 
-// Global error handler (must be last)
+// Global error handler
 app.use(errorHandler);
 
 export default app;

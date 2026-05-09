@@ -3,7 +3,7 @@
 
 import { ApprovalStatus } from '@prisma/client';
 
-// ─── Profile Management ──────────────────────────────────────────────────────
+// Profile Management
 
 export interface CreateStartupProfileInput {
   name: string;
@@ -67,7 +67,7 @@ export interface StartupListItem {
   createdAt: Date;
 }
 
-// ─── Admin Actions ───────────────────────────────────────────────────────────
+// Admin Actions
 
 export interface ApproveStartupInput {
   approvedBy: string;
@@ -78,7 +78,7 @@ export interface RejectStartupInput {
   rejectedBy: string;
 }
 
-// ─── Filtering & Search ──────────────────────────────────────────────────────
+// Filtering & Search
 
 export interface StartupFilters {
   sector?: string;

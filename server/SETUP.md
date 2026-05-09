@@ -1,8 +1,9 @@
-# 🚀 Backend Setup Guide
+# Backend Setup Guide
 
 ## Prerequisites
 
 Before you start, make sure you have:
+
 - Node.js (v18 or higher)
 - npm or yarn
 - PostgreSQL database (or Supabase account)
@@ -43,6 +44,7 @@ CORS_ORIGIN=http://localhost:3000
 ```
 
 ### Getting DATABASE_URL (Supabase):
+
 1. Go to https://supabase.com
 2. Create a new project
 3. Go to Settings > Database
@@ -52,16 +54,19 @@ CORS_ORIGIN=http://localhost:3000
 ## 4. Database Setup
 
 Generate Prisma Client:
+
 ```bash
 npm run prisma:generate
 ```
 
 Run migrations to create tables:
+
 ```bash
 npm run db:migrate
 ```
 
 Seed the database with initial data (admin user):
+
 ```bash
 npm run db:seed
 ```
@@ -77,11 +82,13 @@ Server should start on http://localhost:5000
 ## 6. Test the Setup
 
 Open your browser or Postman and visit:
+
 ```
 http://localhost:5000/health
 ```
 
 You should see:
+
 ```json
 {
   "success": true,
@@ -93,6 +100,7 @@ You should see:
 ## 7. Default Admin Credentials
 
 After seeding, you can login with:
+
 - Email: `admin@innobiz.et`
 - Password: `Admin@123`
 
@@ -135,6 +143,7 @@ server/
 ## 10. Development Workflow
 
 1. Create a new branch for your feature:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -142,11 +151,13 @@ server/
 2. Make your changes
 
 3. Test your changes:
+
    ```bash
    npm run dev
    ```
 
 4. Commit and push:
+
    ```bash
    git add .
    git commit -m "feat: your feature description"
@@ -158,17 +169,21 @@ server/
 ## Troubleshooting
 
 ### Database Connection Error
+
 - Check if PostgreSQL is running
 - Verify DATABASE_URL in .env
 - Make sure database exists
 
 ### Port Already in Use
+
 - Change PORT in .env to another port (e.g., 5001)
 
 ### Prisma Client Not Found
+
 - Run `npm run prisma:generate`
 
 ### Module Not Found Errors
+
 - Delete node_modules and package-lock.json
 - Run `npm install` again
 

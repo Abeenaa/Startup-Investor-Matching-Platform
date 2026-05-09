@@ -25,11 +25,7 @@ import type {
   AuthUser,
 } from './auth.types';
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-/**
- * Build the safe user object returned in responses (no password hash).
- */
+//Helpers 
 const toAuthUser = (user: {
   id: string;
   email: string;
@@ -44,15 +40,15 @@ const toAuthUser = (user: {
   createdAt: user.createdAt,
 });
 
-/**
- * Generate both tokens for a user.
- */
+
+ //Generate both tokens for a user.
+ 
 const issueTokens = (user: { id: string; email: string; role: Role }): AuthTokens => ({
   accessToken: generateAccessToken({ id: user.id, email: user.email, role: user.role }),
   refreshToken: generateRefreshToken({ id: user.id, email: user.email, role: user.role }),
 });
 
-// ─── Service Methods ──────────────────────────────────────────────────────────
+// Service Methods
 
 /**
  * Register a new user account.

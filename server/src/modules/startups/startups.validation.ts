@@ -6,7 +6,7 @@ import { SECTORS } from '../../shared/constants/sectors';
 import { STAGES } from '../../shared/constants/stages';
 import { ApprovalStatus } from '@prisma/client';
 
-// ─── Create Startup Profile ──────────────────────────────────────────────────
+// Create Startup Profile
 
 export const createStartupProfileSchema = z.object({
   body: z.object({
@@ -69,7 +69,7 @@ export const createStartupProfileSchema = z.object({
   }),
 });
 
-// ─── Update Startup Profile ──────────────────────────────────────────────────
+// Update Startup Profile
 
 export const updateStartupProfileSchema = z.object({
   body: z.object({
@@ -131,7 +131,7 @@ export const updateStartupProfileSchema = z.object({
   }),
 });
 
-// ─── Get Startups List ───────────────────────────────────────────────────────
+// Get Startups List
 
 export const getStartupsSchema = z.object({
   query: z.object({
@@ -144,7 +144,7 @@ export const getStartupsSchema = z.object({
   }),
 });
 
-// ─── Approve Startup ─────────────────────────────────────────────────────────
+// Approve Startup
 
 export const approveStartupSchema = z.object({
   params: z.object({
@@ -152,7 +152,7 @@ export const approveStartupSchema = z.object({
   }),
 });
 
-// ─── Reject Startup ──────────────────────────────────────────────────────────
+// Reject Startup
 
 export const rejectStartupSchema = z.object({
   params: z.object({
@@ -166,7 +166,7 @@ export const rejectStartupSchema = z.object({
   }),
 });
 
-// ─── Inferred Types ──────────────────────────────────────────────────────────
+// Inferred Types 
 
 export type CreateStartupProfileSchema = z.infer<typeof createStartupProfileSchema>;
 export type UpdateStartupProfileSchema = z.infer<typeof updateStartupProfileSchema>;

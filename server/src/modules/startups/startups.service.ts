@@ -45,7 +45,7 @@ const toStartupProfile = (startup: any): StartupProfile => ({
   updatedAt: startup.updatedAt,
 });
 
-// ─── Profile Management ──────────────────────────────────────────────────────
+// Profile Management
 
 /**
  * Create a startup profile (STARTUP role only)
@@ -99,9 +99,7 @@ export const createProfile = async (
   return toStartupProfile(startup);
 };
 
-/**
- * Get user's own startup profile
- */
+//Get user's own startup profile
 export const getMyProfile = async (userId: string): Promise<StartupProfile | null> => {
   const startup = await prisma.startup.findUnique({
     where: { userId },
@@ -183,7 +181,7 @@ export const updateProfile = async (
   return toStartupProfile(updated);
 };
 
-// ─── Admin Operations ────────────────────────────────────────────────────────
+// Admin Operations
 
 /**
  * Get paginated list of startups (admin/reviewer access)
@@ -246,9 +244,7 @@ export const getStartups = async (
   };
 };
 
-/**
- * Get single startup profile by ID (admin/reviewer access)
- */
+//Get single startup profile by ID (admin/reviewer access)
 export const getStartupById = async (startupId: string): Promise<StartupProfile> => {
   const startup = await prisma.startup.findUnique({
     where: { id: startupId },
@@ -303,9 +299,7 @@ export const approveStartup = async (
   return toStartupProfile(updated);
 };
 
-/**
- * Reject startup profile (admin only)
- */
+// Reject startup profile (admin only)
 export const rejectStartup = async (
   startupId: string,
   input: RejectStartupInput

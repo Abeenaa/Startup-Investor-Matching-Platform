@@ -10,8 +10,7 @@ import {
   GEOGRAPHIC_FOCUS,
 } from './investors.types';
 
-// ─── Create Investor Profile ─────────────────────────────────────────────────
-
+// Create Investor Profile
 export const createInvestorProfileSchema = z.object({
   body: z.object({
     name: z
@@ -46,8 +45,7 @@ export const createInvestorProfileSchema = z.object({
   }),
 });
 
-// ─── Update Investor Profile ─────────────────────────────────────────────────
-
+// Update Investor Profile 
 export const updateInvestorProfileSchema = z.object({
   body: z.object({
     name: z
@@ -85,8 +83,7 @@ export const updateInvestorProfileSchema = z.object({
   }),
 });
 
-// ─── Get Investors List ──────────────────────────────────────────────────────
-
+// Get Investors List
 export const getInvestorsSchema = z.object({
   query: z.object({
     page: z.string().optional(),
@@ -98,16 +95,14 @@ export const getInvestorsSchema = z.object({
   }),
 });
 
-// ─── Approve Investor ────────────────────────────────────────────────────────
-
+// Approve Investor 
 export const approveInvestorSchema = z.object({
   params: z.object({
     investorId: z.string().uuid('Invalid investor ID'),
   }),
 });
 
-// ─── Inferred Types ──────────────────────────────────────────────────────────
-
+// Inferred Types
 export type CreateInvestorProfileSchema = z.infer<typeof createInvestorProfileSchema>;
 export type UpdateInvestorProfileSchema = z.infer<typeof updateInvestorProfileSchema>;
 export type GetInvestorsSchema = z.infer<typeof getInvestorsSchema>;

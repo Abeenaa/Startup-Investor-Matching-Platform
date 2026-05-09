@@ -3,8 +3,7 @@
 
 import { ApprovalStatus } from '@prisma/client';
 
-// ─── Profile Management ──────────────────────────────────────────────────────
-
+// Profile Management 
 export interface CreateInvestorProfileInput {
   name: string;
   organizationType?: string;
@@ -50,14 +49,12 @@ export interface InvestorListItem {
   createdAt: Date;
 }
 
-// ─── Admin Actions ───────────────────────────────────────────────────────────
-
+// Admin Actions 
 export interface ApproveInvestorInput {
   approvedBy: string;
 }
 
-// ─── Filtering & Search ──────────────────────────────────────────────────────
-
+// Filtering & Search 
 export interface InvestorFilters {
   sectorFocus?: string;
   investmentStage?: string;
@@ -65,7 +62,7 @@ export interface InvestorFilters {
   search?: string;
 }
 
-// ─── Investment Preferences ──────────────────────────────────────────────────
+// Investment Preferences
 
 export const INVESTMENT_STAGES = [
   'Pre-Seed',

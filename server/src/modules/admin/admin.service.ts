@@ -21,11 +21,8 @@ import type {
   ReviewerAssignment,
 } from './admin.types';
 
-// ─── User Management ─────────────────────────────────────────────────────────
-
-/**
- * Create a new system admin or reviewer (staff admin only)
- */
+// User Management 
+//Create a new system admin or reviewer (staff admin only)
 export const createUser = async (
   creatorRole: string,
   creatorId: string,
@@ -76,9 +73,7 @@ export const createUser = async (
   return user;
 };
 
-/**
- * Get paginated list of users with filtering
- */
+//Get paginated list of users with filtering
 export const getUsers = async (
   page: number,
   limit: number,
@@ -124,9 +119,7 @@ export const getUsers = async (
   return { users, total };
 };
 
-/**
- * Update user details (staff admin only for system admins/reviewers)
- */
+// Update user details (staff admin only for system admins/reviewers)
 export const updateUser = async (
   updaterRole: string,
   updaterId: string,
@@ -187,9 +180,7 @@ export const updateUser = async (
   return updatedUser;
 };
 
-/**
- * Delete/deactivate user (staff admin only)
- */
+//Delete/deactivate user (staff admin only)
 export const deleteUser = async (
   deleterRole: string,
   deleterId: string,
@@ -232,11 +223,8 @@ export const deleteUser = async (
   });
 };
 
-// ─── Reviewer Assignment ─────────────────────────────────────────────────────
-
-/**
- * Assign reviewers to applications (staff admin only)
- */
+// Reviewer Assignment 
+//Assign reviewers to applications (staff admin only)
 export const assignReviewers = async (
   assignerId: string,
   input: AssignReviewerInput
@@ -307,9 +295,7 @@ export const assignReviewers = async (
   return assignments;
 };
 
-/**
- * Get all reviewer assignments
- */
+//Get all reviewer assignments
 export const getReviewerAssignments = async (): Promise<ReviewerAssignment[]> => {
   const evaluations = await prisma.evaluation.findMany({
     include: {

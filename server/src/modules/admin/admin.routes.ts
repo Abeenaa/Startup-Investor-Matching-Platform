@@ -21,8 +21,7 @@ const router = Router();
 // Apply admin rate limiting to all routes
 router.use(adminRateLimit);
 
-// ─── User Management (Staff Admin Only) ──────────────────────────────────────
-
+// User Management (Staff Admin Only)
 // POST /api/admin/users - Create system admin or reviewer
 router.post(
   '/users',
@@ -59,8 +58,7 @@ router.delete(
   adminController.deleteUser
 );
 
-// ─── Reviewer Management ─────────────────────────────────────────────────────
-
+// Reviewer Management
 // POST /api/admin/assign-reviewers - Assign reviewers to applications
 router.post(
   '/assign-reviewers',

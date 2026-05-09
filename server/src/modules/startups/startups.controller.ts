@@ -6,7 +6,7 @@ import * as startupService from './startups.service';
 import { successResponse, paginatedResponse } from '../../shared/utils/response';
 import { parsePaginationParams } from '../../shared/utils/pagination';
 
-// ─── Profile Management ──────────────────────────────────────────────────────
+// Profile Management
 
 export const createProfile = async (
   req: Request,
@@ -59,7 +59,7 @@ export const updateProfile = async (
   }
 };
 
-// ─── Admin Operations ────────────────────────────────────────────────────────
+// Admin Operations 
 
 export const getStartups = async (
   req: Request,

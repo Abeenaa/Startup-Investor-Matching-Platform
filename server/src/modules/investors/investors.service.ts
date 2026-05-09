@@ -38,8 +38,7 @@ const toInvestorProfile = (investor: any): InvestorProfile => ({
   updatedAt: investor.updatedAt,
 });
 
-// ─── Profile Management ──────────────────────────────────────────────────────
-
+// Profile Management
 /**
  * Create an investor profile (INVESTOR role only)
  * SRS 3.1.3 — investor profiles with investment preferences
@@ -85,9 +84,7 @@ export const createProfile = async (
   return toInvestorProfile(investor);
 };
 
-/**
- * Get user's own investor profile
- */
+//Get user's own investor profile
 export const getMyProfile = async (userId: string): Promise<InvestorProfile | null> => {
   const investor = await prisma.investor.findUnique({
     where: { userId },
@@ -158,11 +155,8 @@ export const updateProfile = async (
   return toInvestorProfile(updated);
 };
 
-// ─── Admin Operations ────────────────────────────────────────────────────────
-
-/**
- * Get paginated list of investors (admin/reviewer access)
- */
+// Admin Operations 
+// Get paginated list of investors (admin/reviewer access)
 export const getInvestors = async (
   page: number,
   limit: number,
@@ -223,9 +217,7 @@ export const getInvestors = async (
   };
 };
 
-/**
- * Get single investor profile by ID (admin/reviewer access)
- */
+//Get single investor profile by ID (admin/reviewer access)
 export const getInvestorById = async (investorId: string): Promise<InvestorProfile> => {
   const investor = await prisma.investor.findUnique({
     where: { id: investorId },
@@ -238,9 +230,7 @@ export const getInvestorById = async (investorId: string): Promise<InvestorProfi
   return toInvestorProfile(investor);
 };
 
-/**
- * Approve investor profile (admin only)
- */
+//Approve investor profile (admin only)
 export const approveInvestor = async (
   investorId: string,
   input: ApproveInvestorInput

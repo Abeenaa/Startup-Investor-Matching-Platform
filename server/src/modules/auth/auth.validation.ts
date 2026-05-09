@@ -14,8 +14,7 @@ const passwordValidator = z.string().refine((password) => {
   message: 'Password does not meet security requirements',
 });
 
-// ─── Register ────────────────────────────────────────────────────────────────
-
+//Register 
 export const registerSchema = z.object({
   body: z.object({
     email: z
@@ -40,8 +39,7 @@ export const registerSchema = z.object({
   }),
 });
 
-// ─── Login ───────────────────────────────────────────────────────────────────
-
+// Login
 export const loginSchema = z.object({
   body: z.object({
     email: z
@@ -53,16 +51,14 @@ export const loginSchema = z.object({
   }),
 });
 
-// ─── Refresh Token ───────────────────────────────────────────────────────────
-
+// Refresh Token 
 export const refreshTokenSchema = z.object({
   body: z.object({
     refreshToken: z.string({ required_error: 'Refresh token is required' }),
   }),
 });
 
-// ─── Change Password ─────────────────────────────────────────────────────────
-
+// Change Password 
 export const changePasswordSchema = z.object({
   body: z
     .object({
@@ -82,8 +78,7 @@ export const changePasswordSchema = z.object({
     }),
 });
 
-// ─── Inferred Types ──────────────────────────────────────────────────────────
-
+//  Inferred Types
 export type RegisterSchema = z.infer<typeof registerSchema>;
 export type LoginSchema = z.infer<typeof loginSchema>;
 export type RefreshTokenSchema = z.infer<typeof refreshTokenSchema>;

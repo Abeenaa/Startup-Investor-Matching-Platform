@@ -16,8 +16,7 @@ import {
 
 const router = Router();
 
-// ─── Investor User Routes ────────────────────────────────────────────────────
-
+// Investor User Routes 
 // POST /api/investors/profile - Create investor profile
 router.post(
   '/profile',
@@ -44,8 +43,7 @@ router.patch(
   investorController.updateProfile
 );
 
-// ─── Admin Routes ────────────────────────────────────────────────────────────
-
+// Admin Routes
 // GET /api/investors - Get all investors (admin/reviewer)
 router.get(
   '/',

@@ -15,7 +15,7 @@ const startServer = async () => {
     console.log(`📍 API base:     http://localhost:${PORT}/api`);
   });
 
-  // ─── Graceful Shutdown ──────────────────────────────────────────────────────
+  // Graceful Shutdown
 
   const shutdown = async (signal: string) => {
     console.log(`\n${signal} received. Shutting down gracefully...`);

@@ -1,0 +1,680 @@
+
+> @innobiz/backend@1.0.0 test
+> jest --testPathPattern=integration --verbose
+
+::ffff:127.0.0.1 - - [09/May/2026:00:29:17 +0000] "GET /api/startups/profile HTTP/1.1" 401 47 "-" "-"
+::ffff:127.0.0.1 - - [09/May/2026:00:29:17 +0000] "GET /api/startups HTTP/1.1" 401 47 "-" "-"
+PASS server/tests/integration/startups.test.ts (8.803 s)
+  Startups Integration Tests
+    √ should require authentication for startup profile access (101 ms)
+    √ should require authentication for listing startups (15 ms)
+
+::ffff:127.0.0.1 - - [09/May/2026:00:29:17 +0000] "POST /api/auth/register HTTP/1.1" 400 340 "-" "-"
+::ffff:127.0.0.1 - - [09/May/2026:00:29:17 +0000] "GET /api/auth/me HTTP/1.1" 401 47 "-" "-"
+PASS server/tests/integration/auth.test.ts (8.856 s)
+  Auth Integration Tests
+    √ should validate registration input and return 400 (132 ms)
+    √ should require authentication for protected user profile route (16 ms)
+
+FAIL server/tests/integration/complete-workflow.test.ts (9.234 s)
+  Complete Workflow Integration
+    1. Authentication & Role Hierarchy
+      × should register staff admin (highest privilege) (13 ms)
+      × should register system admin
+      × should register reviewer
+      × should register startup user
+      × should register investor user (1 ms)
+    2. Staff Admin User Management
+      × should allow staff admin to create system admin
+      × should allow staff admin to create reviewer
+      × should prevent system admin from creating users (1 ms)
+      × should allow staff admin to list all users
+    3. Startup Profile Management
+      × should allow startup to create profile
+      × should allow startup to view their own profile (1 ms)
+      × should allow admin to view startup profiles
+      × should allow admin to approve startup profile
+      × should prevent startup from updating approved profile
+    4. Investor Profile Management
+      × should allow investor to create profile
+      × should allow investor to view their own profile (1 ms)
+      × should allow admin to view investor profiles
+      × should allow admin to approve investor profile
+    5. Cross-Feature Integration
+      × should prevent unauthorized access across features
+      × should maintain audit trail across all operations
+      × should enforce role hierarchy in all modules
+    6. Security Features
+      × should enforce rate limiting on auth endpoints
+      × should validate password strength (1 ms)
+      × should sanitize input data
+
+  ● Complete Workflow Integration › 1. Authentication & Role Hierarchy › should register staff admin (highest privilege)
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 1. Authentication & Role Hierarchy › should register system admin
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 1. Authentication & Role Hierarchy › should register reviewer
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 1. Authentication & Role Hierarchy › should register startup user
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 1. Authentication & Role Hierarchy › should register investor user
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 2. Staff Admin User Management › should allow staff admin to create system admin
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 2. Staff Admin User Management › should allow staff admin to create reviewer
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 2. Staff Admin User Management › should prevent system admin from creating users
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 2. Staff Admin User Management › should allow staff admin to list all users
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 3. Startup Profile Management › should allow startup to create profile
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 3. Startup Profile Management › should allow startup to view their own profile
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 3. Startup Profile Management › should allow admin to view startup profiles
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 3. Startup Profile Management › should allow admin to approve startup profile
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 3. Startup Profile Management › should prevent startup from updating approved profile
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 4. Investor Profile Management › should allow investor to create profile
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 4. Investor Profile Management › should allow investor to view their own profile
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 4. Investor Profile Management › should allow admin to view investor profiles
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 4. Investor Profile Management › should allow admin to approve investor profile
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 5. Cross-Feature Integration › should prevent unauthorized access across features
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 5. Cross-Feature Integration › should maintain audit trail across all operations
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 5. Cross-Feature Integration › should enforce role hierarchy in all modules
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 6. Security Features › should enforce rate limiting on auth endpoints
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 6. Security Features › should validate password strength
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+  ● Complete Workflow Integration › 6. Security Features › should sanitize input data
+
+    PrismaClientInitializationError: 
+    Invalid `prisma.profileHistory.deleteMany()` invocation in
+    C:\Users\HP\Documents\myProject\Innobiz-K_Ethiopia\main\Innobiz-k-ethiopia-platform\server\tests\integration\complete-workflow.test.ts:24:33
+
+      21 
+      22 beforeAll(async () => {
+      23   // Clean up database
+    → 24   await prisma.profileHistory.deleteMany(
+    User `test` was denied access on the database `innobiz_test.public`
+
+      22 |   beforeAll(async () => {
+      23 |     // Clean up database
+    > 24 |     await prisma.profileHistory.deleteMany();
+         |     ^
+      25 |     await prisma.evaluation.deleteMany();
+      26 |     await prisma.application.deleteMany();
+      27 |     await prisma.program.deleteMany();
+
+      at $n.handleRequestError (node_modules/@prisma/client/runtime/library.js:121:7615)
+      at $n.handleAndLogRequestError (node_modules/@prisma/client/runtime/library.js:121:6623)
+      at $n.request (node_modules/@prisma/client/runtime/library.js:121:6307)
+      at l (node_modules/@prisma/client/runtime/library.js:130:9633)
+      at Object.<anonymous> (server/tests/integration/complete-workflow.test.ts:24:5)
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       24 failed, 4 passed, 28 total
+Snapshots:   0 total
+Time:        11.612 s
+Ran all test suites matching /integration/i.

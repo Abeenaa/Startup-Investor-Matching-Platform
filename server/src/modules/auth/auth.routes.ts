@@ -16,8 +16,7 @@ import {
 
 const router = Router();
 
-// ─── Public Routes (with enhanced security) ──────────────────────────────────
-
+//Public Routes
 // POST /api/auth/register - Enhanced with rate limiting
 router.post('/register', 
   authRateLimit, 
@@ -39,8 +38,7 @@ router.post('/refresh',
   authController.refreshToken
 );
 
-// ─── Protected Routes (require valid JWT) ────────────────────────────────────
-
+// Protected Routes (require valid JWT) 
 // GET /api/auth/me
 router.get('/me', authenticate, authController.getMe);
 
