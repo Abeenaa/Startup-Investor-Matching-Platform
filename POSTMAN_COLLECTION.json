@@ -1,0 +1,675 @@
+{
+  "info": {
+    "name": "Innobiz-K Ethiopia Platform API",
+    "description": "Complete API collection for testing all implemented endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints - Public routes",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"role\": \"STARTUP\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Register a new user account"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login and get JWT tokens"
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"your_refresh_token_here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/refresh",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "refresh"]
+            },
+            "description": "Refresh access token using refresh token"
+          }
+        },
+        {
+          "name": "Get Current User (Me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "Get current authenticated user profile"
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"SecurePass123!\",\n  \"newPassword\": \"NewSecurePass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/change-password",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "change-password"]
+            },
+            "description": "Change current user password"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Startups",
+      "description": "Startup profile management endpoints",
+      "item": [
+        {
+          "name": "Create Startup Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyName\": \"Tech Startup Inc\",\n  \"industry\": \"Technology\",\n  \"foundedYear\": 2022,\n  \"description\": \"Innovative tech solutions\",\n  \"website\": \"https://techstartup.com\",\n  \"phoneNumber\": \"+251911234567\",\n  \"teamSize\": 10\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/startups/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "startups", "profile"]
+            },
+            "description": "Create startup profile (STARTUP role required)"
+          }
+        },
+        {
+          "name": "Get My Startup Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/startups/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "startups", "profile"]
+            },
+            "description": "Get current startup's profile"
+          }
+        },
+        {
+          "name": "Update My Startup Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyName\": \"Tech Startup Inc - Updated\",\n  \"description\": \"Updated innovative tech solutions\",\n  \"teamSize\": 15\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/startups/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "startups", "profile"]
+            },
+            "description": "Update current startup's profile"
+          }
+        },
+        {
+          "name": "Get All Startups",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/startups?status=PENDING&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "startups"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all startups (Admin/Reviewer only)"
+          }
+        },
+        {
+          "name": "Get Startup by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/startups/{{startup_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "startups", "{{startup_id}}"]
+            },
+            "description": "Get specific startup by ID (Admin/Reviewer only)"
+          }
+        },
+        {
+          "name": "Approve Startup",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comments\": \"Approved - good potential\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/startups/{{startup_id}}/approve",
+              "host": ["{{base_url}}"],
+              "path": ["api", "startups", "{{startup_id}}", "approve"]
+            },
+            "description": "Approve a startup (Admin only)"
+          }
+        },
+        {
+          "name": "Reject Startup",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comments\": \"Rejected - does not meet criteria\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/startups/{{startup_id}}/reject",
+              "host": ["{{base_url}}"],
+              "path": ["api", "startups", "{{startup_id}}", "reject"]
+            },
+            "description": "Reject a startup (Admin only)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Investors",
+      "description": "Investor profile management endpoints",
+      "item": [
+        {
+          "name": "Create Investor Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"investorName\": \"John Investment Fund\",\n  \"investmentFocus\": \"Technology\",\n  \"investmentRange\": \"$100K - $1M\",\n  \"description\": \"Early stage investor\",\n  \"website\": \"https://johnfund.com\",\n  \"phoneNumber\": \"+251911987654\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/investors/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "investors", "profile"]
+            },
+            "description": "Create investor profile (INVESTOR role required)"
+          }
+        },
+        {
+          "name": "Get My Investor Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/investors/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "investors", "profile"]
+            },
+            "description": "Get current investor's profile"
+          }
+        },
+        {
+          "name": "Update My Investor Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"investorName\": \"John Investment Fund - Updated\",\n  \"description\": \"Experienced early stage investor\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/investors/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "investors", "profile"]
+            },
+            "description": "Update current investor's profile"
+          }
+        },
+        {
+          "name": "Get All Investors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/investors?status=PENDING&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "investors"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all investors (Admin/Reviewer only)"
+          }
+        },
+        {
+          "name": "Get Investor by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/investors/{{investor_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "investors", "{{investor_id}}"]
+            },
+            "description": "Get specific investor by ID (Admin/Reviewer only)"
+          }
+        },
+        {
+          "name": "Approve Investor",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comments\": \"Approved - legitimate investor\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/investors/{{investor_id}}/approve",
+              "host": ["{{base_url}}"],
+              "path": ["api", "investors", "{{investor_id}}", "approve"]
+            },
+            "description": "Approve an investor (Admin only)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Admin user management endpoints",
+      "item": [
+        {
+          "name": "Create User (Admin/Reviewer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"reviewer@innobiz.com\",\n  \"password\": \"SecurePass123!\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Reviewer\",\n  \"role\": \"REVIEWER\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users"]
+            },
+            "description": "Create new admin or reviewer user (Staff Admin only)"
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/users?role=REVIEWER&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users"],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "REVIEWER",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all users with filtering (Staff Admin only)"
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"ReviewerUpdated\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users", "{{user_id}}"]
+            },
+            "description": "Update user details (Staff Admin only)"
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "users", "{{user_id}}"]
+            },
+            "description": "Delete/deactivate user (Staff Admin only)"
+          }
+        },
+        {
+          "name": "Assign Reviewers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": \"app-123\",\n  \"reviewerIds\": [\"reviewer-1\", \"reviewer-2\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/assign-reviewers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "assign-reviewers"]
+            },
+            "description": "Assign reviewers to applications (Staff Admin only)"
+          }
+        },
+        {
+          "name": "Get Reviewer Assignments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/reviewer-assignments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "reviewer-assignments"]
+            },
+            "description": "Get all reviewer assignments (Staff Admin only)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "description": "Server health check endpoint",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Check if server is running"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "startup_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "investor_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

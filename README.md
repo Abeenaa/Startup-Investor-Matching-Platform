@@ -1,11 +1,13 @@
 # Innobiz-K Ethiopia: Startup-Investor Matching Platform
 
-###  Vision
+## Vision
+
 Innobiz-K Ethiopia is the nation's premier incubation center. This platform serves as the digital bridge between high-potential Ethiopian startups and global/local investors, fostering a transparent, data-driven, and scalable entrepreneurship ecosystem.
 
 ---
 
 ## 🛠 Tech Stack
+
 - **Frontend:** React.js + Tailwind CSS
 - **Backend:** Node.js + Express.js + TypeScript
 - **Database:** PostgreSQL (via Supabase)
@@ -15,7 +17,8 @@ Innobiz-K Ethiopia is the nation's premier incubation center. This platform serv
 
 ---
 
-## ✨ Phase 1 Features (6 Weeks)
+## Phase 1 Features (6 Weeks)
+
 1. ✅ User Registration & Account Management (RBAC)
 2. ✅ Startup Profile Management
 3. ✅ Investor Profile Management
@@ -26,16 +29,18 @@ Innobiz-K Ethiopia is the nation's premier incubation center. This platform serv
 
 ---
 
-## 👥 Team Structure
+## Team Structure
+
 - **Backend Team:** 3 Developers
 - **Frontend Team:** 2 Developers
 - **Timeline:** 6 Weeks
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### For Backend Developers
+
 ```bash
 # Clone repository
 git clone <repository-url>
@@ -49,6 +54,7 @@ See server/TASK_DISTRIBUTION.md for task assignments
 ```
 
 ### For Frontend Developers
+
 ```bash
 # Clone repository
 git clone <repository-url>
@@ -59,9 +65,10 @@ cd innobiz-k-platform/client
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### Backend
+
 - **[SETUP.md](server/SETUP.md)** - Complete setup instructions
 - **[TASK_DISTRIBUTION.md](server/TASK_DISTRIBUTION.md)** - Task assignments for 3 developers
 - **[QUICK_REFERENCE.md](server/QUICK_REFERENCE.md)** - Quick reference for common tasks
@@ -73,7 +80,7 @@ cd innobiz-k-platform/client
 
 ---
 
-## 🏗 Project Structure
+## Project Structure
 
 ```
 innobiz-k-platform/
@@ -96,7 +103,7 @@ innobiz-k-platform/
 
 ---
 
-## 🔐 User Roles
+## User Roles
 
 | Role | Description |
 |------|-------------|
@@ -107,7 +114,8 @@ innobiz-k-platform/
 
 ---
 
-## 🔒 Security Features
+## Security Features
+
 - JWT-based authentication
 - Role-based access control (RBAC)
 - Password hashing with bcrypt
@@ -117,7 +125,7 @@ innobiz-k-platform/
 
 ---
 
-## 📊 Development Workflow
+## Development Workflow
 
 1. **Pick a task** from TASK_DISTRIBUTION.md
 2. **Create a branch**: `git checkout -b feature/your-feature`
@@ -130,9 +138,10 @@ innobiz-k-platform/
 
 ---
 
-## 🤝 Contribution Guidelines
+## Contribution Guidelines
 
 ### Commit Message Format
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `docs:` - Documentation
@@ -140,11 +149,13 @@ innobiz-k-platform/
 - `refactor:` - Code refactoring
 
 ### Branch Naming
+
 - `feature/` - New features
 - `fix/` - Bug fixes
 - `docs/` - Documentation
 
 ### Code Review
+
 - All PRs must be reviewed
 - Review within 24 hours
 - Be constructive and helpful
@@ -153,39 +164,44 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
-## 📞 Communication
+## Communication
 
 ### Daily Standup (9:00 AM)
+
 - What did you do yesterday?
 - What will you do today?
 - Any blockers?
 
 ### Code Review
+
 - Review PRs promptly
 - Provide constructive feedback
 - Ask questions if unclear
 
 ---
 
-## 🎯 Milestones
+## Milestones
 
-### Week 1-2: Foundation
+### Week 1-2: 
+
 - ✅ Authentication & user management
 - ✅ Profile creation (startups & investors)
 
 ### Week 3-4: Core Features
+
 - ✅ Public directory with search
 - ✅ Programs & applications
 - ✅ Evaluation workflow
 
 ### Week 5-6: Polish & Testing
+
 - ✅ Admin dashboard
 - ✅ Testing & bug fixes
 - ✅ Documentation & deployment prep
 
 ---
 
-## 🔗 Useful Links
+## Useful Links
 
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [Express.js Guide](https://expressjs.com/en/guide/routing.html)
@@ -194,11 +210,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
-## 📄 License
+## License
 
 © 2026 Innobiz-K Ethiopia Project Team  
 Supported by the Ministry of Innovation and Technology (MInT)
 
 ---
 
-**Let's build something amazing! 🚀**
+**Let's build something amazing!**

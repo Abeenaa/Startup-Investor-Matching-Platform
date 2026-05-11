@@ -1,4 +1,4 @@
-# 🚀 GitHub Setup & Push Guide
+# GitHub Setup & Push Guide
 
 ## Step 1: Create GitHub Repository
 
@@ -63,22 +63,23 @@ git push -u origin main
 Send this message to your team:
 
 ```
-🚀 Backend Repository is Ready!
+
+Backend Repository is Ready!
 
 Repository: https://github.com/YOUR-USERNAME/innobiz-k-platform
 
-📋 Setup Instructions:
+Setup Instructions:
 1. Accept the GitHub invitation
 2. Clone the repo: git clone https://github.com/YOUR-USERNAME/innobiz-k-platform.git
 3. Follow server/SETUP.md for backend setup
 4. Check server/TASK_DISTRIBUTION.md for your tasks
 
-📚 Important Files:
+Important Files:
 - server/SETUP.md - Setup instructions
 - server/TASK_DISTRIBUTION.md - Task assignments
 - CONTRIBUTING.md - Development workflow
 
-Let's build! 💪
+Let's build! 
 ```
 
 ## Branch Protection (Optional but Recommended)
@@ -98,12 +99,14 @@ This ensures all code is reviewed before merging to main.
 ### For Team Members:
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/YOUR-USERNAME/innobiz-k-platform.git
    cd innobiz-k-platform
    ```
 
 2. **Create your feature branch**
+
    ```bash
    git checkout -b feature/your-name-your-feature
    ```
@@ -113,6 +116,7 @@ This ensures all code is reviewed before merging to main.
    - Test your code
 
 4. **Commit and push**
+
    ```bash
    git add .
    git commit -m "feat: description of what you did"
@@ -127,6 +131,7 @@ This ensures all code is reviewed before merging to main.
    - Wait for approval
 
 6. **After merge, update your local main**
+
    ```bash
    git checkout main
    git pull origin main
@@ -163,10 +168,12 @@ git checkout -- filename
 ## Troubleshooting
 
 ### "Permission denied"
+
 - Make sure you're added as a collaborator
 - Check your GitHub authentication
 
 ### "Merge conflict"
+
 ```bash
 # Pull latest main
 git checkout main
@@ -184,6 +191,7 @@ git push
 ```
 
 ### "Remote already exists"
+
 ```bash
 # Remove old remote
 git remote remove origin
@@ -194,7 +202,8 @@ git remote add origin https://github.com/YOUR-USERNAME/innobiz-k-platform.git
 
 ## Security Notes
 
-⚠️ **NEVER commit these files:**
+**NEVER commit these files:**
+
 - `.env` (contains secrets)
 - `node_modules/` (too large)
 - `dist/` or `build/` (generated files)
@@ -211,4 +220,4 @@ These are already in `.gitignore`, but double-check!
 
 ---
 
-**Ready to collaborate! 🎉**
+**Ready to collaborate! **

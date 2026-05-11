@@ -3,9 +3,7 @@
 
 import { Response } from 'express';
 
-/**
- * Success response format
- */
+ // Success response format
 export const successResponse = (
   res: Response,
   data: any,
@@ -19,9 +17,7 @@ export const successResponse = (
   });
 };
 
-/**
- * Error response format
- */
+//Error response format
 export const errorResponse = (
   res: Response,
   message: string,
@@ -35,9 +31,7 @@ export const errorResponse = (
   });
 };
 
-/**
- * Paginated response format
- */
+//Paginated response format
 export const paginatedResponse = (
   res: Response,
   data: any[],
