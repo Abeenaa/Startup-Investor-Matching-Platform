@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 // USER MANAGEMENT
@@ -120,21 +121,48 @@ model Investor {
 
 // PROGRAMS & APPLICATIONS
 
+// Program types enum
+enum ProgramType {
+  FUNDING        // Financial support
+  INCUBATION     // Long-term support with resources
+  ACCELERATION   // Intensive short-term program
+  COMPETITION    // Pitch competition
+  MENTORSHIP     // Mentorship program
+  WORKSPACE      // Co-working space allocation
+  TRAINING       // Skills development
+}
+
 // Program - Incubation/funding opportunities created by admins
 model Program {
-  id                  String    @id @default(uuid())
+  id                  String      @id @default(uuid())
   name                String
-  description         String    @db.Text
-  eligibilityCriteria String    @db.Text @map("eligibility_criteria")
+  type                ProgramType // Type of program
+  description         String      @db.Text
+  eligibilityCriteria String      @db.Text @map("eligibility_criteria")
+  
+  // Funding & Benefits
+  fundingAmount       String?     @map("funding_amount")      // "50K-200K USD"
+  benefits            String[]                                // ["Funding", "Mentorship", "Office space"]
+  
+  // Timeline
   deadline            DateTime
-  evaluationStages    Json      @map("evaluation_stages")  
-  expectedOutcomes    String    @db.Text @map("expected_outcomes")
+  startDate           DateTime?   @map("start_date")          // When program starts
+  duration            String?                                 // "3 months", "6 months"
   
-  isActive            Boolean   @default(true) @map("is_active")
-  createdBy           String    @map("created_by") 
+  // Capacity
+  maxApplicants       Int?        @map("max_applicants")      // Maximum number of applicants
+  applicationCount    Int         @default(0) @map("application_count") // Current count
   
-  createdAt           DateTime  @default(now()) @map("created_at")
-  updatedAt           DateTime  @updatedAt @map("updated_at")
+  // Evaluation
+  evaluationStages    Json        @map("evaluation_stages")  
+  expectedOutcomes    String      @db.Text @map("expected_outcomes")
+  
+  // Status
+  isActive            Boolean     @default(true) @map("is_active")
+  createdBy           String      @map("created_by") 
+  
+  createdAt           DateTime    @default(now()) @map("created_at")
+  updatedAt           DateTime    @updatedAt @map("updated_at")
   
   // Relations
   applications        Application[]
@@ -144,20 +172,39 @@ model Program {
 
 // Application - Startup's submission to a program
 model Application {
-  id              String    @id @default(uuid())
-  startupId       String    @map("startup_id")
-  startup         Startup   @relation(fields: [startupId], references: [id], onDelete: Cascade)
-  programId       String    @map("program_id")
-  program         Program   @relation(fields: [programId], references: [id], onDelete: Cascade)
+  id              String            @id @default(uuid())
+  startupId       String            @map("startup_id")
+  startup         Startup           @relation(fields: [startupId], references: [id], onDelete: Cascade)
+  programId       String            @map("program_id")
+  program         Program           @relation(fields: [programId], references: [id], onDelete: Cascade)
   
-  status          ApplicationStatus @default(SUBMITTED)
-  submittedAt     DateTime  @default(now()) @map("submitted_at")
-  updatedAt       DateTime  @updatedAt @map("updated_at")
+  // Application Content
+  additionalInfo  String?           @db.Text @map("additional_info") // Why applying, fit explanation
+  pitchDeck       String?           @map("pitch_deck")               // Document URL
+  businessPlan    String?           @map("business_plan")            // Document URL
+  financials      String?                                            // Financial projections URL
+  otherDocuments  Json?             @map("other_documents")          // Array of {name, url, type}
+  
+  // Status & Workflow
+  status          ApplicationStatus @default(DRAFT)
+  submittedAt     DateTime?         @map("submitted_at")             // When submitted (null if DRAFT)
+  
+  // Decision
+  rejectionReason String?           @db.Text @map("rejection_reason")
+  decidedBy       String?           @map("decided_by")               // Staff admin who decided
+  decidedAt       DateTime?         @map("decided_at")
+  
+  // Reapplication tracking
+  previousApplicationId String?     @map("previous_application_id")  // If reapplying after rejection
+  reapplicationCount    Int         @default(0) @map("reapplication_count")
+  
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
   
   // Relations
   evaluations     Evaluation[]
   
-  @@unique([startupId, programId]) // One startup can only apply once per program
+  @@unique([startupId, programId]) // One startup can only have ONE active application per program
   @@map("applications")
 }
 
