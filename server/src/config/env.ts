@@ -4,9 +4,11 @@
 
 import { z } from 'zod';
 import dotenv from 'dotenv';
+import path from 'path';
 
-// Load .env file
-dotenv.config();
+// Load .env file - points to server/.env regardless of where npm run dev is called from
+const envPath = path.resolve(__dirname, '../../.env');
+dotenv.config({ path: envPath });
 
 // Define the schema for environment variables
 const envSchema = z.object({
