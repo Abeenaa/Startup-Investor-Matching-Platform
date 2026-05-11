@@ -1,7 +1,3 @@
-// Prisma Schema - Database Models Definition
-// This file defines your database structure (tables, columns, relationships)
-// Run: npx prisma generate (to generate Prisma Client)
-// Run: npx prisma migrate dev (to create database tables)
 
 generator client {
   provider = "prisma-client-js"
@@ -12,9 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ============================================
 // USER MANAGEMENT
-// ============================================
 
 // Main User table - Base for all user types
 model User {
@@ -40,13 +34,13 @@ model User {
 enum Role {
   STARTUP      // Can create startup profile, apply to programs
   INVESTOR     // Can create investor profile, search startups
-  REVIEWER     // Can evaluate applications
-  ADMIN        // Can do everything (approve, create programs, assign reviewers)
+  REVIEWER     // Can evaluate applications (assigned by staff admin)
+  SYSTEM_ADMIN // Can approve profiles, create programs (managed by staff admin)
+  STAFF_ADMIN  // Super admin - can do everything + manage system admins + assign reviewers
 }
 
-// ============================================
+
 // STARTUP PROFILES
-// ============================================
 
 // Startup profile - Detailed information about a startup
 model Startup {
@@ -56,8 +50,8 @@ model Startup {
   
   // Basic Information
   name            String
-  sector          String    // Tech, Agriculture, Healthcare, etc.
-  stage           String    // Idea, Seed, Growth, Expansion
+  sector          String   
+  stage           String 
   description     String    @db.Text
   
   // Detailed Information
@@ -94,9 +88,7 @@ enum ApprovalStatus {
   REJECTED     // Rejected by admin
 }
 
-// ============================================
 // INVESTOR PROFILES
-// ============================================
 
 // Investor profile - Investment preferences and criteria
 model Investor {
@@ -126,9 +118,7 @@ model Investor {
   @@map("investors")
 }
 
-// ============================================
 // PROGRAMS & APPLICATIONS
-// ============================================
 
 // Program - Incubation/funding opportunities created by admins
 model Program {
@@ -137,11 +127,11 @@ model Program {
   description         String    @db.Text
   eligibilityCriteria String    @db.Text @map("eligibility_criteria")
   deadline            DateTime
-  evaluationStages    Json      @map("evaluation_stages")  // JSON: stages of evaluation
+  evaluationStages    Json      @map("evaluation_stages")  
   expectedOutcomes    String    @db.Text @map("expected_outcomes")
   
   isActive            Boolean   @default(true) @map("is_active")
-  createdBy           String    @map("created_by")  // Admin user ID
+  createdBy           String    @map("created_by") 
   
   createdAt           DateTime  @default(now()) @map("created_at")
   updatedAt           DateTime  @updatedAt @map("updated_at")
@@ -180,9 +170,7 @@ enum ApplicationStatus {
   REJECTED        // Not accepted
 }
 
-// ============================================
 // EVALUATION & REVIEW
-// ============================================
 
 // Evaluation - Reviewer's assessment of an application
 model Evaluation {
@@ -208,9 +196,7 @@ model Evaluation {
   @@map("evaluations")
 }
 
-// ============================================
 // AUDIT & HISTORY
-// ============================================
 
 // Profile History - Track all profile changes for accountability
 model ProfileHistory {
