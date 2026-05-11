@@ -7,6 +7,8 @@ import startupsRouter from './modules/startups/startups.routes';
 import investorsRouter from './modules/investors/investors.routes';
 import adminRouter from './modules/admin/admin.routes';
 import directoryRouter from './modules/directory/directory.routes';
+import programsRouter from './modules/programs/programs.routes';
+import applicationsRouter from './modules/applications/applications.routes';
 
 const router = Router();
 
@@ -25,9 +27,13 @@ router.use('/admin', adminRouter);
 // Directory — public search and browse (no auth required)
 router.use('/directory', directoryRouter);
 
+// Programs — program management (public + staff admin)
+router.use('/programs', programsRouter);
+
+// Applications — application submission and management (startup + staff admin)
+router.use('/applications', applicationsRouter);
+
 // Future modules will be added here as they are implemented:
-// router.use('/programs', programsRouter);
-// router.use('/applications', applicationsRouter);
 // router.use('/evaluations', evaluationsRouter);
 // router.use('/dashboard', dashboardRouter);
 
