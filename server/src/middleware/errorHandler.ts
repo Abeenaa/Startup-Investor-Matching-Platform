@@ -17,7 +17,7 @@ export const errorHandler = (
 ) => {
   // Log error in development
   if (NODE_ENV === 'development') {
-    console.error('❌ Error:', err);
+    console.error('Error:', err);
   }
 
   // Handle operational errors (AppError instances)

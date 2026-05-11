@@ -136,12 +136,12 @@ export const sessionSecurity = (req: Request, res: Response, next: NextFunction)
     const isNewUA = existingSession.userAgent !== currentUA;
 
     // Flag suspicious login patterns
-    if (isNewIP && timeDiff < 60000) { // New IP within 1 minute
-      console.warn(`🚨 Suspicious activity detected for user ${userId}: IP change too fast`);
+    if (isNewIP && timeDiff < 60000) {
+      console.warn(`Suspicious activity detected for user ${userId}: IP change too fast`);
     }
 
-    if (isNewUA && timeDiff < 300000) { // New user agent within 5 minutes
-      console.warn(`🚨 Suspicious activity detected for user ${userId}: User agent change`);
+    if (isNewUA && timeDiff < 300000) {
+      console.warn(`Suspicious activity detected for user ${userId}: User agent change`);
     }
 
     // Update session

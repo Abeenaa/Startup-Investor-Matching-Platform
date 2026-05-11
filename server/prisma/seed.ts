@@ -8,9 +8,8 @@ import { hashPassword } from '../src/shared/utils/passwords';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Starting database seeding...');
+  console.log('Starting database seeding...');
 
-  // Create default staff admin user (super admin)
   const staffAdminPassword = await hashPassword('StaffAdmin@123');
   const staffAdmin = await prisma.user.upsert({
     where: { email: 'staff.admin@innobiz.et' },
@@ -23,9 +22,8 @@ async function main() {
     },
   });
 
-  console.log('✅ Created staff admin user:', staffAdmin.email);
+  console.log('Created staff admin user:', staffAdmin.email);
 
-  // Create default system admin user
   const systemAdminPassword = await hashPassword('SystemAdmin@123');
   const systemAdmin = await prisma.user.upsert({
     where: { email: 'system.admin@innobiz.et' },
@@ -38,9 +36,8 @@ async function main() {
     },
   });
 
-  console.log('✅ Created system admin user:', systemAdmin.email);
+  console.log('Created system admin user:', systemAdmin.email);
 
-  // Create test reviewer
   const reviewerPassword = await hashPassword('Reviewer@123');
   const reviewer = await prisma.user.upsert({
     where: { email: 'reviewer@innobiz.et' },
@@ -53,14 +50,13 @@ async function main() {
     },
   });
 
-  console.log('✅ Created reviewer user:', reviewer.email);
-
-  console.log('🎉 Seeding completed!');
+  console.log('Created reviewer user:', reviewer.email);
+  console.log('Seeding completed.');
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Seeding failed:', e);
+    console.error('Seeding failed:', e);
     process.exit(1);
   })
   .finally(async () => {
