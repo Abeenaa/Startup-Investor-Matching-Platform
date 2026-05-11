@@ -1,12 +1,12 @@
 // Admin Routes
-// API endpoints for staff admin user management operations
+// API endpoints for system admin user management operations
 // Enhanced with government-level security features
 
 import { Router } from 'express';
 import * as adminController from './admin.controller';
 import { validate } from '../../middleware/validate';
 import { authenticate } from '../../middleware/auth';
-import { staffAdminOnly } from '../../middleware/authorize';
+import { systemAdminOnly, staffAdminOnly } from '../../middleware/authorize';
 import { adminRateLimit } from '../../middleware/security';
 import {
   createUserSchema,
@@ -21,12 +21,12 @@ const router = Router();
 // Apply admin rate limiting to all routes
 router.use(adminRateLimit);
 
-// User Management (Staff Admin Only)
-// POST /api/admin/users - Create system admin or reviewer
+// User Management (System Admin Only)
+// POST /api/admin/users - Create users (system admin manages users)
 router.post(
   '/users',
   authenticate,
-  staffAdminOnly,
+  systemAdminOnly,
   validate(createUserSchema),
   adminController.createUser
 );
@@ -35,7 +35,7 @@ router.post(
 router.get(
   '/users',
   authenticate,
-  staffAdminOnly,
+  systemAdminOnly,
   validate(getUsersSchema),
   adminController.getUsers
 );
@@ -44,7 +44,7 @@ router.get(
 router.patch(
   '/users/:userId',
   authenticate,
-  staffAdminOnly,
+  systemAdminOnly,
   validate(updateUserSchema),
   adminController.updateUser
 );
@@ -53,12 +53,12 @@ router.patch(
 router.delete(
   '/users/:userId',
   authenticate,
-  staffAdminOnly,
+  systemAdminOnly,
   validate(deleteUserSchema),
   adminController.deleteUser
 );
 
-// Reviewer Management
+// Reviewer Management (Staff Admin Only - business operations)
 // POST /api/admin/assign-reviewers - Assign reviewers to applications
 router.post(
   '/assign-reviewers',

@@ -5,7 +5,7 @@ import { Router } from 'express';
 import * as investorController from './investors.controller';
 import { validate } from '../../middleware/validate';
 import { authenticate } from '../../middleware/auth';
-import { authorize, adminOnly } from '../../middleware/authorize';
+import { authorize, staffAdminOnly } from '../../middleware/authorize';
 import { UserRole } from '../../shared/constants/roles';
 import {
   createInvestorProfileSchema,
@@ -44,28 +44,28 @@ router.patch(
 );
 
 // Admin Routes
-// GET /api/investors - Get all investors (admin/reviewer)
+// GET /api/investors - Get all investors (staff admin/reviewer)
 router.get(
   '/',
   authenticate,
-  authorize([UserRole.SYSTEM_ADMIN, UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
+  authorize([UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
   validate(getInvestorsSchema),
   investorController.getInvestors
 );
 
-// GET /api/investors/:investorId - Get investor by ID (admin/reviewer)
+// GET /api/investors/:investorId - Get investor by ID (staff admin/reviewer)
 router.get(
   '/:investorId',
   authenticate,
-  authorize([UserRole.SYSTEM_ADMIN, UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
+  authorize([UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
   investorController.getInvestorById
 );
 
-// PATCH /api/investors/:investorId/approve - Approve investor (admin only)
+// PATCH /api/investors/:investorId/approve - Approve investor (staff admin only)
 router.patch(
   '/:investorId/approve',
   authenticate,
-  adminOnly,
+  staffAdminOnly,
   validate(approveInvestorSchema),
   investorController.approveInvestor
 );

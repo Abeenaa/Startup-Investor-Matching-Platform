@@ -18,9 +18,7 @@ export const searchStartups = async (
     const query = req.query as unknown as SearchStartupsQuery;
     const result = await directoryService.searchStartups(query);
 
-    res.json(
-      successResponse(result, 'Startups retrieved successfully')
-    );
+    successResponse(res, result, 'Startups retrieved successfully');
   } catch (error) {
     next(error);
   }
@@ -39,9 +37,7 @@ export const getStartupById = async (
     const { startupId } = req.params;
     const startup = await directoryService.getStartupById(startupId);
 
-    res.json(
-      successResponse(startup, 'Startup retrieved successfully')
-    );
+    successResponse(res, startup, 'Startup retrieved successfully');
   } catch (error) {
     next(error);
   }
@@ -60,9 +56,7 @@ export const searchInvestors = async (
     const query = req.query as unknown as SearchInvestorsQuery;
     const result = await directoryService.searchInvestors(query);
 
-    res.json(
-      successResponse(result, 'Investors retrieved successfully')
-    );
+    successResponse(res, result, 'Investors retrieved successfully');
   } catch (error) {
     next(error);
   }
@@ -81,9 +75,7 @@ export const getInvestorById = async (
     const { investorId } = req.params;
     const investor = await directoryService.getInvestorById(investorId);
 
-    res.json(
-      successResponse(investor, 'Investor retrieved successfully')
-    );
+    successResponse(res, investor, 'Investor retrieved successfully');
   } catch (error) {
     next(error);
   }

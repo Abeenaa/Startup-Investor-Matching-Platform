@@ -15,8 +15,8 @@ export const ROLE_DESCRIPTIONS = {
   [UserRole.STARTUP]: 'Can create startup profile and apply to programs',
   [UserRole.INVESTOR]: 'Can create investor profile and search startups',
   [UserRole.REVIEWER]: 'Can evaluate applications (assigned by staff admin)',
-  [UserRole.SYSTEM_ADMIN]: 'Can approve profiles, create programs (managed by staff admin)',
-  [UserRole.STAFF_ADMIN]: 'Super admin - can do everything + manage system admins + assign reviewers',
+  [UserRole.SYSTEM_ADMIN]: 'System-level management (manage users, system configuration)',
+  [UserRole.STAFF_ADMIN]: 'Business operations (create programs, approve profiles, assign reviewers)',
 };
 
 // Role hierarchy levels (higher number = more privileges)
@@ -24,8 +24,8 @@ export const ROLE_HIERARCHY = {
   [UserRole.STARTUP]: 1,
   [UserRole.INVESTOR]: 1,
   [UserRole.REVIEWER]: 2,
-  [UserRole.SYSTEM_ADMIN]: 3,
-  [UserRole.STAFF_ADMIN]: 4,
+  [UserRole.STAFF_ADMIN]: 3,
+  [UserRole.SYSTEM_ADMIN]: 4,
 };
 
 // Check if a role is staff admin (highest privilege)

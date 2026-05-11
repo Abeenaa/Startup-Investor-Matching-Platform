@@ -1,6 +1,6 @@
 // Business logic for search, filtering, and pagination
 
-import { prisma } from '../../database/prisma';
+import prisma from '../../database/prisma';
 import { NotFoundError } from '../../shared/errors/AppError';
 import { ApprovalStatus } from '@prisma/client';
 import type {
@@ -19,6 +19,10 @@ export const searchStartups = async (
   query: SearchStartupsQuery
 ): Promise<PaginatedResponse<PublicStartupProfile>> => {
   const { search, sector, stage, page = 1, limit = 10 } = query;
+
+  // Ensure page and limit are numbers
+  const pageNum = Number(page);
+  const limitNum = Number(limit);
 
   // Build dynamic filter conditions
   const where: any = {
@@ -44,14 +48,14 @@ export const searchStartups = async (
   }
 
   // Calculate pagination
-  const skip = (page - 1) * limit;
+  const skip = (pageNum - 1) * limitNum;
 
   // Execute query with pagination
   const [startups, total] = await Promise.all([
     prisma.startup.findMany({
       where,
       skip,
-      take: limit,
+      take: limitNum,
       select: {
         id: true,
         name: true,
@@ -73,10 +77,10 @@ export const searchStartups = async (
   return {
     data: startups,
     pagination: {
-      page,
-      limit,
+      page: pageNum,
+      limit: limitNum,
       total,
-      totalPages: Math.ceil(total / limit),
+      totalPages: Math.ceil(total / limitNum),
     },
   };
 };
@@ -129,6 +133,10 @@ export const searchInvestors = async (
 ): Promise<PaginatedResponse<PublicInvestorProfile>> => {
   const { search, sector, investmentStage, page = 1, limit = 10 } = query;
 
+  // Ensure page and limit are numbers
+  const pageNum = Number(page);
+  const limitNum = Number(limit);
+
   // Build dynamic filter conditions
   const where: any = {
     approvalStatus: ApprovalStatus.APPROVED, // Only show approved investors
@@ -150,14 +158,14 @@ export const searchInvestors = async (
   }
 
   // Calculate pagination
-  const skip = (page - 1) * limit;
+  const skip = (pageNum - 1) * limitNum;
 
   // Execute query with pagination
   const [investors, total] = await Promise.all([
     prisma.investor.findMany({
       where,
       skip,
-      take: limit,
+      take: limitNum,
       select: {
         id: true,
         name: true,
@@ -176,10 +184,10 @@ export const searchInvestors = async (
   return {
     data: investors,
     pagination: {
-      page,
-      limit,
+      page: pageNum,
+      limit: limitNum,
       total,
-      totalPages: Math.ceil(total / limit),
+      totalPages: Math.ceil(total / limitNum),
     },
   };
 };

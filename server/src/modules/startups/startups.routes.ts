@@ -5,7 +5,7 @@ import { Router } from 'express';
 import * as startupController from './startups.controller';
 import { validate } from '../../middleware/validate';
 import { authenticate } from '../../middleware/auth';
-import { authorize, adminOnly } from '../../middleware/authorize';
+import { authorize, staffAdminOnly } from '../../middleware/authorize';
 import { UserRole } from '../../shared/constants/roles';
 import {
   createStartupProfileSchema,
@@ -45,37 +45,37 @@ router.patch(
 );
 
 // Admin Routes
-// GET /api/startups - Get all startups (admin/reviewer)
+// GET /api/startups - Get all startups (staff admin/reviewer)
 router.get(
   '/',
   authenticate,
-  authorize([UserRole.SYSTEM_ADMIN, UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
+  authorize([UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
   validate(getStartupsSchema),
   startupController.getStartups
 );
 
-// GET /api/startups/:startupId - Get startup by ID (admin/reviewer)
+// GET /api/startups/:startupId - Get startup by ID (staff admin/reviewer)
 router.get(
   '/:startupId',
   authenticate,
-  authorize([UserRole.SYSTEM_ADMIN, UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
+  authorize([UserRole.STAFF_ADMIN, UserRole.REVIEWER]),
   startupController.getStartupById
 );
 
-// PATCH /api/startups/:startupId/approve - Approve startup (admin only)
+// PATCH /api/startups/:startupId/approve - Approve startup (staff admin only)
 router.patch(
   '/:startupId/approve',
   authenticate,
-  adminOnly,
+  staffAdminOnly,
   validate(approveStartupSchema),
   startupController.approveStartup
 );
 
-// PATCH /api/startups/:startupId/reject - Reject startup (admin only)
+// PATCH /api/startups/:startupId/reject - Reject startup (staff admin only)
 router.patch(
   '/:startupId/reject',
   authenticate,
-  adminOnly,
+  staffAdminOnly,
   validate(rejectStartupSchema),
   startupController.rejectStartup
 );
