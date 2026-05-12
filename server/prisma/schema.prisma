@@ -167,6 +167,13 @@ model Program {
   // Relations
   applications        Application[]
   
+  // Indexes for performance
+  @@index([type])
+  @@index([isActive])
+  @@index([deadline])
+  @@index([createdAt])
+  @@index([isActive, deadline]) // Compound index for public queries
+  
   @@map("programs")
 }
 
@@ -203,6 +210,14 @@ model Application {
   
   // Relations
   evaluations     Evaluation[]
+  
+  // Indexes for performance
+  @@index([status])
+  @@index([submittedAt])
+  @@index([programId])
+  @@index([startupId])
+  @@index([programId, status]) // Compound index for filtering by program and status
+  @@index([startupId, status]) // Compound index for startup's applications
   
   @@unique([startupId, programId]) // One startup can only have ONE active application per program
   @@map("applications")

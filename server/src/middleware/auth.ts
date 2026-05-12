@@ -40,6 +40,16 @@ export const authenticate = async (
         email: true,
         role: true,
         isActive: true,
+        startup: {
+          select: {
+            id: true,
+          },
+        },
+        investor: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 
@@ -56,6 +66,8 @@ export const authenticate = async (
       id: user.id,
       email: user.email,
       role: user.role,
+      startup: user.startup,
+      investor: user.investor,
     };
 
     next();

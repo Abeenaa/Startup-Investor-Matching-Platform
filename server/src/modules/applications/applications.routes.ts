@@ -1,6 +1,7 @@
 // Application submission API endpoints
 
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import * as applicationsController from './applications.controller';
 import { validate } from '../../middleware/validate';
 import { authenticate } from '../../middleware/auth';
@@ -19,6 +20,24 @@ import {
 
 const router = Router();
 
+// Rate limiter for application creation (prevent spam)
+const applicationCreationLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Max 5 applications per 15 minutes per IP
+  message: 'Too many applications created. Please try again in 15 minutes.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Rate limiter for application submission (prevent spam)
+const applicationSubmissionLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // Max 10 submissions per hour per IP
+  message: 'Too many application submissions. Please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // ============================================
 // STARTUP ROUTES
 // ============================================
@@ -26,6 +45,7 @@ const router = Router();
 // POST /api/applications - Create draft application
 router.post(
   '/',
+  applicationCreationLimiter, // Rate limit: 5 per 15 minutes
   authenticate,
   authorize([UserRole.STARTUP]),
   validate(createApplicationSchema),
@@ -53,6 +73,7 @@ router.patch(
 // POST /api/applications/:applicationId/submit - Submit draft application
 router.post(
   '/:applicationId/submit',
+  applicationSubmissionLimiter, // Rate limit: 10 per hour
   authenticate,
   authorize([UserRole.STARTUP]),
   validate(submitApplicationSchema),

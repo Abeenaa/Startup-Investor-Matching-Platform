@@ -7,7 +7,10 @@ declare global {
   namespace Express {
     interface Request {
       // Authenticated user information (set by auth middleware)
-      user?: JwtPayload;
+      user?: JwtPayload & {
+        startup?: { id: string } | null;
+        investor?: { id: string } | null;
+      };
     }
   }
 }

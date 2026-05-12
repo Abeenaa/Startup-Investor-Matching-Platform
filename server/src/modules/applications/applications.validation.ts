@@ -3,10 +3,28 @@
 import { z } from 'zod';
 import { ApplicationStatus } from '@prisma/client';
 
+// Allowed document storage domains - Supabase only
+const ALLOWED_STORAGE_DOMAINS = [
+  'supabase.co',
+];
+
+// Validate document URL is from Supabase storage
+const isAllowedStorageUrl = (url: string): boolean => {
+  try {
+    const hostname = new URL(url).hostname;
+    return ALLOWED_STORAGE_DOMAINS.some(domain => hostname.includes(domain));
+  } catch {
+    return false;
+  }
+};
+
 // Document validation schema
 const documentSchema = z.object({
   name: z.string().trim().min(1).max(200),
-  url: z.string().url('Invalid document URL'),
+  url: z.string().url('Invalid document URL').refine(
+    (url) => isAllowedStorageUrl(url),
+    { message: 'Document must be hosted on Supabase storage' }
+  ),
   type: z.string().trim().min(1).max(50),
   size: z.number().int().min(1).max(20 * 1024 * 1024), // Max 20MB
 });
@@ -16,9 +34,18 @@ export const createApplicationSchema = z.object({
   body: z.object({
     programId: z.string().uuid('Invalid program ID format'),
     additionalInfo: z.string().trim().max(5000, 'Additional info too long').optional(),
-    pitchDeck: z.string().url('Invalid pitch deck URL').optional(),
-    businessPlan: z.string().url('Invalid business plan URL').optional(),
-    financials: z.string().url('Invalid financials URL').optional(),
+    pitchDeck: z.string().url('Invalid pitch deck URL').refine(
+      (url) => isAllowedStorageUrl(url),
+      { message: 'Pitch deck must be hosted on Supabase storage' }
+    ).optional(),
+    businessPlan: z.string().url('Invalid business plan URL').refine(
+      (url) => isAllowedStorageUrl(url),
+      { message: 'Business plan must be hosted on Supabase storage' }
+    ).optional(),
+    financials: z.string().url('Invalid financials URL').refine(
+      (url) => isAllowedStorageUrl(url),
+      { message: 'Financials must be hosted on Supabase storage' }
+    ).optional(),
     otherDocuments: z.array(documentSchema).max(5, 'Maximum 5 additional documents allowed').optional(),
   }),
 });
@@ -30,9 +57,18 @@ export const updateApplicationSchema = z.object({
   }),
   body: z.object({
     additionalInfo: z.string().trim().max(5000).optional(),
-    pitchDeck: z.string().url().optional(),
-    businessPlan: z.string().url().optional(),
-    financials: z.string().url().optional(),
+    pitchDeck: z.string().url().refine(
+      (url) => isAllowedStorageUrl(url),
+      { message: 'Pitch deck must be hosted on Supabase storage' }
+    ).optional(),
+    businessPlan: z.string().url().refine(
+      (url) => isAllowedStorageUrl(url),
+      { message: 'Business plan must be hosted on Supabase storage' }
+    ).optional(),
+    financials: z.string().url().refine(
+      (url) => isAllowedStorageUrl(url),
+      { message: 'Financials must be hosted on Supabase storage' }
+    ).optional(),
     otherDocuments: z.array(documentSchema).max(5).optional(),
   }),
 });
