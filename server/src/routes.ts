@@ -9,6 +9,7 @@ import adminRouter from './modules/admin/admin.routes';
 import directoryRouter from './modules/directory/directory.routes';
 import programsRouter from './modules/programs/programs.routes';
 import applicationsRouter from './modules/applications/applications.routes';
+import evaluationsRouter from './modules/evaluations/evaluations.routes';
 
 const router = Router();
 
@@ -33,8 +34,10 @@ router.use('/programs', programsRouter);
 // Applications — application submission and management (startup + staff admin)
 router.use('/applications', applicationsRouter);
 
+// Evaluations — application evaluation by reviewers
+router.use('/evaluations', evaluationsRouter);
+
 // Future modules will be added here as they are implemented:
-// router.use('/evaluations', evaluationsRouter);
 // router.use('/dashboard', dashboardRouter);
 
 export default router;
