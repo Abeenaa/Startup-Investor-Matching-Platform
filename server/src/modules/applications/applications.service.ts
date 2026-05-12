@@ -586,3 +586,90 @@ export const rejectApplication = async (
 
   return formatAdminApplicationResponse(rejectedApplication);
 };
+
+/**
+ * Update application status (Staff Admin)
+ * Allows changing status to UNDER_REVIEW, APPROVED, or REJECTED
+ */
+export const updateApplicationStatus = async (
+  applicationId: string,
+  status: ApplicationStatus,
+  decidedBy: string,
+  rejectionReason?: string
+): Promise<AdminApplicationResponse> => {
+  const application = await prisma.application.findUnique({
+    where: { id: applicationId },
+    include: {
+      program: {
+        select: {
+          id: true,
+          name: true,
+          type: true,
+          deadline: true,
+        },
+      },
+      startup: {
+        select: {
+          id: true,
+          name: true,
+          sector: true,
+          stage: true,
+        },
+      },
+    },
+  });
+
+  if (!application) {
+    throw new NotFoundError('Application not found');
+  }
+
+  // Validation based on status transition
+  if (status === ApplicationStatus.DRAFT) {
+    throw new BadRequestError('Cannot change status back to DRAFT');
+  }
+
+  if (status === ApplicationStatus.REJECTED && !rejectionReason) {
+    throw new BadRequestError('Rejection reason is required when rejecting an application');
+  }
+
+  // Prepare update data
+  const updateData: any = {
+    status,
+  };
+
+  // Add decision fields for APPROVED/REJECTED
+  if (status === ApplicationStatus.APPROVED || status === ApplicationStatus.REJECTED) {
+    updateData.decidedBy = decidedBy;
+    updateData.decidedAt = new Date();
+  }
+
+  if (status === ApplicationStatus.REJECTED && rejectionReason) {
+    updateData.rejectionReason = rejectionReason;
+  }
+
+  // Update application
+  const updatedApplication = await prisma.application.update({
+    where: { id: applicationId },
+    data: updateData,
+    include: {
+      program: {
+        select: {
+          id: true,
+          name: true,
+          type: true,
+          deadline: true,
+        },
+      },
+      startup: {
+        select: {
+          id: true,
+          name: true,
+          sector: true,
+          stage: true,
+        },
+      },
+    },
+  });
+
+  return formatAdminApplicationResponse(updatedApplication);
+};

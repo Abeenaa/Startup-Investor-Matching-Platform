@@ -202,3 +202,30 @@ export const rejectApplication = async (
     next(error);
   }
 };
+
+/**
+ * PATCH /api/applications/:applicationId/status
+ * Update application status (Staff Admin)
+ */
+export const updateApplicationStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { applicationId } = req.params;
+    const { status, rejectionReason } = req.body;
+    const decidedBy = req.user!.id;
+
+    const application = await applicationsService.updateApplicationStatus(
+      applicationId,
+      status,
+      decidedBy,
+      rejectionReason
+    );
+
+    successResponse(res, application, 'Application status updated successfully');
+  } catch (error) {
+    next(error);
+  }
+};

@@ -16,6 +16,7 @@ import {
   deleteApplicationSchema,
   approveApplicationSchema,
   rejectApplicationSchema,
+  updateApplicationStatusSchema,
 } from './applications.validation';
 
 const router = Router();
@@ -118,6 +119,15 @@ router.patch(
   staffAdminOnly,
   validate(rejectApplicationSchema),
   applicationsController.rejectApplication
+);
+
+// PATCH /api/applications/:applicationId/status - Update application status
+router.patch(
+  '/:applicationId/status',
+  authenticate,
+  staffAdminOnly,
+  validate(updateApplicationStatusSchema),
+  applicationsController.updateApplicationStatus
 );
 
 // ============================================

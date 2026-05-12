@@ -4,6 +4,7 @@ import { Router } from 'express';
 import { authenticate } from '../../middleware/auth';
 import { authorize } from '../../middleware/authorize';
 import { validate } from '../../middleware/validate';
+import { UserRole } from '../../shared/constants/roles';
 import * as evaluationsController from './evaluations.controller';
 import * as evaluationsValidation from './evaluations.validation';
 
@@ -16,7 +17,7 @@ const router = Router();
 router.post(
   '/',
   authenticate,
-  authorize(['REVIEWER']),
+  authorize([UserRole.REVIEWER]),
   validate(evaluationsValidation.createEvaluationSchema),
   evaluationsController.createEvaluation
 );
@@ -28,7 +29,7 @@ router.post(
 router.patch(
   '/:evaluationId',
   authenticate,
-  authorize(['REVIEWER']),
+  authorize([UserRole.REVIEWER]),
   validate(evaluationsValidation.updateEvaluationSchema),
   evaluationsController.updateEvaluation
 );
@@ -40,7 +41,7 @@ router.patch(
 router.get(
   '/my-assignments',
   authenticate,
-  authorize(['REVIEWER']),
+  authorize([UserRole.REVIEWER]),
   validate(evaluationsValidation.getMyAssignmentsSchema),
   evaluationsController.getMyAssignments
 );
@@ -52,7 +53,7 @@ router.get(
 router.get(
   '/application/:applicationId',
   authenticate,
-  authorize(['STAFF_ADMIN']),
+  authorize([UserRole.STAFF_ADMIN]),
   evaluationsController.getApplicationEvaluations
 );
 
@@ -63,7 +64,7 @@ router.get(
 router.get(
   '/:evaluationId',
   authenticate,
-  authorize(['REVIEWER', 'STAFF_ADMIN']),
+  authorize([UserRole.REVIEWER, UserRole.STAFF_ADMIN]),
   evaluationsController.getEvaluationById
 );
 
@@ -74,7 +75,7 @@ router.get(
 router.delete(
   '/:evaluationId',
   authenticate,
-  authorize(['REVIEWER']),
+  authorize([UserRole.REVIEWER]),
   evaluationsController.deleteEvaluation
 );
 

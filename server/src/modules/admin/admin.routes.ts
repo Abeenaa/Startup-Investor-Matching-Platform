@@ -6,7 +6,7 @@ import { Router } from 'express';
 import * as adminController from './admin.controller';
 import { validate } from '../../middleware/validate';
 import { authenticate } from '../../middleware/auth';
-import { systemAdminOnly, staffAdminOnly } from '../../middleware/authorize';
+import { systemAdminOnly, staffAdminOnly, adminOnly } from '../../middleware/authorize';
 import { adminRateLimit } from '../../middleware/security';
 import {
   createUserSchema,
@@ -21,39 +21,39 @@ const router = Router();
 // Apply admin rate limiting to all routes
 router.use(adminRateLimit);
 
-// User Management (System Admin Only)
-// POST /api/admin/users - Create users (system admin manages users)
+// User Management
+// POST /api/admin/users - Create users (both SYSTEM_ADMIN and STAFF_ADMIN can create users)
 router.post(
   '/users',
   authenticate,
-  systemAdminOnly,
+  adminOnly,  // Changed from systemAdminOnly to adminOnly
   validate(createUserSchema),
   adminController.createUser
 );
 
-// GET /api/admin/users - Get all users with filtering
+// GET /api/admin/users - Get all users with filtering (both admins)
 router.get(
   '/users',
   authenticate,
-  systemAdminOnly,
+  adminOnly,  // Changed from systemAdminOnly
   validate(getUsersSchema),
   adminController.getUsers
 );
 
-// PATCH /api/admin/users/:userId - Update user
+// PATCH /api/admin/users/:userId - Update user (both admins)
 router.patch(
   '/users/:userId',
   authenticate,
-  systemAdminOnly,
+  adminOnly,  // Changed from systemAdminOnly
   validate(updateUserSchema),
   adminController.updateUser
 );
 
-// DELETE /api/admin/users/:userId - Delete/deactivate user
+// DELETE /api/admin/users/:userId - Delete/deactivate user (SYSTEM_ADMIN only for safety)
 router.delete(
   '/users/:userId',
   authenticate,
-  systemAdminOnly,
+  systemAdminOnly,  // Keep as systemAdminOnly - deleting users is sensitive
   validate(deleteUserSchema),
   adminController.deleteUser
 );

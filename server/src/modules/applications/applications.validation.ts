@@ -124,3 +124,28 @@ export const rejectApplicationSchema = z.object({
     comments: z.string().trim().max(1000).optional(),
   }),
 });
+
+// Validation for updating application status (Staff Admin)
+export const updateApplicationStatusSchema = z.object({
+  params: z.object({
+    applicationId: z.string().uuid('Invalid application ID format'),
+  }),
+  body: z.object({
+    status: z.enum([
+      ApplicationStatus.SUBMITTED,
+      ApplicationStatus.UNDER_REVIEW,
+      ApplicationStatus.APPROVED,
+      ApplicationStatus.REJECTED,
+    ]),
+    rejectionReason: z.string().trim().min(10).max(1000).optional(),
+  }).refine((data) => {
+    // If status is REJECTED, rejectionReason is required
+    if (data.status === ApplicationStatus.REJECTED && !data.rejectionReason) {
+      return false;
+    }
+    return true;
+  }, {
+    message: 'Rejection reason is required when rejecting an application',
+    path: ['rejectionReason'],
+  }),
+});
