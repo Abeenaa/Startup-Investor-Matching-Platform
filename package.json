@@ -5,6 +5,9 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only server/src/server.ts",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "ts-node-dev --respawn --transpile-only server/src/server.ts",
+    "dev:all": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "build": "tsc -p tsconfig.json",
     "start": "node server/dist/server.js",
     "lint": "eslint .",
