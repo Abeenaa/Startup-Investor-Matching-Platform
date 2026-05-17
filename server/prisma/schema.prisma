@@ -66,6 +66,12 @@ model Startup {
   tractionMetrics Json?     @map("traction_metrics")
   website         String?
   
+  // Essential Government Compliance Fields
+  phoneNumber     String    @map("phone_number")
+  tinNumber       String    @map("tin_number")
+  legalStructure  String    @map("legal_structure")
+  yearFounded     Int       @map("year_founded")
+  
   // Approval Status
   isApproved      Boolean   @default(false) @map("is_approved")
   approvalStatus  ApprovalStatus @default(PENDING) @map("approval_status")
@@ -107,11 +113,17 @@ model Investor {
   fundingCapacity   String    @map("funding_capacity")   // "$10K-$50K", "$50K-$100K", etc.
   geographicFocus   String[]  @map("geographic_focus")   // Array: ["Addis Ababa", "Ethiopia"]
   
+  // Essential Government Compliance Fields
+  phoneNumber       String    @map("phone_number")
+  registrationType  String    @map("registration_type")  // "Individual", "VC Firm", "Angel Network", "Corporate", "Government"
+  minimumInvestment String    @map("minimum_investment") // "$5K", "$10K", "$50K", etc.
+  
   // Approval Status
   isApproved        Boolean   @default(false) @map("is_approved")
   approvalStatus    ApprovalStatus @default(PENDING) @map("approval_status")
   approvedBy        String?   @map("approved_by")
   approvedAt        DateTime? @map("approved_at")
+  rejectionReason   String?   @db.Text @map("rejection_reason")
   
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")

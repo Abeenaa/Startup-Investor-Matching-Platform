@@ -12,6 +12,7 @@ import {
   updateInvestorProfileSchema,
   getInvestorsSchema,
   approveInvestorSchema,
+  rejectInvestorSchema,
 } from './investors.validation';
 
 const router = Router();
@@ -68,6 +69,15 @@ router.patch(
   staffAdminOnly,
   validate(approveInvestorSchema),
   investorController.approveInvestor
+);
+
+// PATCH /api/investors/:investorId/reject - Reject investor (staff admin only)
+router.patch(
+  '/:investorId/reject',
+  authenticate,
+  staffAdminOnly,
+  validate(rejectInvestorSchema),
+  investorController.rejectInvestor
 );
 
 export default router;

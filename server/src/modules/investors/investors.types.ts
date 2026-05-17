@@ -11,6 +11,9 @@ export interface CreateInvestorProfileInput {
   sectorFocus: string[];
   fundingCapacity: string;
   geographicFocus: string[];
+  phoneNumber: string;
+  registrationType: string;
+  minimumInvestment: string;
 }
 
 export interface UpdateInvestorProfileInput {
@@ -20,6 +23,9 @@ export interface UpdateInvestorProfileInput {
   sectorFocus?: string[];
   fundingCapacity?: string;
   geographicFocus?: string[];
+  phoneNumber?: string;
+  registrationType?: string;
+  minimumInvestment?: string;
 }
 
 export interface InvestorProfile {
@@ -31,10 +37,14 @@ export interface InvestorProfile {
   sectorFocus: string[];
   fundingCapacity: string;
   geographicFocus: string[];
+  phoneNumber: string;
+  registrationType: string;
+  minimumInvestment: string;
   isApproved: boolean;
   approvalStatus: ApprovalStatus;
   approvedBy?: string;
   approvedAt?: Date;
+  rejectionReason?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -52,6 +62,11 @@ export interface InvestorListItem {
 // Admin Actions 
 export interface ApproveInvestorInput {
   approvedBy: string;
+}
+
+export interface RejectInvestorInput {
+  rejectionReason: string;
+  rejectedBy: string;
 }
 
 // Filtering & Search 

@@ -109,3 +109,19 @@ export const approveInvestor = async (
     next(error);
   }
 };
+
+export const rejectInvestor = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const investor = await investorService.rejectInvestor(req.params.investorId, {
+      rejectionReason: req.body.rejectionReason,
+      rejectedBy: req.user!.id,
+    });
+    successResponse(res, investor, 'Investor rejected successfully');
+  } catch (error) {
+    next(error);
+  }
+};

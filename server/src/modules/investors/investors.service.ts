@@ -30,10 +30,14 @@ const toInvestorProfile = (investor: any): InvestorProfile => ({
   sectorFocus: investor.sectorFocus,
   fundingCapacity: investor.fundingCapacity,
   geographicFocus: investor.geographicFocus,
+  phoneNumber: investor.phoneNumber,
+  registrationType: investor.registrationType,
+  minimumInvestment: investor.minimumInvestment,
   isApproved: investor.isApproved,
   approvalStatus: investor.approvalStatus,
   approvedBy: nullToUndef(investor.approvedBy),
   approvedAt: nullToUndef(investor.approvedAt),
+  rejectionReason: nullToUndef(investor.rejectionReason),
   createdAt: investor.createdAt,
   updatedAt: investor.updatedAt,
 });
@@ -251,6 +255,7 @@ export const approveInvestor = async (
       approvalStatus: ApprovalStatus.APPROVED,
       approvedBy: input.approvedBy,
       approvedAt: new Date(),
+      rejectionReason: null,
     },
   });
 
@@ -262,6 +267,48 @@ export const approveInvestor = async (
       oldValue: { approvalStatus: investor.approvalStatus },
       newValue: { approvalStatus: ApprovalStatus.APPROVED },
       changedBy: input.approvedBy,
+    },
+  });
+
+  return toInvestorProfile(updated);
+};
+
+// Reject investor profile (admin only)
+export const rejectInvestor = async (
+  investorId: string,
+  input: RejectInvestorInput
+): Promise<InvestorProfile> => {
+  const investor = await prisma.investor.findUnique({ where: { id: investorId } });
+  if (!investor) {
+    throw new NotFoundError('Investor not found');
+  }
+
+  if (investor.approvalStatus === ApprovalStatus.REJECTED) {
+    throw new BadRequestError('Investor is already rejected');
+  }
+
+  const updated = await prisma.investor.update({
+    where: { id: investorId },
+    data: {
+      isApproved: false,
+      approvalStatus: ApprovalStatus.REJECTED,
+      rejectionReason: input.rejectionReason,
+      approvedBy: null,
+      approvedAt: null,
+    },
+  });
+
+  // Record rejection in history
+  await prisma.profileHistory.create({
+    data: {
+      userId: investor.userId,
+      changeType: 'INVESTOR_REJECTED',
+      oldValue: { approvalStatus: investor.approvalStatus },
+      newValue: { 
+        approvalStatus: ApprovalStatus.REJECTED,
+        rejectionReason: input.rejectionReason,
+      },
+      changedBy: input.rejectedBy,
     },
   });
 

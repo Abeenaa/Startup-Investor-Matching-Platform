@@ -3,6 +3,7 @@
 
 import { z } from 'zod';
 import { SECTORS } from '../../shared/constants/sectors';
+import { REGISTRATION_TYPES, MINIMUM_INVESTMENTS } from '../../shared/constants/legal';
 import { ApprovalStatus } from '@prisma/client';
 import {
   INVESTMENT_STAGES,
@@ -42,6 +43,23 @@ export const createInvestorProfileSchema = z.object({
       .array(z.enum(GEOGRAPHIC_FOCUS as readonly [string, ...string[]]))
       .min(1, 'At least one geographic focus must be selected')
       .max(GEOGRAPHIC_FOCUS.length, 'Too many geographic areas selected'),
+
+    // Essential Government Compliance Fields
+    phoneNumber: z
+      .string({ required_error: 'Phone number is required' })
+      .min(10, 'Phone number must be at least 10 characters')
+      .max(20, 'Phone number must not exceed 20 characters')
+      .regex(/^[+]?[\d\s()-]+$/, 'Invalid phone number format'),
+
+    registrationType: z.enum(REGISTRATION_TYPES as readonly [string, ...string[]], {
+      required_error: 'Registration type is required',
+      invalid_type_error: `Registration type must be one of: ${REGISTRATION_TYPES.join(', ')}`,
+    }),
+
+    minimumInvestment: z.enum(MINIMUM_INVESTMENTS as readonly [string, ...string[]], {
+      required_error: 'Minimum investment is required',
+      invalid_type_error: `Minimum investment must be one of: ${MINIMUM_INVESTMENTS.join(', ')}`,
+    }),
   }),
 });
 
@@ -80,6 +98,18 @@ export const updateInvestorProfileSchema = z.object({
       .min(1, 'At least one geographic focus must be selected')
       .max(GEOGRAPHIC_FOCUS.length, 'Too many geographic areas selected')
       .optional(),
+
+    // Essential Government Compliance Fields
+    phoneNumber: z
+      .string()
+      .min(10, 'Phone number must be at least 10 characters')
+      .max(20, 'Phone number must not exceed 20 characters')
+      .regex(/^[+]?[\d\s()-]+$/, 'Invalid phone number format')
+      .optional(),
+
+    registrationType: z.enum(REGISTRATION_TYPES as readonly [string, ...string[]]).optional(),
+
+    minimumInvestment: z.enum(MINIMUM_INVESTMENTS as readonly [string, ...string[]]).optional(),
   }),
 });
 
@@ -102,8 +132,22 @@ export const approveInvestorSchema = z.object({
   }),
 });
 
+// Reject Investor
+export const rejectInvestorSchema = z.object({
+  params: z.object({
+    investorId: z.string().uuid('Invalid investor ID'),
+  }),
+  body: z.object({
+    rejectionReason: z
+      .string({ required_error: 'Rejection reason is required' })
+      .min(10, 'Rejection reason must be at least 10 characters')
+      .max(500, 'Rejection reason must not exceed 500 characters'),
+  }),
+});
+
 // Inferred Types
 export type CreateInvestorProfileSchema = z.infer<typeof createInvestorProfileSchema>;
 export type UpdateInvestorProfileSchema = z.infer<typeof updateInvestorProfileSchema>;
 export type GetInvestorsSchema = z.infer<typeof getInvestorsSchema>;
 export type ApproveInvestorSchema = z.infer<typeof approveInvestorSchema>;
+export type RejectInvestorSchema = z.infer<typeof rejectInvestorSchema>;

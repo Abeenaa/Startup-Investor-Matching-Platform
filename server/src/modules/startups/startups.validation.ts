@@ -4,6 +4,7 @@
 import { z } from 'zod';
 import { SECTORS } from '../../shared/constants/sectors';
 import { STAGES } from '../../shared/constants/stages';
+import { LEGAL_STRUCTURES } from '../../shared/constants/legal';
 import { ApprovalStatus } from '@prisma/client';
 
 // Create Startup Profile
@@ -46,10 +47,14 @@ export const createStartupProfileSchema = z.object({
       .max(1000, 'Innovation description must not exceed 1000 characters'),
 
     teamSize: z
-      .number()
-      .int('Team size must be a whole number')
-      .min(1, 'Team size must be at least 1')
-      .max(1000, 'Team size must not exceed 1000')
+      .union([z.number(), z.string()])
+      .transform((val) => (typeof val === 'string' ? parseInt(val, 10) : val))
+      .pipe(
+        z.number()
+          .int('Team size must be a whole number')
+          .min(1, 'Team size must be at least 1')
+          .max(1000, 'Team size must not exceed 1000')
+      )
       .optional(),
 
     fundingHistory: z
@@ -66,6 +71,33 @@ export const createStartupProfileSchema = z.object({
       .url('Website must be a valid URL')
       .optional()
       .or(z.literal('')),
+
+    // Essential Government Compliance Fields
+    phoneNumber: z
+      .string({ required_error: 'Phone number is required' })
+      .min(10, 'Phone number must be at least 10 characters')
+      .max(20, 'Phone number must not exceed 20 characters')
+      .regex(/^[+]?[\d\s()-]+$/, 'Invalid phone number format'),
+
+    tinNumber: z
+      .string({ required_error: 'TIN (Tax Identification Number) is required' })
+      .min(5, 'TIN must be at least 5 characters')
+      .max(50, 'TIN must not exceed 50 characters'),
+
+    legalStructure: z.enum(LEGAL_STRUCTURES as readonly [string, ...string[]], {
+      required_error: 'Legal structure is required',
+      invalid_type_error: `Legal structure must be one of: ${LEGAL_STRUCTURES.join(', ')}`,
+    }),
+
+    yearFounded: z
+      .union([z.number(), z.string()])
+      .transform((val) => (typeof val === 'string' ? parseInt(val, 10) : val))
+      .pipe(
+        z.number()
+          .int('Year founded must be a whole number')
+          .min(1900, 'Year founded must be after 1900')
+          .max(new Date().getFullYear(), `Year founded cannot be in the future`)
+      ),
   }),
 });
 
@@ -108,10 +140,14 @@ export const updateStartupProfileSchema = z.object({
       .optional(),
 
     teamSize: z
-      .number()
-      .int('Team size must be a whole number')
-      .min(1, 'Team size must be at least 1')
-      .max(1000, 'Team size must not exceed 1000')
+      .union([z.number(), z.string()])
+      .transform((val) => (typeof val === 'string' ? parseInt(val, 10) : val))
+      .pipe(
+        z.number()
+          .int('Team size must be a whole number')
+          .min(1, 'Team size must be at least 1')
+          .max(1000, 'Team size must not exceed 1000')
+      )
       .optional(),
 
     fundingHistory: z
@@ -128,6 +164,33 @@ export const updateStartupProfileSchema = z.object({
       .url('Website must be a valid URL')
       .optional()
       .or(z.literal('')),
+
+    // Essential Government Compliance Fields
+    phoneNumber: z
+      .string()
+      .min(10, 'Phone number must be at least 10 characters')
+      .max(20, 'Phone number must not exceed 20 characters')
+      .regex(/^[+]?[\d\s()-]+$/, 'Invalid phone number format')
+      .optional(),
+
+    tinNumber: z
+      .string()
+      .min(5, 'TIN must be at least 5 characters')
+      .max(50, 'TIN must not exceed 50 characters')
+      .optional(),
+
+    legalStructure: z.enum(LEGAL_STRUCTURES as readonly [string, ...string[]]).optional(),
+
+    yearFounded: z
+      .union([z.number(), z.string()])
+      .transform((val) => (typeof val === 'string' ? parseInt(val, 10) : val))
+      .pipe(
+        z.number()
+          .int('Year founded must be a whole number')
+          .min(1900, 'Year founded must be after 1900')
+          .max(new Date().getFullYear(), `Year founded cannot be in the future`)
+      )
+      .optional(),
   }),
 });
 

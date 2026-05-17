@@ -13,6 +13,10 @@ export interface CreateStartupProfileInput {
   problemSolved: string;
   targetMarket: string;
   innovation: string;
+  phoneNumber: string;
+  tinNumber: string;
+  legalStructure: string;
+  yearFounded: number;
   teamSize?: number;
   fundingHistory?: string;
   tractionMetrics?: Record<string, any>;
@@ -27,6 +31,10 @@ export interface UpdateStartupProfileInput {
   problemSolved?: string;
   targetMarket?: string;
   innovation?: string;
+  phoneNumber?: string;
+  tinNumber?: string;
+  legalStructure?: string;
+  yearFounded?: number;
   teamSize?: number;
   fundingHistory?: string;
   tractionMetrics?: Record<string, any>;
@@ -43,6 +51,10 @@ export interface StartupProfile {
   problemSolved: string;
   targetMarket: string;
   innovation: string;
+  phoneNumber: string;
+  tinNumber: string;
+  legalStructure: string;
+  yearFounded: number;
   teamSize?: number;
   fundingHistory?: string;
   tractionMetrics?: Record<string, any>;
