@@ -18,6 +18,7 @@ import type {
   InvestorListItem,
   InvestorFilters,
   ApproveInvestorInput,
+  RejectInvestorInput,
 } from './investors.types';
 
 // Helper function to convert Prisma investor to InvestorProfile
