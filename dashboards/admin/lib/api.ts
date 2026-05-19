@@ -1,7 +1,7 @@
 import { clearSession, getSession, saveSession, type AdminSession, type AdminUser } from './session'
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') ?? 'http://localhost:5000/api'
+import { getApiBaseUrl } from './request'
+const API_BASE_URL = getApiBaseUrl()
 
 type ApiEnvelope<T> = {
   success: boolean

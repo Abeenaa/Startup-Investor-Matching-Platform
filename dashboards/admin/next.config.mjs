@@ -6,7 +6,9 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5000/api/:path*',
+        destination: process.env.NEXT_PUBLIC_API_BASE_URL
+          ? `${process.env.NEXT_PUBLIC_API_BASE_URL.replace(/\/$/, '')}/:path*`
+          : 'http://localhost:5000/api/:path*',
       },
     ]
   },
