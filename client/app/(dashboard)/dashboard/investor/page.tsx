@@ -80,7 +80,7 @@ export default function InvestorDashboard() {
                 </Link>
               </div>
               <div className="space-y-3">
-                {data.matches.recent.length > 0 ? data.matches.recent.map(match => (
+                {data.matches.recent.length > 0 ? data.matches.recent.map((match: any) => (
                   <div key={match.id} className="flex items-center justify-between rounded-2xl border border-border p-4">
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">{match.startupName}</p>
@@ -126,7 +126,7 @@ export default function InvestorDashboard() {
                 <div className="mt-6">
                   <h3 className="mb-3 text-xs font-semibold text-muted-foreground">OPEN PROGRAMS</h3>
                   <div className="space-y-2">
-                    {data.programs.list.slice(0, 3).map(p => (
+                    {data.programs.list.slice(0, 3).map((p: any) => (
                       <div key={p.id} className="rounded-xl border border-border p-3">
                         <p className="text-xs font-medium text-foreground">{p.name}</p>
                         <p className="mt-0.5 text-xs text-muted-foreground">{p.type} • Deadline {new Date(p.deadline).toLocaleDateString()}</p>
@@ -146,7 +146,7 @@ export default function InvestorDashboard() {
                 <Link href="/dashboard/discover"><Button variant="outline" className="h-8 text-xs">Browse All</Button></Link>
               </div>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                {data.directory.recentStartups.map(s => (
+                {data.directory.recentStartups.map((s: any) => (
                   <Link key={s.id} href={`/dashboard/discover/${s.id}`}>
                     <div className="rounded-2xl border border-border p-4 transition hover:border-primary/30 hover:bg-primary/5">
                       <p className="text-sm font-semibold text-foreground">{s.name}</p>

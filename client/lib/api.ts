@@ -231,19 +231,19 @@ export async function assignReviewer(applicationId: string, reviewerId: string) 
 }
 
 export async function getMyProfile() {
-  return (await request<any>('/startups/me')).data
+  return (await request<any>('/startups/profile')).data
 }
 
 export async function createProfile(data: any) {
-  return (await request<any>('/startups', { method: 'POST', body: JSON.stringify(data) })).data
+  return (await request<any>('/startups/profile', { method: 'POST', body: JSON.stringify(data) })).data
 }
 
 export async function updateProfile(data: any) {
-  return (await request<any>('/startups/me', { method: 'PATCH', body: JSON.stringify(data) })).data
+  return (await request<any>('/startups/profile', { method: 'PATCH', body: JSON.stringify(data) })).data
 }
 
 export async function getMyApplications() {
-  return (await request<{ data: any[] }>('/applications/my')).data.data
+  return (await request<{ data: any[] }>('/applications/my-applications')).data.data
 }
 
 export async function createApplication(programId: string) {
@@ -268,4 +268,23 @@ export async function getAssignments() {
 
 export async function submitEvaluation(applicationId: string, data: any) {
   return (await request<any>(`/evaluations/${applicationId}`, { method: 'POST', body: JSON.stringify(data) })).data
+}
+
+export async function getStartupDirectory(filters?: { sector?: string; stage?: string; search?: string; page?: number }) {
+  const params = new URLSearchParams()
+  if (filters?.sector) params.append('sector', filters.sector)
+  if (filters?.stage) params.append('stage', filters.stage)
+  if (filters?.search) params.append('search', filters.search)
+  if (filters?.page) params.append('page', filters.page.toString())
+  params.append('limit', '12') // Default limit for pagination
+  const query = params.toString() ? `?${params.toString()}` : ''
+  return (await request<{ data: any[]; pagination: { total: number; totalPages: number; page: number; limit: number } }>(`/directory/startups${query}`)).data
+}
+
+export async function getStartupById(id: string) {
+  return (await request<any>(`/directory/startups/${id}`)).data
+}
+
+export async function getMatches() {
+  return (await request<{ data: any[] }>('/investors/matches')).data.data
 }

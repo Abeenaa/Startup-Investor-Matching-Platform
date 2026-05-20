@@ -1,17 +1,9 @@
 export function DashboardLoading() {
   return (
-    <div className="space-y-6 animate-pulse">
-      {/* Stats skeleton */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-32 rounded-2xl bg-muted/50" />
-        ))}
-      </div>
-
-      {/* Content skeleton */}
-      <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <div className="h-96 rounded-2xl bg-muted/50" />
-        <div className="h-96 rounded-2xl bg-muted/50" />
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="text-center">
+        <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        <p className="text-sm text-muted-foreground">Loading dashboard...</p>
       </div>
     </div>
   )

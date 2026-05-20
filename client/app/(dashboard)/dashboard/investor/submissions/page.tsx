@@ -19,7 +19,7 @@ export default function SubmissionsPage() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    getAssignments('completed')
+    getAssignments()
       .then((response) => setAssignments(response.data))
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load submissions'))
   }, [])
@@ -28,7 +28,7 @@ export default function SubmissionsPage() {
     <DashboardShell title="My Submissions" description="Completed reviewer assignments" navItems={navItems}>
       {error ? <div className="mb-6 rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">{error}</div> : null}
       <div className="space-y-3">
-        {assignments.length ? assignments.map((submission) => (
+        {assignments.length ? assignments.map((submission: any) => (
           <Card key={submission.id} className="p-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>

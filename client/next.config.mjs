@@ -3,10 +3,20 @@ const nextConfig = {
   turbopack: {
     root: process.cwd(),
   },
-  // Optimize for faster dev builds
+  // Performance optimizations
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', 'recharts'],
   },
+  // Image optimization
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
+  },
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  // API proxy
   async rewrites() {
     return [
       {

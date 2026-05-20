@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -26,6 +26,22 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  // Check if already logged in
+  useEffect(() => {
+    const sessionData = localStorage.getItem(ROLE_SESSION_KEY)
+    if (sessionData) {
+      try {
+        const session = JSON.parse(sessionData)
+        const portal = ROLE_PORTALS[session.user.role]
+        if (portal) {
+          router.replace(portal.url)
+        }
+      } catch {
+        localStorage.removeItem(ROLE_SESSION_KEY)
+      }
+    }
+  }, [router])
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
@@ -47,20 +63,21 @@ export default function LoginPage() {
       const portal = ROLE_PORTALS[role]
 
       if (portal) {
-        const sessionData = JSON.stringify({
+        const sessionData = {
           user: body.data.user,
           tokens: body.data.tokens,
-        })
+        }
+        
         // Save session data
-        localStorage.setItem(ROLE_SESSION_KEY, sessionData)
-        // Redirect to role-specific dashboard
-        router.push(portal.url)
+        localStorage.setItem(ROLE_SESSION_KEY, JSON.stringify(sessionData))
+        
+        // Use window.location for full page reload (ensures clean state)
+        window.location.href = portal.url
       } else {
         throw new Error('Unknown role: ' + role)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed')
-    } finally {
       setLoading(false)
     }
   }
