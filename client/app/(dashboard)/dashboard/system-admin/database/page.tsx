@@ -33,7 +33,7 @@ export default function DatabasePage() {
   return (
     <DashboardShell title="Database" description="Table-level data volume from the live database" navItems={navItems} portalLabel="SYSTEM ADMIN">
       {loading ? (
-        <div className="space-y-3">{[...Array(6)].map((_, i) => <div key={i} className="skeleton h-16 rounded-2xl" />)}</div>
+        <div className="space-y-3">{[...Array(6)].map((_, i: number) => <div key={i} className="skeleton h-16 rounded-2xl" />)}</div>
       ) : (
         <div className="space-y-6">
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">

@@ -45,7 +45,7 @@ export default function StartupDetailPage() {
 
       {loading ? (
         <div className="space-y-4">
-          {[...Array(3)].map((_, i) => <div key={i} className="h-32 animate-pulse rounded-2xl border border-border bg-muted" />)}
+          {[...Array(3)].map((_, i: number) => <div key={i} className="h-32 animate-pulse rounded-2xl border border-border bg-muted" />)}
         </div>
       ) : startup ? (
         <div className="space-y-4">

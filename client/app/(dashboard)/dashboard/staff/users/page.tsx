@@ -83,7 +83,7 @@ export default function UsersPage() {
       </div>
 
       {loading ? (
-        <div className="space-y-2">{[...Array(5)].map((_, i) => <div key={i} className="skeleton h-16 rounded-2xl" />)}</div>
+        <div className="space-y-2">{[...Array(5)].map((_, i: number) => <div key={i} className="skeleton h-16 rounded-2xl" />)}</div>
       ) : filtered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border bg-card p-12 text-center">
           <p className="text-sm text-muted-foreground">No users found.</p>

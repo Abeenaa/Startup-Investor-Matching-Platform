@@ -97,7 +97,7 @@ export default function ReportsPage() {
             <ResponsiveContainer width="100%" height={220}>
               <PieChart>
                 <Pie data={appStatusData} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(0)}%`}>
-                  {appStatusData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                  {appStatusData.map((_, i: number) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                 </Pie>
                 <Tooltip />
               </PieChart>

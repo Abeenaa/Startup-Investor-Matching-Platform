@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { CheckCircle, Clock, Star, ChevronDown, ChevronUp, Send, Loader2, AlertCircle } from 'lucide-react'
 import { DashboardShell } from '@/components/dashboard-shell'
 import { Badge } from '@/components/ui/badge'
-import { getAssignments, submitEvaluation, type ReviewerAssignmentsResponse } from '@/lib/api'
+import { getAssignments, submitEvaluation, type ReviewerAssignmentsResponse } from '@/lib/reviewer/api'
 
 const navItems = [
   { href: '/dashboard/reviewer', label: 'Dashboard' },
@@ -94,7 +94,7 @@ export default function SubmissionsPage() {
       )}
 
       {loading ? (
-        <div className="space-y-3">{[...Array(3)].map((_, i) => <div key={i} className="skeleton h-20 rounded-2xl" />)}</div>
+        <div className="space-y-3">{[...Array(3)].map((_, i: number) => <div key={i} className="skeleton h-20 rounded-2xl" />)}</div>
       ) : assignments.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border bg-card p-12 text-center">
           <p className="text-sm font-medium text-foreground">No {tab} assignments</p>

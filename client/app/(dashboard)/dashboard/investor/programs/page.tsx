@@ -36,7 +36,7 @@ export default function ProgramsPage() {
 
       {loading ? (
         <div className="space-y-3">
-          {[...Array(4)].map((_, i) => <div key={i} className="h-24 animate-pulse rounded-2xl border border-border bg-muted" />)}
+          {[...Array(4)].map((_, i: number) => <div key={i} className="h-24 animate-pulse rounded-2xl border border-border bg-muted" />)}
         </div>
       ) : programs.length === 0 ? (
         <Card className="p-8 text-center text-sm text-muted-foreground">No active programs at the moment.</Card>

@@ -160,6 +160,15 @@ export function logout() {
   clearSession()
 }
 
+export async function login(email: string, password: string) {
+  const result = await request<LoginResponse>('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  })
+  saveSession(result.data)
+  return result.data
+}
+
 export async function getDashboard() {
   const session = getSession()
   if (!session) throw new Error('Not authenticated')

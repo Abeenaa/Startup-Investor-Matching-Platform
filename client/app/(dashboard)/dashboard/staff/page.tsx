@@ -45,7 +45,7 @@ export default function DashboardPage() {
               <h2 className="text-sm font-semibold text-foreground">Recent Applications</h2>
               <p className="mt-1 text-xs text-muted-foreground">Live data from `/api/dashboard/staff-admin`</p>
               <div className="mt-4 space-y-3">
-                {data.recentApplications.map((application) => (
+                {data.recentApplications.map((application: StaffDashboardData["recentApplications"][number]) => (
                   <div key={application.id} className="flex flex-col gap-3 rounded-2xl border border-border p-4 md:flex-row md:items-center md:justify-between">
                     <div>
                       <p className="text-sm font-medium text-foreground">{application.startupName}</p>

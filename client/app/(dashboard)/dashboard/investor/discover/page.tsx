@@ -104,7 +104,7 @@ export default function DiscoverPage() {
       {/* Grid */}
       {loading ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(6)].map((_, i: number) => (
             <div key={i} className="h-48 animate-pulse rounded-2xl border border-border bg-muted" />
           ))}
         </div>

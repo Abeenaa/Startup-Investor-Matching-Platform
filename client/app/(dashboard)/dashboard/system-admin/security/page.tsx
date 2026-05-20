@@ -75,7 +75,7 @@ export default function SecurityPage() {
           </div>
           <div className="divide-y divide-border">
             {loading ? (
-              [...Array(5)].map((_, i) => <div key={i} className="skeleton mx-5 my-3 h-12 rounded-xl" />)
+              [...Array(5)].map((_, i: number) => <div key={i} className="skeleton mx-5 my-3 h-12 rounded-xl" />)
             ) : filtered.length === 0 ? (
               <p className="px-5 py-8 text-center text-sm text-muted-foreground">No users found.</p>
             ) : filtered.map(user => (

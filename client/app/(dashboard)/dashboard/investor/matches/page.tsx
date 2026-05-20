@@ -46,7 +46,7 @@ export default function MatchesPage() {
 
       {loading ? (
         <div className="space-y-3">
-          {[...Array(4)].map((_, i) => <div key={i} className="h-28 animate-pulse rounded-2xl border border-border bg-muted" />)}
+          {[...Array(4)].map((_, i: number) => <div key={i} className="h-28 animate-pulse rounded-2xl border border-border bg-muted" />)}
         </div>
       ) : matches.length === 0 ? (
         <Card className="p-12 text-center">
@@ -59,7 +59,7 @@ export default function MatchesPage() {
         </Card>
       ) : (
         <div className="space-y-3">
-          {matches.map((match, i) => (
+          {matches.map((match, i: number) => (
             <Card key={match.id || i} className="p-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
