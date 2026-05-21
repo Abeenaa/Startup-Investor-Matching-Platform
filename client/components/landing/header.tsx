@@ -20,7 +20,7 @@ export default function Header() {
       <nav className="innobiz-shell flex items-center justify-between py-4">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between w-full">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/innobiz-k.png" alt="Innobiz-K" width={140} height={40} className="h-7 w-auto" loading="eager" />
+            <Image src="/innobiz-k.png" alt="Innobiz-K" width={180} height={50} className="h-9 w-auto" loading="eager" />
           </Link>
 
           <button
