@@ -3,7 +3,7 @@
 export default function Partners() {
   return (
     <section className="innobiz-shell py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <h2 className="mb-10 text-center text-3xl font-bold tracking-[-0.05em] text-foreground">
           Trusted by
         </h2>
@@ -24,5 +24,5 @@ export default function Partners() {
         </div>
       </div>
     </section>
-  )
+  );
 }

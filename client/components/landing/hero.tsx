@@ -3,12 +3,17 @@
 import { AnimatedMarqueeHero } from '@/components/ui/hero-3'
 
 const HERO_IMAGES = [
-  'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&auto=format&fit=crop&q=80',
+  '/hero/1.jpg',
+  '/hero/2.jpg',
+  '/hero/3.jpg',
+  '/hero/4.jpg',
+  '/hero/5.jpg',
+  '/hero/6.jpg',
+  '/hero/7.png',
+  '/hero/8.png',
+  '/hero/9.png',
+  '/hero/10.png',
+  '/hero/11.png'
 ]
 
 export default function Hero() {

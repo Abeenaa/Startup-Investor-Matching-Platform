@@ -35,15 +35,15 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {!data ? (
-        <div className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {[...Array(4)].map((_, i: number) => <div key={i} className="skeleton h-28 rounded-2xl" />)}
-          </div>
-          <div className="skeleton h-64 rounded-2xl" />
-        </div>
-      ) : (
-        <div className="space-y-6 page-transition">
+       {!data ? (
+         <div className="space-y-4">
+           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+             {[...Array(4)].map((_, i: number) => <div key={i} className="skeleton h-28 rounded-2xl" />)}
+           </div>
+           <div className="skeleton h-64 rounded-2xl" />
+         </div>
+       ) : (
+         <div className="max-w-7xl mx-auto px-6 lg:px-8 space-y-6 page-transition">
           {/* Stats */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <div className="stat-card border-l-4 border-l-[#28C3BE] stagger-item">

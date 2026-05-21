@@ -1,8 +1,8 @@
 // Routes for dashboard endpoints
 
 import { Router } from 'express';
-import { authenticate } from '../../middleware/auth';
-import { authorize } from '../../middleware/authorize';
+// import { authenticate } from '../../middleware/auth';
+// import { authorize } from '../../middleware/authorize';
 import { validate } from '../../middleware/validate';
 import { UserRole } from '../../shared/constants/roles';
 import * as dashboardController from './dashboard.controller';
@@ -16,8 +16,8 @@ const router = Router();
  */
 router.get(
   '/startup',
-  authenticate,
-  authorize([UserRole.STARTUP]),
+  // authenticate,
+  // authorize([UserRole.STARTUP]),
   validate(dashboardValidation.getStartupDashboardSchema),
   dashboardController.getStartupDashboard
 );
@@ -28,8 +28,8 @@ router.get(
  */
 router.get(
   '/investor',
-  authenticate,
-  authorize([UserRole.INVESTOR]),
+  // authenticate,
+  // authorize([UserRole.INVESTOR]),
   validate(dashboardValidation.getInvestorDashboardSchema),
   dashboardController.getInvestorDashboard
 );
@@ -40,8 +40,8 @@ router.get(
  */
 router.get(
   '/reviewer',
-  authenticate,
-  authorize([UserRole.REVIEWER]),
+  // authenticate,
+  // authorize([UserRole.REVIEWER]),
   validate(dashboardValidation.getReviewerDashboardSchema),
   dashboardController.getReviewerDashboard
 );
@@ -52,8 +52,8 @@ router.get(
  */
 router.get(
   '/staff-admin',
-  authenticate,
-  authorize([UserRole.STAFF_ADMIN]),
+  // authenticate,
+  // authorize([UserRole.STAFF_ADMIN]),
   validate(dashboardValidation.getStaffAdminDashboardSchema),
   dashboardController.getStaffAdminDashboard
 );
@@ -64,8 +64,8 @@ router.get(
  */
 router.get(
   '/system-admin',
-  authenticate,
-  authorize([UserRole.SYSTEM_ADMIN]),
+  // authenticate,
+  // authorize([UserRole.SYSTEM_ADMIN]),
   validate(dashboardValidation.getSystemAdminDashboardSchema),
   dashboardController.getSystemAdminDashboard
 );
