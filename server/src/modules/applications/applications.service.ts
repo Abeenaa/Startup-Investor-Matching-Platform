@@ -55,29 +55,29 @@ export const createApplication = async (
     throw new BadRequestError('You have already applied to this program');
   }
 
-  // Create draft application
-  const application = await prisma.application.create({
-    data: {
-      startupId,
-      programId: data.programId,
-      status: ApplicationStatus.DRAFT,
-      additionalInfo: data.additionalInfo,
-      pitchDeck: data.pitchDeck,
-      businessPlan: data.businessPlan,
-      financials: data.financials,
-      otherDocuments: data.otherDocuments as any, // JSON field
-    },
-    include: {
-      program: {
-        select: {
-          id: true,
-          name: true,
-          type: true,
-          deadline: true,
+// Create draft application
+    const application = await prisma.application.create({
+      data: {
+        programId: data.programId,
+        additionalInfo: data.additionalInfo,
+        pitchDeck: data.pitchDeck,
+        businessPlan: data.businessPlan,
+        financials: data.financials,
+        otherDocuments: data.otherDocuments,
+        startupId,
+        status: ApplicationStatus.DRAFT,
+      },
+      include: {
+        program: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            deadline: true,
+          },
         },
       },
-    },
-  });
+    });
 
   return formatApplicationResponse(application);
 };
@@ -113,27 +113,27 @@ export const updateApplication = async (
     throw new BadRequestError('Only draft applications can be updated');
   }
 
-  // Update application
-  const updatedApplication = await prisma.application.update({
-    where: { id: applicationId },
-    data: {
-      additionalInfo: data.additionalInfo,
-      pitchDeck: data.pitchDeck,
-      businessPlan: data.businessPlan,
-      financials: data.financials,
-      otherDocuments: data.otherDocuments as any, // JSON field
-    },
-    include: {
-      program: {
-        select: {
-          id: true,
-          name: true,
-          type: true,
-          deadline: true,
+// Update application
+    const updatedApplication = await prisma.application.update({
+      where: { id: applicationId },
+      data: {
+        additionalInfo: data.additionalInfo,
+        pitchDeck: data.pitchDeck,
+        businessPlan: data.businessPlan,
+        financials: data.financials,
+        otherDocuments: data.otherDocuments,
+      },
+      include: {
+        program: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            deadline: true,
+          },
         },
       },
-    },
-  });
+    });
 
   return formatApplicationResponse(updatedApplication);
 };

@@ -108,7 +108,7 @@ export default function SignupPage() {
           <ArrowLeft size={15} /> Back to home
         </Link>
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="Innobiz-K" width={24} height={14} className="h-6 w-auto" />
+          <Image src="/innobiz-k.png" alt="Innobiz-K" width={180} height={50} className="h-9 w-auto" />
           <span className="text-sm font-bold tracking-widest text-foreground">INNOBIZ-K</span>
         </Link>
       </div>
