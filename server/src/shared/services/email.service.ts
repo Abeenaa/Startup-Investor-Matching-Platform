@@ -14,25 +14,25 @@ class EmailService {
     try {
       if (env.RESEND_API_KEY) {
         this.resend = new Resend(env.RESEND_API_KEY)
-        console.log('✅ Resend email service initialized')
-        console.log(`📧 Sending emails from: ${env.EMAIL_FROM}`)
+        console.log('[EMAIL] Resend email service initialized')
+        console.log(`[EMAIL] Sending emails from: ${env.EMAIL_FROM}`)
       } else {
-        console.warn('⚠️ RESEND_API_KEY not configured. Email notifications disabled.')
+        console.warn('[EMAIL] RESEND_API_KEY not configured. Email notifications disabled.')
       }
     } catch (error) {
-      console.error('❌ Failed to initialize Resend:', error)
+      console.error('[EMAIL] Failed to initialize Resend:', error)
     }
   }
 
   async sendEmail(to: string, subject: string, html: string) {
     if (!this.resend) {
-      console.warn('⚠️ Resend not initialized. Email not sent to:', to)
+      console.warn('[EMAIL] Resend not initialized. Email not sent to:', to)
       return false
     }
 
     try {
-      console.log(`📤 Attempting to send email to: ${to}`)
-      console.log(`📋 Subject: ${subject}`)
+      console.log(`[EMAIL] Attempting to send email to: ${to}`)
+      console.log(`[EMAIL] Subject: ${subject}`)
       
       const result = await this.resend.emails.send({
         from: env.EMAIL_FROM,
@@ -41,24 +41,24 @@ class EmailService {
         html,
       })
       
-      console.log(`✅ Email sent successfully!`)
-      console.log(`📧 Recipient: ${to}`)
-      console.log(`🆔 Email ID: ${result.data?.id || 'N/A'}`)
+      console.log(`[EMAIL] Email sent successfully!`)
+      console.log(`[EMAIL] Recipient: ${to}`)
+      console.log(`[EMAIL] Email ID: ${result.data?.id || 'N/A'}`)
       
       if (result.error) {
-        console.error('⚠️ Resend error:', result.error)
-        console.log('\n💡 TIP: In test mode, you can only send to your verified email.')
+        console.error('[EMAIL] Resend error:', result.error)
+        console.log('\n[EMAIL] TIP: In test mode, you can only send to your verified email.')
         console.log('   Either use your verified email or verify a domain at resend.com/domains\n')
       }
       
       return true
     } catch (error: any) {
-      console.error('❌ Failed to send email:', error)
+      console.error('[EMAIL] Failed to send email:', error)
       console.error('Error details:', error.message)
       
       // Check if it's a 403 validation error
       if (error.statusCode === 403 || error.name === 'validation_error') {
-        console.log('\n💡 SOLUTION: In Resend test mode, you can only send emails to your verified email address.')
+        console.log('\n[EMAIL] SOLUTION: In Resend test mode, you can only send emails to your verified email address.')
         console.log('   Register with your verified email to receive test emails.\n')
       }
       
@@ -72,7 +72,7 @@ class EmailService {
 
   async sendWelcomeStartup(to: string, name: string) {
     const content = `
-      ${heading('Welcome to Innobiz-K! 🎉')}
+      ${heading('Welcome to Innobiz-K!')}
       ${paragraph(`Hi <strong style="color: #ffffff;">${name}</strong>,`)}
       ${paragraph('Welcome to <strong style="color: #28C3BE;">Innobiz-K Ethiopia</strong>, the premier platform connecting innovative startups with investors and funding opportunities.')}
       ${infoBox(`
@@ -91,7 +91,7 @@ class EmailService {
 
   async sendWelcomeInvestor(to: string, name: string) {
     const content = `
-      ${heading('Welcome to Innobiz-K! 🎉')}
+      ${heading('Welcome to Innobiz-K!')}
       ${paragraph(`Hi <strong style="color: #ffffff;">${name}</strong>,`)}
       ${paragraph('Thank you for joining <strong style="color: #28C3BE;">Innobiz-K Ethiopia</strong> as an investor. We\'re excited to connect you with innovative startups.')}
       ${infoBox(`
@@ -110,7 +110,7 @@ class EmailService {
 
   async sendWelcomeReviewer(to: string, name: string, tempPassword: string) {
     const content = `
-      ${heading('Welcome to the Innobiz-K Review Team! 👋')}
+      ${heading('Welcome to the Innobiz-K Review Team!')}
       ${paragraph(`Hi <strong style="color: #ffffff;">${name}</strong>,`)}
       ${paragraph('You have been added as a reviewer on the Innobiz-K platform. Your expertise will help evaluate startup applications and support Ethiopia\'s innovation ecosystem.')}
       ${infoBox(`
@@ -119,7 +119,7 @@ class EmailService {
         <p style="margin: 5px 0; color: #b0b0b0;">Temporary Password: <strong style="color: #FFC300;">${tempPassword}</strong></p>
       `, '#FFC300')}
       <div style="background-color: #2a1a1a; border-left: 4px solid #ef4444; border-radius: 8px; padding: 15px; margin: 20px 0;">
-        <p style="margin: 0; color: #fca5a5; font-size: 14px;">⚠️ <strong>Important:</strong> Please change your password immediately after first login for security.</p>
+        <p style="margin: 0; color: #fca5a5; font-size: 14px;"><strong>Important:</strong> Please change your password immediately after first login for security.</p>
       </div>
       ${button('Login to Dashboard', `${this.baseUrl}/login`)}
     `
@@ -132,13 +132,13 @@ class EmailService {
 
   async sendStartupProfileApproved(to: string, startupName: string) {
     const content = `
-      ${heading('Profile Approved! ✅')}
+      ${heading('Profile Approved!')}
       ${paragraph(`Congratulations <strong style="color: #ffffff;">${startupName}</strong>!`)}
       ${paragraph('Great news! Your startup profile has been approved and is now visible in the Innobiz-K directory.')}
       ${infoBox(`
         <div style="text-align: center;">
           <div style="display: inline-block; padding: 12px 24px; background-color: #10b981; border-radius: 8px; margin: 10px 0;">
-            <p style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 700;">✓ PROFILE APPROVED</p>
+            <p style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 700;">PROFILE APPROVED</p>
           </div>
         </div>
       `, '#10b981')}
@@ -150,7 +150,7 @@ class EmailService {
       </ul>
       ${button('Browse Programs', `${this.baseUrl}/dashboard/startup/programs`, '#28C3BE')}
     `
-    return this.sendEmail(to, '🎉 Your Startup Profile Has Been Approved', emailLayout(content))
+    return this.sendEmail(to, 'Your Startup Profile Has Been Approved', emailLayout(content))
   }
 
   async sendStartupProfileRejected(to: string, startupName: string, reason: string) {
@@ -175,19 +175,19 @@ class EmailService {
 
   async sendInvestorProfileApproved(to: string, investorName: string) {
     const content = `
-      ${heading('Profile Approved! ✅')}
+      ${heading('Profile Approved!')}
       ${paragraph(`Congratulations <strong style="color: #ffffff;">${investorName}</strong>!`)}
       ${paragraph('Your investor profile has been approved. You now have full access to the startup directory and can connect with innovative Ethiopian companies.')}
       ${infoBox(`
         <div style="text-align: center;">
           <div style="display: inline-block; padding: 12px 24px; background-color: #10b981; border-radius: 8px; margin: 10px 0;">
-            <p style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 700;">✓ VERIFIED INVESTOR</p>
+            <p style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 700;">VERIFIED INVESTOR</p>
           </div>
         </div>
       `, '#10b981')}
       ${button('Discover Startups', `${this.baseUrl}/dashboard/investor/discover`, '#28C3BE')}
     `
-    return this.sendEmail(to, '🎉 Your Investor Profile Has Been Approved', emailLayout(content))
+    return this.sendEmail(to, 'Your Investor Profile Has Been Approved', emailLayout(content))
   }
 
   async sendInvestorProfileRejected(to: string, investorName: string, reason: string) {
@@ -210,13 +210,13 @@ class EmailService {
 
   async sendApplicationSubmitted(to: string, startupName: string, programName: string) {
     const content = `
-      ${heading('Application Submitted Successfully! 📝')}
+      ${heading('Application Submitted Successfully!')}
       ${paragraph(`Hi <strong style="color: #ffffff;">${startupName}</strong>,`)}
       ${paragraph(`Your application to <strong style="color: #28C3BE;">${programName}</strong> has been successfully submitted and is now under review.`)}
       ${infoBox(`
         <div style="text-align: center;">
           <div style="display: inline-block; padding: 10px 20px; background-color: #3b82f6; border-radius: 8px; margin: 10px 0;">
-            <p style="margin: 0; color: #ffffff; font-size: 16px; font-weight: 600;">✓ APPLICATION RECEIVED</p>
+            <p style="margin: 0; color: #ffffff; font-size: 16px; font-weight: 600;">APPLICATION RECEIVED</p>
           </div>
         </div>
       `, '#3b82f6')}
@@ -261,14 +261,13 @@ class EmailService {
 
   async sendApplicationApproved(to: string, startupName: string, programName: string) {
     const content = `
-      ${heading('Congratulations! 🎉')}
+      ${heading('Congratulations!')}
       ${paragraph(`Hi <strong style="color: #ffffff;">${startupName}</strong>,`)}
       <p style="color: #b0b0b0; line-height: 1.7; margin: 0 0 20px 0; font-size: 17px;">
         We're <strong style="color: #10b981;">thrilled</strong> to inform you that your application to <strong style="color: #28C3BE;">${programName}</strong> has been <strong style="color: #10b981;">approved</strong>!
       </p>
       ${infoBox(`
         <div style="text-align: center; padding: 20px 0;">
-          <p style="margin: 0; font-size: 48px;">🎊</p>
           <p style="margin: 15px 0 0 0; color: #10b981; font-size: 24px; font-weight: 700;">APPLICATION APPROVED!</p>
         </div>
       `, '#10b981')}
@@ -276,7 +275,7 @@ class EmailService {
       ${paragraph('This is an exciting milestone for your startup journey. Congratulations on your achievement!')}
       ${button('View Application', `${this.baseUrl}/dashboard/startup/applications`, '#10b981')}
     `
-    return this.sendEmail(to, `🎉 Application Approved: ${programName}`, emailLayout(content))
+    return this.sendEmail(to, `Application Approved: ${programName}`, emailLayout(content))
   }
 
   async sendApplicationRejected(to: string, startupName: string, programName: string, reason?: string) {
@@ -306,7 +305,7 @@ class EmailService {
 
   async sendReviewerAssigned(to: string, reviewerName: string, startupName: string, programName: string, applicationId: string) {
     const content = `
-      ${heading('New Review Assignment 📋')}
+      ${heading('New Review Assignment')}
       ${paragraph(`Hi <strong style="color: #ffffff;">${reviewerName}</strong>,`)}
       ${paragraph('You have been assigned to review a new application. Your expertise is valuable in helping us identify promising startups for our programs.')}
       ${infoBox(`

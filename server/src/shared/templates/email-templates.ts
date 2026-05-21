@@ -86,6 +86,6 @@ export const paragraph = (text: string) => `
 
 export const tip = (text: string) => `
   <p style="color: #808080; font-size: 13px; margin: 25px 0 0 0; line-height: 1.6; font-style: italic;">
-    💡 Tip: ${text}
+    Tip: ${text}
   </p>
 `

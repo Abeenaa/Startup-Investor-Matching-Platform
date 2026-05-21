@@ -22,29 +22,29 @@ const router = Router();
 router.use(adminRateLimit);
 
 // User Management
-// POST /api/admin/users - Create users (both SYSTEM_ADMIN and STAFF_ADMIN can create users)
+// POST /api/admin/users - Create users (SYSTEM_ADMIN only)
 router.post(
   '/users',
   authenticate,
-  adminOnly,  // Changed from systemAdminOnly to adminOnly
+  systemAdminOnly,
   validate(createUserSchema),
   adminController.createUser
 );
 
-// GET /api/admin/users - Get all users with filtering (both admins)
+// GET /api/admin/users - Get all users with filtering (SYSTEM_ADMIN only)
 router.get(
   '/users',
   authenticate,
-  adminOnly,  // Changed from systemAdminOnly
+  systemAdminOnly,
   validate(getUsersSchema),
   adminController.getUsers
 );
 
-// PATCH /api/admin/users/:userId - Update user (both admins)
+// PATCH /api/admin/users/:userId - Update user (SYSTEM_ADMIN only)
 router.patch(
   '/users/:userId',
   authenticate,
-  adminOnly,  // Changed from systemAdminOnly
+  systemAdminOnly,
   validate(updateUserSchema),
   adminController.updateUser
 );

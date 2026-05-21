@@ -10,8 +10,8 @@ const startServer = async () => {
     // Try to connect to database with retries
     await connectDatabase();
   } catch (error) {
-    console.error('\n⚠️  WARNING: Starting server without database connection');
-    console.error('📖 See server/DATABASE_TROUBLESHOOTING.md for help\n');
+    console.error('\n[SERVER] WARNING: Starting server without database connection');
+    console.error('[SERVER] Database connection failed\n');
     
     // Continue without database for frontend development
     // Comment out the line below if you want to exit on database failure
@@ -19,11 +19,11 @@ const startServer = async () => {
   }
 
   const server = app.listen(PORT, () => {
-    console.log('\n🚀 Server started successfully!');
-    console.log(`📍 Port: ${PORT}`);
-    console.log(`🏥 Health check: http://localhost:${PORT}/health`);
-    console.log(`🔌 API base: http://localhost:${PORT}/api`);
-    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}\n`);
+    console.log('\n[SERVER] Server started successfully!');
+    console.log(`[SERVER] Port: ${PORT}`);
+    console.log(`[SERVER] Health check: http://localhost:${PORT}/health`);
+    console.log(`[SERVER] API base: http://localhost:${PORT}/api`);
+    console.log(`[SERVER] Environment: ${process.env.NODE_ENV || 'development'}\n`);
   });
 
   const shutdown = async (signal: string) => {
@@ -31,17 +31,17 @@ const startServer = async () => {
     server.close(async () => {
       try {
         await disconnectDatabase();
-        console.log('✅ Database disconnected');
+        console.log('[SERVER] Database disconnected');
       } catch (error) {
-        console.log('⚠️  Database was not connected');
+        console.log('[SERVER] Database was not connected');
       }
-      console.log('✅ Server closed');
+      console.log('[SERVER] Server closed');
       process.exit(0);
     });
 
     // Force shutdown after 10 seconds
     setTimeout(() => {
-      console.error('⚠️  Forced shutdown after timeout');
+      console.error('[SERVER] Forced shutdown after timeout');
       process.exit(1);
     }, 10000);
   };
@@ -50,17 +50,17 @@ const startServer = async () => {
   process.on('SIGINT', () => shutdown('SIGINT'));
 
   process.on('unhandledRejection', (reason) => {
-    console.error('❌ Unhandled Rejection:', reason);
+    console.error('[SERVER] Unhandled Rejection:', reason);
     server.close(() => process.exit(1));
   });
 
   process.on('uncaughtException', (error) => {
-    console.error('❌ Uncaught Exception:', error);
+    console.error('[SERVER] Uncaught Exception:', error);
     server.close(() => process.exit(1));
   });
 };
 
 startServer().catch((error) => {
-  console.error('❌ Failed to start server:', error);
+  console.error('[SERVER] Failed to start server:', error);
   process.exit(1);
 });

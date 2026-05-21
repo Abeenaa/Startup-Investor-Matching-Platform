@@ -87,18 +87,49 @@ innobiz-k-ethiopia-platform/
 
 ### 4. Staff Admin (`/dashboard/staff`)
 - Dashboard overview with system stats
-- Program management
+- Program management (create, update, delete programs)
 - Application review & approval
-- User management
+- Reviewer assignment to applications
+- Profile approval (startups & investors)
 - **Reports & analytics** (charts)
 - Settings
+- **Note**: Cannot create, update, or delete users
 
 ### 5. System Admin (`/dashboard/system-admin`)
 - Dashboard overview with system health
+- **User management** (create, update, delete users)
 - Server monitoring
 - Database management
 - Security controls
 - Settings
+- **Note**: Full system-level access including user account management
+
+## Admin Role Separation
+
+The platform implements a clear separation between system administration and business operations:
+
+### System Admin (SYSTEM_ADMIN)
+**Responsibilities**: System-level management and user account control
+- Create, update, and delete user accounts (all roles)
+- Manage system configuration
+- Monitor server health and performance
+- Database administration
+- Security and access control
+
+### Staff Admin (STAFF_ADMIN)
+**Responsibilities**: Business operations and program management
+- Create, update, and delete programs
+- Approve/reject startup and investor profiles
+- Review and approve/reject applications
+- Assign reviewers to applications
+- View business analytics and reports
+- **Cannot** create, update, or delete user accounts
+
+This separation ensures:
+- Clear role boundaries and responsibilities
+- Enhanced security by limiting user management access
+- Focused workflows for each administrative role
+- Audit trail for sensitive operations
 
 ## Quick Start
 
@@ -139,7 +170,13 @@ JWT_REFRESH_SECRET="your-refresh-secret-min-32-chars"
 PORT=5000
 NODE_ENV=development
 CORS_ORIGIN=http://localhost:3000
+
+# Email Configuration (Optional - for notifications)
+RESEND_API_KEY=your_resend_api_key
+EMAIL_FROM=noreply@yourdomain.com
 ```
+
+**Note**: Email notifications are optional. The system will work without them, but users won't receive automated emails for profile approvals, application updates, etc.
 
 **Client** (`client/.env.local`):
 ```env
@@ -291,11 +328,12 @@ GET    /api/dashboard/system-admin  # System admin dashboard data
 
 ### Admin
 ```
-POST   /api/admin/users             # Create user
-GET    /api/admin/users             # List users
-PATCH  /api/admin/users/:id         # Update user
-DELETE /api/admin/users/:id         # Delete user
-POST   /api/admin/assign-reviewers  # Assign reviewers to application
+POST   /api/admin/users             # Create user (SYSTEM_ADMIN only)
+GET    /api/admin/users             # List users (SYSTEM_ADMIN only)
+PATCH  /api/admin/users/:id         # Update user (SYSTEM_ADMIN only)
+DELETE /api/admin/users/:id         # Delete user (SYSTEM_ADMIN only)
+POST   /api/admin/assign-reviewers  # Assign reviewers (STAFF_ADMIN only)
+GET    /api/admin/reviewer-assignments # Get assignments (STAFF_ADMIN only)
 ```
 
 ### Directory (Public)
@@ -347,22 +385,51 @@ headers: {
 - Secure password hashing (bcrypt)
 - Session management
 
+### Email Notifications
+The platform includes automated email notifications powered by Resend for key events:
+
+**Startup Notifications:**
+- Welcome email upon registration
+- Profile approval/rejection notifications
+- Application submission confirmation
+- Application status updates (under review, approved, rejected)
+
+**Investor Notifications:**
+- Welcome email upon registration
+- Profile approval/rejection notifications
+
+**Reviewer Notifications:**
+- Welcome email with temporary password
+- New review assignment notifications
+
+**Configuration:**
+To enable email notifications, configure the following environment variables in `server/.env`:
+```env
+RESEND_API_KEY=your_resend_api_key
+EMAIL_FROM=noreply@yourdomain.com
+```
+
+**Note**: In Resend test mode, emails can only be sent to verified email addresses. For production, verify your domain at resend.com/domains.
+
 ### Startup Features
 - Profile creation & management
 - Program discovery & application
 - Application tracking
 - Document management
+- Email notifications for all profile and application events
 
 ### Investor Features
 - Startup discovery
 - Investment matching
 - Program participation
 - Portfolio management
+- Email notifications for profile status
 
 ### Admin Features
-- User management
+- User management (SYSTEM_ADMIN only)
 - Program creation & management
 - Application review & approval
+- Reviewer assignment
 - Analytics & reporting (charts)
 - System monitoring
 
@@ -419,6 +486,21 @@ Ensure all production environment variables are set:
 - JWT secrets (strong, random)
 - API URLs
 - CORS origins
+- Email configuration (RESEND_API_KEY, EMAIL_FROM) for notifications
+
+### Email Service Setup
+
+For production email notifications:
+1. Sign up at [Resend](https://resend.com)
+2. Verify your domain
+3. Generate an API key
+4. Add to environment variables:
+   ```env
+   RESEND_API_KEY=re_xxxxxxxxxxxxx
+   EMAIL_FROM=noreply@yourdomain.com
+   ```
+
+Without email configuration, the system will log warnings but continue to function normally.
 
 ## Documentation
 
