@@ -28,11 +28,9 @@ const envSchema = z.object({
   // CORS
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
   
-  // Optional: Email service (for future)
-  // SMTP_HOST: z.string().optional(),
-  // SMTP_PORT: z.string().optional(),
-  // SMTP_USER: z.string().optional(),
-  // SMTP_PASS: z.string().optional(),
+  // Email service (Resend)
+  RESEND_API_KEY: z.string().default(''),
+  EMAIL_FROM: z.string().default(''),
 });
 
 // Validate environment variables
@@ -40,7 +38,7 @@ const parseEnv = () => {
   try {
     return envSchema.parse(process.env);
   } catch (error) {
-    console.error('❌ Invalid environment variables:');
+    console.error('Invalid environment variables:');
     if (error instanceof z.ZodError) {
       error.errors.forEach((err) => {
         console.error(`  - ${err.path.join('.')}: ${err.message}`);
@@ -63,4 +61,6 @@ export const {
   JWT_REFRESH_SECRET,
   JWT_REFRESH_EXPIRES_IN,
   CORS_ORIGIN,
+  RESEND_API_KEY,
+  EMAIL_FROM,
 } = env;

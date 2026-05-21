@@ -11,6 +11,7 @@ import {
   NotFoundError,
   ForbiddenError,
 } from '../../shared/errors/AppError';
+import { emailService } from '../../shared/services/email.service';
 import type {
   CreateInvestorProfileInput,
   UpdateInvestorProfileInput,
@@ -258,6 +259,9 @@ export const approveInvestor = async (
       approvedAt: new Date(),
       rejectionReason: null,
     },
+    include: {
+      user: { select: { email: true } },
+    },
   });
 
   // Record approval in history
@@ -270,6 +274,11 @@ export const approveInvestor = async (
       changedBy: input.approvedBy,
     },
   });
+
+  // Send approval email (non-blocking)
+  emailService.sendInvestorProfileApproved(updated.user.email, updated.name).catch(err =>
+    console.error('Failed to send approval email:', err)
+  );
 
   return toInvestorProfile(updated);
 };
@@ -297,6 +306,9 @@ export const rejectInvestor = async (
       approvedBy: null,
       approvedAt: null,
     },
+    include: {
+      user: { select: { email: true } },
+    },
   });
 
   // Record rejection in history
@@ -312,6 +324,15 @@ export const rejectInvestor = async (
       changedBy: input.rejectedBy,
     },
   });
+
+  // Send rejection email (non-blocking)
+  emailService.sendInvestorProfileRejected(
+    updated.user.email,
+    updated.name,
+    input.rejectionReason
+  ).catch(err =>
+    console.error('Failed to send rejection email:', err)
+  );
 
   return toInvestorProfile(updated);
 };

@@ -6,6 +6,7 @@ import prisma from '../../database/prisma';
 import { hashPassword } from '../../shared/utils/passwords';
 import { calculateSkip } from '../../shared/utils/pagination';
 import { canManageRole } from '../../shared/constants/roles';
+import { emailService } from '../../shared/services/email.service';
 import {
   BadRequestError,
   ConflictError,
@@ -69,6 +70,13 @@ export const createUser = async (
       changedBy: creatorId,
     },
   });
+
+  // Send welcome email with temporary password for reviewers (non-blocking)
+  if (role === Role.REVIEWER) {
+    emailService.sendWelcomeReviewer(user.email, user.email, password).catch(err =>
+      console.error('Failed to send welcome email:', err)
+    );
+  }
 
   return user;
 };
@@ -248,7 +256,11 @@ export const assignReviewers = async (
   // Verify all applications exist
   const applications = await prisma.application.findMany({
     where: { id: { in: applicationIds } },
-    select: { id: true, startup: { select: { name: true } } },
+    select: { 
+      id: true, 
+      startup: { select: { name: true } },
+      program: { select: { name: true } },
+    },
   });
 
   if (applications.length !== applicationIds.length) {
@@ -288,6 +300,15 @@ export const assignReviewers = async (
           applicationTitle: application.startup.name,
           assignedAt: new Date(),
         });
+
+        // Send assignment email to reviewer (non-blocking)
+        emailService.sendReviewerAssigned(
+          reviewer.email,
+          reviewer.email, // Using email as name since we don't have reviewer name
+          application.startup.name,
+          application.program.name,
+          application.id
+        ).catch(err => console.error('Failed to send assignment email:', err));
       }
     }
   }

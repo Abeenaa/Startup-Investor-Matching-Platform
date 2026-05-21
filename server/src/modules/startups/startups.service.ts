@@ -11,6 +11,7 @@ import {
   NotFoundError,
   ForbiddenError,
 } from '../../shared/errors/AppError';
+import { emailService } from '../../shared/services/email.service';
 import type {
   CreateStartupProfileInput,
   UpdateStartupProfileInput,
@@ -287,6 +288,9 @@ export const approveStartup = async (
       approvedAt: new Date(),
       rejectionReason: null,
     },
+    include: {
+      user: { select: { email: true } },
+    },
   });
 
   // Record approval in history
@@ -299,6 +303,11 @@ export const approveStartup = async (
       changedBy: input.approvedBy,
     },
   });
+
+  // Send approval email (non-blocking)
+  emailService.sendStartupProfileApproved(updated.user.email, updated.name).catch(err =>
+    console.error('Failed to send approval email:', err)
+  );
 
   return toStartupProfile(updated);
 };
@@ -326,6 +335,9 @@ export const rejectStartup = async (
       approvedBy: null,
       approvedAt: null,
     },
+    include: {
+      user: { select: { email: true } },
+    },
   });
 
   // Record rejection in history
@@ -341,6 +353,15 @@ export const rejectStartup = async (
       changedBy: input.rejectedBy,
     },
   });
+
+  // Send rejection email (non-blocking)
+  emailService.sendStartupProfileRejected(
+    updated.user.email, 
+    updated.name, 
+    input.rejectionReason
+  ).catch(err =>
+    console.error('Failed to send rejection email:', err)
+  );
 
   return toStartupProfile(updated);
 };

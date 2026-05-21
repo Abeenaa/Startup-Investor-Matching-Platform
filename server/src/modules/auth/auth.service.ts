@@ -15,6 +15,7 @@ import {
   ConflictError,
   NotFoundError,
 } from '../../shared/errors/AppError';
+import { emailService } from '../../shared/services/email.service';
 import type {
   RegisterInput,
   LoginInput,
@@ -96,6 +97,17 @@ export const register = async (input: RegisterInput): Promise<AuthResponse> => {
   });
 
   const tokens = issueTokens(user);
+
+  // Send welcome email based on role (non-blocking)
+  if (role === Role.STARTUP) {
+    emailService.sendWelcomeStartup(user.email, user.email).catch(err => 
+      console.error('Failed to send welcome email:', err)
+    );
+  } else if (role === Role.INVESTOR) {
+    emailService.sendWelcomeInvestor(user.email, user.email).catch(err => 
+      console.error('Failed to send welcome email:', err)
+    );
+  }
 
   return { user: toAuthUser(user), tokens };
 };

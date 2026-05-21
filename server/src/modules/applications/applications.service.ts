@@ -4,6 +4,7 @@ import prisma from '../../database/prisma';
 import { NotFoundError, BadRequestError, ForbiddenError } from '../../shared/errors/AppError';
 import { ApplicationStatus, ApprovalStatus } from '@prisma/client';
 import * as programsService from '../programs/programs.service';
+import { emailService } from '../../shared/services/email.service';
 import type {
   CreateApplicationRequest,
   UpdateApplicationRequest,
@@ -57,9 +58,14 @@ export const createApplication = async (
   // Create draft application
   const application = await prisma.application.create({
     data: {
-      ...data,
       startupId,
+      programId: data.programId,
       status: ApplicationStatus.DRAFT,
+      additionalInfo: data.additionalInfo,
+      pitchDeck: data.pitchDeck,
+      businessPlan: data.businessPlan,
+      financials: data.financials,
+      otherDocuments: data.otherDocuments as any, // JSON field
     },
     include: {
       program: {
@@ -110,7 +116,13 @@ export const updateApplication = async (
   // Update application
   const updatedApplication = await prisma.application.update({
     where: { id: applicationId },
-    data,
+    data: {
+      additionalInfo: data.additionalInfo,
+      pitchDeck: data.pitchDeck,
+      businessPlan: data.businessPlan,
+      financials: data.financials,
+      otherDocuments: data.otherDocuments as any, // JSON field
+    },
     include: {
       program: {
         select: {
@@ -179,6 +191,12 @@ export const submitApplication = async (
             deadline: true,
           },
         },
+        startup: {
+          select: {
+            name: true,
+            user: { select: { email: true } },
+          },
+        },
       },
     }),
     prisma.program.update({
@@ -190,6 +208,13 @@ export const submitApplication = async (
       },
     }),
   ]);
+
+  // Send submission confirmation email (non-blocking)
+  emailService.sendApplicationSubmitted(
+    submittedApplication.startup.user.email,
+    submittedApplication.startup.name,
+    submittedApplication.program.name
+  ).catch(err => console.error('Failed to send submission email:', err));
 
   return formatApplicationResponse(submittedApplication);
 };
@@ -503,12 +528,18 @@ export const approveApplication = async (
           name: true,
           sector: true,
           stage: true,
+          user: { select: { email: true } },
         },
       },
     },
   });
 
-  // TODO: Send notification to startup
+  // Send approval email (non-blocking)
+  emailService.sendApplicationApproved(
+    approvedApplication.startup.user.email,
+    approvedApplication.startup.name,
+    approvedApplication.program.name
+  ).catch(err => console.error('Failed to send approval email:', err));
 
   return formatAdminApplicationResponse(approvedApplication);
 };
@@ -577,12 +608,19 @@ export const rejectApplication = async (
           name: true,
           sector: true,
           stage: true,
+          user: { select: { email: true } },
         },
       },
     },
   });
 
-  // TODO: Send notification to startup with rejection reason
+  // Send rejection email with reason (non-blocking)
+  emailService.sendApplicationRejected(
+    rejectedApplication.startup.user.email,
+    rejectedApplication.startup.name,
+    rejectedApplication.program.name,
+    reason
+  ).catch(err => console.error('Failed to send rejection email:', err));
 
   return formatAdminApplicationResponse(rejectedApplication);
 };
