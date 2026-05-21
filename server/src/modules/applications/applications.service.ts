@@ -4,6 +4,7 @@ import prisma from '../../database/prisma';
 import { NotFoundError, BadRequestError, ForbiddenError } from '../../shared/errors/AppError';
 import { ApplicationStatus, ApprovalStatus } from '@prisma/client';
 import * as programsService from '../programs/programs.service';
+import { emailService } from '../../shared/services/email.service';
 import type {
   CreateApplicationRequest,
   UpdateApplicationRequest,
@@ -190,6 +191,12 @@ export const submitApplication = async (
             deadline: true,
           },
         },
+        startup: {
+          select: {
+            name: true,
+            user: { select: { email: true } },
+          },
+        },
       },
     }),
     prisma.program.update({
@@ -201,6 +208,13 @@ export const submitApplication = async (
       },
     }),
   ]);
+
+  // Send submission confirmation email (non-blocking)
+  emailService.sendApplicationSubmitted(
+    submittedApplication.startup.user.email,
+    submittedApplication.startup.name,
+    submittedApplication.program.name
+  ).catch(err => console.error('Failed to send submission email:', err));
 
   return formatApplicationResponse(submittedApplication);
 };
@@ -514,12 +528,18 @@ export const approveApplication = async (
           name: true,
           sector: true,
           stage: true,
+          user: { select: { email: true } },
         },
       },
     },
   });
 
-  // TODO: Send notification to startup
+  // Send approval email (non-blocking)
+  emailService.sendApplicationApproved(
+    approvedApplication.startup.user.email,
+    approvedApplication.startup.name,
+    approvedApplication.program.name
+  ).catch(err => console.error('Failed to send approval email:', err));
 
   return formatAdminApplicationResponse(approvedApplication);
 };
@@ -588,12 +608,19 @@ export const rejectApplication = async (
           name: true,
           sector: true,
           stage: true,
+          user: { select: { email: true } },
         },
       },
     },
   });
 
-  // TODO: Send notification to startup with rejection reason
+  // Send rejection email with reason (non-blocking)
+  emailService.sendApplicationRejected(
+    rejectedApplication.startup.user.email,
+    rejectedApplication.startup.name,
+    rejectedApplication.program.name,
+    reason
+  ).catch(err => console.error('Failed to send rejection email:', err));
 
   return formatAdminApplicationResponse(rejectedApplication);
 };

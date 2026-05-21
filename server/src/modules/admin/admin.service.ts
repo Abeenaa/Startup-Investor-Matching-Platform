@@ -6,6 +6,7 @@ import prisma from '../../database/prisma';
 import { hashPassword } from '../../shared/utils/passwords';
 import { calculateSkip } from '../../shared/utils/pagination';
 import { canManageRole } from '../../shared/constants/roles';
+import { emailService } from '../../shared/services/email.service';
 import {
   BadRequestError,
   ConflictError,
@@ -22,7 +23,7 @@ import type {
 } from './admin.types';
 
 // User Management 
-//Create a new system admin or reviewer (staff admin only)
+//Create a new system admin or reviewer (SYSTEM_ADMIN only)
 export const createUser = async (
   creatorRole: string,
   creatorId: string,
@@ -30,9 +31,9 @@ export const createUser = async (
 ): Promise<UserListItem> => {
   const { email, password, role } = input;
 
-  // Only staff admin can create system admins and reviewers
-  if (!canManageRole(creatorRole, role)) {
-    throw new ForbiddenError('You do not have permission to create users with this role');
+  // Only SYSTEM_ADMIN can create users
+  if (creatorRole !== Role.SYSTEM_ADMIN) {
+    throw new ForbiddenError('You do not have permission to create users');
   }
 
   // Check for duplicate email
@@ -69,6 +70,13 @@ export const createUser = async (
       changedBy: creatorId,
     },
   });
+
+  // Send welcome email with temporary password for reviewers (non-blocking)
+  if (role === Role.REVIEWER) {
+    emailService.sendWelcomeReviewer(user.email, user.email, password).catch(err =>
+      console.error('Failed to send welcome email:', err)
+    );
+  }
 
   return user;
 };
@@ -119,13 +127,18 @@ export const getUsers = async (
   return { users, total };
 };
 
-// Update user details (staff admin only for system admins/reviewers)
+// Update user details (SYSTEM_ADMIN only)
 export const updateUser = async (
   updaterRole: string,
   updaterId: string,
   userId: string,
   input: UpdateUserInput
 ): Promise<UserListItem> => {
+  // Only SYSTEM_ADMIN can update users
+  if (updaterRole !== Role.SYSTEM_ADMIN) {
+    throw new ForbiddenError('You do not have permission to update users');
+  }
+
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { id: true, email: true, role: true, isActive: true },
@@ -133,16 +146,6 @@ export const updateUser = async (
 
   if (!user) {
     throw new NotFoundError('User not found');
-  }
-
-  // Check if updater can manage this user's role
-  if (!canManageRole(updaterRole, user.role)) {
-    throw new ForbiddenError('You do not have permission to update this user');
-  }
-
-  // If changing role, check if updater can assign the new role
-  if (input.role && !canManageRole(updaterRole, input.role)) {
-    throw new ForbiddenError('You do not have permission to assign this role');
   }
 
   // Check for email conflicts if email is being changed
@@ -180,12 +183,17 @@ export const updateUser = async (
   return updatedUser;
 };
 
-//Delete/deactivate user (staff admin only)
+//Delete/deactivate user (SYSTEM_ADMIN only)
 export const deleteUser = async (
   deleterRole: string,
   deleterId: string,
   userId: string
 ): Promise<void> => {
+  // Only SYSTEM_ADMIN can delete users
+  if (deleterRole !== Role.SYSTEM_ADMIN) {
+    throw new ForbiddenError('You do not have permission to delete users');
+  }
+
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { id: true, role: true, isActive: true },
@@ -193,11 +201,6 @@ export const deleteUser = async (
 
   if (!user) {
     throw new NotFoundError('User not found');
-  }
-
-  // Check if deleter can manage this user's role
-  if (!canManageRole(deleterRole, user.role)) {
-    throw new ForbiddenError('You do not have permission to delete this user');
   }
 
   // Prevent deleting yourself
@@ -248,7 +251,11 @@ export const assignReviewers = async (
   // Verify all applications exist
   const applications = await prisma.application.findMany({
     where: { id: { in: applicationIds } },
-    select: { id: true, startup: { select: { name: true } } },
+    select: { 
+      id: true, 
+      startup: { select: { name: true } },
+      program: { select: { name: true } },
+    },
   });
 
   if (applications.length !== applicationIds.length) {
@@ -288,6 +295,15 @@ export const assignReviewers = async (
           applicationTitle: application.startup.name,
           assignedAt: new Date(),
         });
+
+        // Send assignment email to reviewer (non-blocking)
+        emailService.sendReviewerAssigned(
+          reviewer.email,
+          reviewer.email, // Using email as name since we don't have reviewer name
+          application.startup.name,
+          application.program.name,
+          application.id
+        ).catch(err => console.error('Failed to send assignment email:', err));
       }
     }
   }
