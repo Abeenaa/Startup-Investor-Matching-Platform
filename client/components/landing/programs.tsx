@@ -43,7 +43,7 @@ const programs = [
 
 export default function Programs() {
   return (
-    <section id="programs" className="innobiz-shell py-24">
+    <section id="programs" className="innobiz-shell max-w-7xl mx-auto px-6 lg:px-8 py-24">
       <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <span className="rounded-full border border-secondary/20 bg-secondary/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
@@ -78,5 +78,5 @@ export default function Programs() {
         ))}
       </div>
     </section>
-  )
+  );
 }

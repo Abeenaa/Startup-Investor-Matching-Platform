@@ -25,7 +25,7 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section id="impact" className="innobiz-shell py-24">
+    <section id="impact" className="innobiz-shell max-w-7xl mx-auto px-6 lg:px-8 py-24">
       <div className="innobiz-panel p-8 sm:p-10">
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -61,5 +61,5 @@ export default function Stats() {
         </div>
       </div>
     </section>
-  )
+  );
 }

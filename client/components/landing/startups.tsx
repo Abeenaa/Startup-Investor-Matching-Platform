@@ -22,7 +22,7 @@ const sectorColors: Record<string, string> = {
 
 export default function Startups() {
   return (
-    <section id="startups" className="innobiz-shell py-24">
+    <section id="startups" className="innobiz-shell max-w-7xl mx-auto px-6 lg:px-8 py-24">
       <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <span className="rounded-full border border-green-200 bg-green-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-green-700">
@@ -57,5 +57,5 @@ export default function Startups() {
         ))}
       </div>
     </section>
-  )
+  );
 }

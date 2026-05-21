@@ -57,7 +57,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="innobiz-shell py-24">
+    <section id="how-it-works" className="innobiz-shell max-w-7xl mx-auto px-6 lg:px-8 py-24">
       <div className="mb-16 text-center">
         <span className="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
           How It Works
@@ -92,5 +92,5 @@ export default function HowItWorks() {
         ))}
       </div>
     </section>
-  )
+  );
 }

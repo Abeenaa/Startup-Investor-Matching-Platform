@@ -33,10 +33,10 @@ export default function InvestorDashboard() {
     <DashboardShell title="Investor Dashboard" description="Discover startups and manage your investment pipeline" navItems={navItems} portalLabel="INVESTOR PORTAL">
       {error && <div className="mb-4 flex items-center gap-2 rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive"><AlertCircle size={14} /> {error}</div>}
 
-      {!data ? (
-        <div className="rounded-2xl border border-border bg-card p-6 text-sm text-muted-foreground">Loading dashboard...</div>
-      ) : (
-        <div className="space-y-6">
+       {!data ? (
+         <div className="rounded-2xl border border-border bg-card p-6 text-sm text-muted-foreground">Loading dashboard...</div>
+       ) : (
+         <div className="max-w-7xl mx-auto px-6 lg:px-8 space-y-6">
           {/* Profile Status Banner */}
           {!data.profile && (
             <div className="rounded-2xl border border-accent/30 bg-accent/10 p-4">

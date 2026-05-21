@@ -39,7 +39,7 @@ const highlights = [
 
 export default function About() {
   return (
-    <section id="about" className="innobiz-shell py-24">
+    <section id="about" className="innobiz-shell max-w-7xl mx-auto px-6 lg:px-8 py-24">
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="innobiz-panel overflow-hidden p-8 sm:p-10">
           <div className="max-w-2xl">
@@ -85,5 +85,5 @@ export default function About() {
         </div>
       </div>
     </section>
-  )
+  );
 }

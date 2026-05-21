@@ -31,7 +31,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="platform" className="innobiz-shell py-24">
+    <section id="platform" className="innobiz-shell max-w-7xl mx-auto px-6 lg:px-8 py-24">
       <div className="mb-16 text-center">
         <span className="rounded-full border border-secondary/20 bg-secondary/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
           Platform Capabilities
@@ -67,5 +67,5 @@ export default function Features() {
         })}
       </div>
     </section>
-  )
+  );
 }
