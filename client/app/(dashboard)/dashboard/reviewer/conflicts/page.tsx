@@ -110,7 +110,7 @@ export default function ConflictsPage() {
               'Provide the application ID and the nature of the conflict.',
               'The staff admin will reassign the application to another reviewer.',
               'Your declaration will be recorded in the system for audit purposes.',
-            ].map((step, i) => (
+            ].map((step, i: number) => (
               <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">{i + 1}</span>
                 {step}

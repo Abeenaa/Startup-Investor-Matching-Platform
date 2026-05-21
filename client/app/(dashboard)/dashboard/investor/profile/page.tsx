@@ -146,7 +146,7 @@ export default function ProfilePage() {
 
   if (loading) return (
     <DashboardShell title="My Profile" description="Manage your investor profile" navItems={navItems} portalLabel="INVESTOR PORTAL">
-      <div className="space-y-3">{[...Array(3)].map((_, i) => <div key={i} className="skeleton h-20 rounded-2xl" />)}</div>
+      <div className="space-y-3">{[...Array(3)].map((_, i: number) => <div key={i} className="skeleton h-20 rounded-2xl" />)}</div>
     </DashboardShell>
   )
 
@@ -171,7 +171,7 @@ export default function ProfilePage() {
 
         {/* Steps */}
         <div className="mb-6 flex items-center gap-2">
-          {STEPS.map((s, i) => {
+          {STEPS.map((s, i: number) => {
             const done = step > s.id; const active = step === s.id
             return (
               <div key={s.id} className="flex flex-1 items-center gap-2">

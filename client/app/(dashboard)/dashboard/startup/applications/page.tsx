@@ -82,7 +82,7 @@ export default function ApplicationsPage() {
 
       {loading ? (
         <div className="space-y-3">
-          {[...Array(3)].map((_, i) => <div key={i} className="h-24 animate-pulse rounded-2xl border border-border bg-muted" />)}
+          {[...Array(3)].map((_, i: number) => <div key={i} className="h-24 animate-pulse rounded-2xl border border-border bg-muted" />)}
         </div>
       ) : applications.length === 0 ? (
         <Card className="p-12 text-center">

@@ -38,7 +38,7 @@ export default function DashboardPage() {
       {!data ? (
         <div className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {[...Array(4)].map((_, i) => <div key={i} className="skeleton h-28 rounded-2xl" />)}
+            {[...Array(4)].map((_, i: number) => <div key={i} className="skeleton h-28 rounded-2xl" />)}
           </div>
           <div className="skeleton h-64 rounded-2xl" />
         </div>
@@ -100,7 +100,7 @@ export default function DashboardPage() {
             </div>
             
             <div className="divide-y divide-border custom-scrollbar max-h-[500px] overflow-y-auto">
-              {data.pendingApplications.length ? data.pendingApplications.map((app, index) => (
+              {data.pendingApplications.length ? data.pendingApplications.map((app: ReviewerDashboardData['pendingApplications'][number], index: number) => (
                 <div key={app.id} className={`flex items-center justify-between px-6 py-4 table-row-hover cursor-pointer stagger-item`} style={{animationDelay: `${index * 50}ms`}}>
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-foreground transition-colors hover:text-primary">{app.startupName}</p>
@@ -126,7 +126,7 @@ export default function DashboardPage() {
                 <h2 className="text-base font-semibold text-foreground">Recent Evaluations</h2>
               </div>
               <div className="divide-y divide-border custom-scrollbar max-h-[400px] overflow-y-auto">
-                {data.recentEvaluations.slice(0, 5).map((item, index) => (
+                {data.recentEvaluations.slice(0, 5).map((item: ReviewerDashboardData['recentEvaluations'][number], index: number) => (
                   <div key={item.id} className={`flex items-center justify-between px-6 py-4 table-row-hover cursor-pointer stagger-item`} style={{animationDelay: `${index * 50}ms`}}>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-foreground transition-colors hover:text-primary">{item.startupName}</p>

@@ -72,7 +72,7 @@ export default function HelpPage() {
             </div>
           </div>
           <div className="divide-y divide-border">
-            {faqs.map((faq, i) => (
+            {faqs.map((faq, i: number) => (
               <div key={i}>
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
